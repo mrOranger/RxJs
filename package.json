@@ -1,0 +1,17 @@
+{
+      "name": "rxjs",
+      "version": "1.0.0",
+      "description": "Set of theoretical concepts and examples of Reactive Programming with RxJs",
+      "main": "index.js",
+      "scripts": {
+            "tsc:watch": "tsc --watch"
+      },
+      "keywords": [
+            "JavaScript",
+            "TypeScript",
+            "RxJs",
+            "Node"
+      ],
+      "author": "Edoardo Oranger (mrOranger)",
+      "license": "ISC"
+}
