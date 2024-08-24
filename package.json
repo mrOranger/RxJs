@@ -13,5 +13,8 @@
             "Node"
       ],
       "author": "Edoardo Oranger (mrOranger)",
-      "license": "ISC"
+      "license": "ISC",
+      "dependencies": {
+            "rxjs": "^7.8.1"
+      }
 }
