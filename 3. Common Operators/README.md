@@ -8,11 +8,15 @@ Digging deeper theoretically, RxJs Operators are high order-functions that does 
 
 ## Mapping values with `map`
 
-`map` is an RxJs operator belonging to the **transform** operators, meaning that changes the value emitted by the Observable applying a function. Moreover, map is **immutable** meaning that it transforms the data without updating the value that is actually emitted by the Observable, and **one-to-one** that is it does not change the size of the original emitted values. The following figure shows briefly how the map operator works in practice:
+`map` is an RxJs operator belonging to the **transform** operators, meaning that changes the value emitted by the Observable applying a function. Moreover, map is **immutable** meaning that it transforms the data without updating the value that is actually emitted by the Observable, and **one-to-one** that is it does not change the size of the original emitted values. 
+
+The following figure shows briefly how the map operator works in practice:
 
 <p align="center">
     <img src="../assets/3. Common Operators/Map.png" alt="Map Operator" style="width:100%">
 </p>
+
+Consider a Data Source that emits yellow squares and red circles, `map` converts each red circle in a yellow square. The final result is a new set of data contaning only yellow squares.
 
 Map is similar to the [**Adapter Design Pattern**](https://en.wikipedia.org/wiki/Adapter_pattern), since it creates a common interface to share data between a source and the corresponding destination, which has incompatible data type. In the sam way, in the previous figure the Observable emitts some circles while the Observer requires to observer triangles, therefore, map interpose itself between them to make to convert circles in triangles such that the Observer now can work correctly.
 
@@ -81,6 +85,10 @@ We can represent `reduce` in the following way:
     <img src="../assets/3. Common Operators/Reduce.png" alt="Reduce Operator" style="width:100%">
 </p>
 
+The figure representing `reduce` is quite trivial, let's consider a data source composed of only blue circles, each circle contains a number. The `reduce` operator takes a circle and returns the same circle containing a different number which is the result of the sum between the value in the cirlce and a curry given in input to the function. Now, the curry is updated each time that a value is processed, and its value is updated to be the sum between the previous curry, plus the current number inside the current circle. Supponsing the the curry is 0, the result is one single circle, whose value is the sum of each circle
+
+Our data source is composed of red and blue circles and a yellow square, using the `filter` operator, only circles are admitted to continue the path. The result is a set of circles only.
+
 Let's examinate now the corresponding example, using a different database that contains a set of [`Recipie`](../Database/recipie.interface.ts) in the file [**recipies.database.ts**](../Database/recipies.database.ts):
 
 - We would like to filter all the recipies with the field `difficult` `easy`, moreover we would like to get the mean of all the elements using the `map` operator:
@@ -115,6 +123,8 @@ The working of `scan` is shown in this figure, starting from the `reduce` operat
 <p align="center">
     <img src="../assets/3. Common Operators/Scan.png" alt="Scan Operator" style="width:100%">
 </p>
+
+The figure representing `scan` is quite similar to previous which represents `reduce`, however, as we can observe and supposing that the curry is 0, each time a new circle is emitted, whose value is the sum of the updated curry and the corresponding emitted circle's value from the source.
 
 If we would like to rewrite the previous example using `scan`, we have to replace all the occurrences of `reduce` with `scan`, as shown in the file [**scan.ts**](./scan.ts), however, the output of the Observer would be different since each intermediate value is emitted and shown in the console.
 
