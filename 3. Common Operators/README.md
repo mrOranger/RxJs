@@ -75,6 +75,8 @@ from(users)
 
 the same result can be achieved (updating the functions in the correct way) by using the `map` operator as the first one, and then the `filter` operator as the second, however, switching the position of the operator causes an incremental usage of resources, because the map operator will be executed for each emitted value, while using `map` as second operator means that it will be triggered only for those values that will not be filtered by `filter`.
 
+Another useful filter operator is `takeUntilChanges`, which emitts disting values from the source, until an adjacent duplicate is found.
+
 ## Aggragating elements with `reduce`
 
 Up to this moment, each operator we saw returns a new set of elements, empty or not. The new operator that we are going to introduce does not returns a collection but a single value. Let's consider this common example, we have a set of numbers and we would like to compute the mean of this elements, then we are going to sum each of them and then divide the result for the number of elements. Therefore, the `reduce` operator acts in a similar way, iterating for each element of the collection computing a new single value, however, differently from `map` or `filter`, reduce requires a new mandatory parameter in addiction to the set of elements, that is the **initial value** of the result, back to the mean example, the initial value is `0`.

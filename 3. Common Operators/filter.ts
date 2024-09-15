@@ -1,4 +1,4 @@
-import { filter, from, map } from 'rxjs';
+import { distinctUntilChanged, filter, from, map } from 'rxjs';
 import { User } from '../Database/user.interface';
 import { users } from '../Database/users.database';
 
@@ -16,3 +16,10 @@ from(users)
             error: (err) => console.error(err),
             complete: () => console.log('Stream closed.'),
       });
+
+from(users).pipe(
+      map((user) => user.username),
+      distinctUntilChanged(),
+).subscribe({
+      next: (value) => console.log(value),
+});
