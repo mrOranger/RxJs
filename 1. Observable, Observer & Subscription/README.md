@@ -1,23 +1,23 @@
 # Observable, Observer & Subscription
 
-An **Observable** is the producer of a data source, there are different ways to create an observable using methods from rxjs, however, each of these methods refers to different a different caregory of data source that we can identify in:
+An **Observable** is the producer of a data source, there are different ways to create an observable using methods from rxjs, however, each of these methods refers to different a different category of data source that we can identify in:
 
 - **Single Value Synchronous** like values returned from the evaluation of an expression, and whose observable can be created using the `of` operator.
-- **Multi Value Synchronous** such as `String`, `Array` or any object that represents a sequential set of elements and show observable can be created using the `from` opearator.
+- **Multi Value Synchronous** such as `String`, `Array` or any object that represents a sequential set of elements and show observable can be created using the `from` operator.
 - **Single Value Asynchronous** returned form an asynchronous operation such as a `Promise`, created using the operator `from`. However, a promise can return also an array or any set of elements, but, a Promise can be executed once, respect to an event that can be executed an undefined number of times, for this reason a Promise is considered a single value emitting source.
 - Finally, **Multi Value Asynchronous** is the most cumbersome type of data, they are in fact a type of data source that can be emitted multiple times during the execution, with an undefined number of times. Most of the time, these types of data are represented from DOM events, or external events independent from our program, and can be wrapped in an observable using the `fromEvent` operator.
 
-Once a data source is wrapped in an observable, it does not emitts any data until an **Observer** is attached to it. As soon as an observer is attached using the `subscribe` method, we can say that an observer has been subscribed to an observable entity, resulting in a new object known as **Subscription**, that is the combination of Observable + Observer + any eventually data pipe. However, we do not know how many times an observable will emit data to an observer, for this reason, we have to iterate over all the possible elements using the **Iterator** design pattern, needing a `next` method. Aside `next` there are two more methods called by the observable, these are `complete` and `error`. The former indicates the data emission's process is completed, while the latter indicates that an error occurred and no more data will be emitted.
+Once a data source is wrapped in an observable, it does not emits any data until an **Observer** is attached to it. As soon as an observer is attached using the `subscribe` method, we can say that an observer has been subscribed to an observable entity, resulting in a new object known as **Subscription**, that is the combination of Observable + Observer + any eventually data pipe. However, we do not know how many times an observable will emit data to an observer, for this reason, we have to iterate over all the possible elements using the **Iterator** design pattern, needing a `next` method. Aside `next` there are two more methods called by the observable, these are `complete` and `error`. The former indicates the data emission's process is completed, while the latter indicates that an error occurred and no more data will be emitted.
 
 <p align="center">
     <img src="../assets/1. Observable, Observer & Subscription/Observable, Observer & Subscription.png" alt="Observer, Observable & Subscription" style="width:100%">
 </p>
 
-Up to this point, befor explaining the examples, we saw how create observables starting from some operators like `from`, `to` and `fromPromise`, however, how can we create a custom observable from our own? We can simply create a new observable by instantiating it, moreover, the `Observable` class is a generic one, requiring the type of the value emitted to the Observer attached to it, and the constructor function takes as input the `Subscriber` that will be attached, on which we can invoke the methods `next`, `error` or `complete`.
+Up to this point, before explaining the examples, we saw how create observables starting from some operators like `from`, `to` and `fromPromise`, however, how can we create a custom observable from our own? We can simply create a new observable by instantiating it, moreover, the `Observable` class is a generic one, requiring the type of the value emitted to the Observer attached to it, and the constructor function takes as input the `Subscriber` that will be attached, on which we can invoke the methods `next`, `error` or `complete`.
 
 ## Examples
 
-- <i>Create a simple Observable that emitts an array of values, from 1 to 10, subscribe an Observer that prints each single value emitted from the former and print `complete` once the data flow is completed.</i>
+- <i>Create a simple Observable that emits an array of values, from 1 to 10, subscribe an Observer that prints each single value emitted from the former and print `complete` once the data flow is completed.</i>
 
 Using the function `from` we can create an Observable passing as parameters an array of values from 1 to 10, then using the `subscribe` function we pass a new Observer that print each value emitted by the Observable:
 

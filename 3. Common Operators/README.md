@@ -1,6 +1,6 @@
 # Common Operators
 
-As we mentied before, one of the part of a stream is the set of operators that are applied to an Observable and that transforms the emitted values in a new one whose result is made by the composition of the operators applied to it. The set of operators known as **Pipe** is the result of the application of Functional Programming in RxJs, in fact, each operators is side-effect free, and does not modify the emitted value, while makes a new copy and applies the function in the Pipe.
+As we mentioned before, one of the part of a stream is the set of operators that are applied to an Observable and that transforms the emitted values in a new one whose result is made by the composition of the operators applied to it. The set of operators known as **Pipe** is the result of the application of Functional Programming in RxJs, in fact, each operators is side-effect free, and does not modify the emitted value, while makes a new copy and applies the function in the Pipe.
 
 Thinking to our problems as a set of functions to apply to some values is the core concepts of Reactive Programming. In fact, RxJs provides some useful built-in operators that we can combine to some our problem, some examples are `map`, `filter` from `Array` in JavaScript, we wll see that RxJs contains a set of similar operators.
 
@@ -16,9 +16,9 @@ The following figure shows briefly how the map operator works in practice:
     <img src="../assets/3. Common Operators/Map.png" alt="Map Operator" style="width:100%">
 </p>
 
-Consider a Data Source that emits yellow squares and red circles, `map` converts each red circle in a yellow square. The final result is a new set of data contaning only yellow squares.
+Consider a Data Source that emits yellow squares and red circles, `map` converts each red circle in a yellow square. The final result is a new set of data containing only yellow squares.
 
-Map is similar to the [**Adapter Design Pattern**](https://en.wikipedia.org/wiki/Adapter_pattern), since it creates a common interface to share data between a source and the corresponding destination, which has incompatible data type. In the sam way, in the previous figure the Observable emitts some circles while the Observer requires to observer triangles, therefore, map interpose itself between them to make to convert circles in triangles such that the Observer now can work correctly.
+Map is similar to the [**Adapter Design Pattern**](https://en.wikipedia.org/wiki/Adapter_pattern), since it creates a common interface to share data between a source and the corresponding destination, which has incompatible data type. In the sam way, in the previous figure the Observable emits some circles while the Observer requires to observer triangles, therefore, map interpose itself between them to make to convert circles in triangles such that the Observer now can work correctly.
 
 Finally, let's see the example show in the file [**map.ts**](./map.ts)
 
@@ -38,7 +38,7 @@ Thus, using the map operator we transform each current user in the corresponding
 
 ## Filtering with `filter`
 
-While map is a one-to-one operator, **filter** does not return the same input element, while decides who will be keept and who won't be emitted using a function that returns a boolean value. That particular function is also kwnown as **predicate**, meaning that it will predicate a value deciding who pass the test and who not. Therefore, filter updates the size of the emitted string be reducing if it is necessary.
+While map is a one-to-one operator, **filter** does not return the same input element, while decides who will be kept and who won't be emitted using a function that returns a boolean value. That particular function is also known as **predicate**, meaning that it will predicate a value deciding who pass the test and who not. Therefore, filter updates the size of the emitted string be reducing if it is necessary.
 
 Like the map `operator` the working of the `filter` is shown by the following figure:
 
@@ -75,9 +75,9 @@ from(users)
 
 the same result can be achieved (updating the functions in the correct way) by using the `map` operator as the first one, and then the `filter` operator as the second, however, switching the position of the operator causes an incremental usage of resources, because the map operator will be executed for each emitted value, while using `map` as second operator means that it will be triggered only for those values that will not be filtered by `filter`.
 
-Another useful filter operator is `takeUntilChanges`, which emitts disting values from the source, until an adjacent duplicate is found.
+Another useful filter operator is `takeUntilChanges`, which emits distinct values from the source, until an adjacent duplicate is found.
 
-## Aggragating elements with `reduce`
+## Aggregating elements with `reduce`
 
 Up to this moment, each operator we saw returns a new set of elements, empty or not. The new operator that we are going to introduce does not returns a collection but a single value. Let's consider this common example, we have a set of numbers and we would like to compute the mean of this elements, then we are going to sum each of them and then divide the result for the number of elements. Therefore, the `reduce` operator acts in a similar way, iterating for each element of the collection computing a new single value, however, differently from `map` or `filter`, reduce requires a new mandatory parameter in addiction to the set of elements, that is the **initial value** of the result, back to the mean example, the initial value is `0`.
 
@@ -87,21 +87,21 @@ We can represent `reduce` in the following way:
     <img src="../assets/3. Common Operators/Reduce.png" alt="Reduce Operator" style="width:100%">
 </p>
 
-The figure representing `reduce` is quite trivial, let's consider a data source composed of only blue circles, each circle contains a number. The `reduce` operator takes a circle and returns the same circle containing a different number which is the result of the sum between the value in the cirlce and a curry given in input to the function. Now, the curry is updated each time that a value is processed, and its value is updated to be the sum between the previous curry, plus the current number inside the current circle. Supponsing the the curry is 0, the result is one single circle, whose value is the sum of each circle
+The figure representing `reduce` is quite trivial, let's consider a data source composed of only blue circles, each circle contains a number. The `reduce` operator takes a circle and returns the same circle containing a different number which is the result of the sum between the value in the circle and a curry given in input to the function. Now, the curry is updated each time that a value is processed, and its value is updated to be the sum between the previous curry, plus the current number inside the current circle. Supposing the the curry is 0, the result is one single circle, whose value is the sum of each circle
 
 Our data source is composed of red and blue circles and a yellow square, using the `filter` operator, only circles are admitted to continue the path. The result is a set of circles only.
 
-Let's examinate now the corresponding example, using a different database that contains a set of [`Recipie`](../Database/recipie.interface.ts) in the file [**recipies.database.ts**](../Database/recipies.database.ts):
+Let's examine now the corresponding example, using a different database that contains a set of [`Recipe`](../Database/recipie.interface.ts) in the file [**recipes.database.ts**](../Database/recipies.database.ts):
 
-- We would like to filter all the recipies with the field `difficult` `easy`, moreover we would like to get the mean of all the elements using the `map` operator:
+- We would like to filter all the recipes with the field `difficult` `easy`, moreover we would like to get the mean of all the elements using the `map` operator:
 
 ```typescript
-from(recipies)
+from(recipes)
       .pipe(
-            filter((recipie) => recipie.difficulty === 'Easy'),
+            filter((recipe) => recipe.difficulty === 'Easy'),
             reduce(
-                  (acc, recipie) => {
-                        return { sum: acc.sum + recipie.rating, numberOfElements: acc.numberOfElements + 1 };
+                  (acc, recipe) => {
+                        return { sum: acc.sum + recipe.rating, numberOfElements: acc.numberOfElements + 1 };
                   },
                   { sum: 0, numberOfElements: 0 },
             ),
@@ -114,13 +114,13 @@ from(recipies)
       });
 ```
 
-As we saw `filter` returns only those elements having difficult `Easy`, on the other hand, the most difficult part is to understand how `reduce` is implemented. The problem is to save the number of those elements with the sum of all the ratings, for this reason we would like to use an object there `sum` represents the sum of all the ratings, while `numberOfElements` is the total number of elements and then each value of this object starts from `0`. Now, for each element passing the `filter` predicate takes the rating with `recipie.rating` and then increments the `numberOfElements` by 1, the final result is a single object containing the sum of all rating and the number of recipies. In the end, using `map` we are going to return the mean of all ratings.
+As we saw `filter` returns only those elements having difficult `Easy`, on the other hand, the most difficult part is to understand how `reduce` is implemented. The problem is to save the number of those elements with the sum of all the ratings, for this reason we would like to use an object there `sum` represents the sum of all the ratings, while `numberOfElements` is the total number of elements and then each value of this object starts from `0`. Now, for each element passing the `filter` predicate takes the rating with `recipe.rating` and then increments the `numberOfElements` by 1, the final result is a single object containing the sum of all rating and the number of recipes. In the end, using `map` we are going to return the mean of all ratings.
 
 ## Scanning aggregation of values with `scan`
 
 An interesting variation of `reduce` is `scan`, while `reduce` returns only the final aggregated value, `scan` returns the intermediate aggregated values for all the input elements. Therefore, `scan` returns the same number of elements respect to the input set.
 
-The working of `scan` is shown in this figure, starting from the `reduce` operator, we do not return the final diamond, moreover, we are reurning each intermediate value that is represented by each smaller diamond, whose number is the same of the input elements:
+The working of `scan` is shown in this figure, starting from the `reduce` operator, we do not return the final diamond, moreover, we are returning each intermediate value that is represented by each smaller diamond, whose number is the same of the input elements:
 
 <p align="center">
     <img src="../assets/3. Common Operators/Scan.png" alt="Scan Operator" style="width:100%">
@@ -136,7 +136,7 @@ There are few additional operators useful for daily tasks, since these operators
 
 * `take` is a filtering operator, returning a subset of the input elements whose length is indicated by the parameter. Similar to take `first` and `last` return only the first and the last elements in the input collection.
 * `min` and `max` are comparators, returning the minimum and maximum elements in the collection based on the input condition.
-* `tap` is the most interesting since is a **side-effect** operator that executes something without altering the input collectio, in fact, it does not returns any value. Moreover, `tap` is useful for example in HTTP call, if you would like to inform the user about the loading progress.
+* `tap` is the most interesting since is a **side-effect** operator that executes something without altering the input collection, in fact, it does not returns any value. Moreover, `tap` is useful for example in HTTP call, if you would like to inform the user about the loading progress.
 
 Up to this point, we saw the most common operators in RxJs, now, I would like to make a question. Suppose that we would like to use the same operators of RxJs for an input array, shall we chose to use RxJs or the commonest operator defined in the `Array` class? I made the question because the answer let us to understand how useful is this library, and why should we work harder in understanding how RxJs works. The answer to the question is RxJs, and to explain why, let's see the following example:
 

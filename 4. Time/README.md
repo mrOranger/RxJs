@@ -1,10 +1,10 @@
 # Time dimension in RxJs
 
-Time is an invisible dimension in programming and working with asynchronous code is always tricky expecilly in JavaScript, however, RxJs ables us to treat time an additional dimension of our data source, and then treat asynchronous code like synchronous one, in other terms we are able to serialize operations so that we can execute tasks only after the completition of another one.
+Time is an invisible dimension in programming and working with asynchronous code is always tricky especially in JavaScript, however, RxJs ables us to treat time an additional dimension of our data source, and then treat asynchronous code like synchronous one, in other terms we are able to serialize operations so that we can execute tasks only after the competition of another one.
 
 ## `interval` and `timer` factories
 
-`setInterval` and `setTimeout` are asynchronous JavaScript's function that trigger the callback function parameter each time in a fixed interval represeted by the second parameter in the former and once after the time indicated by the second parameter in the latter. In RxJs there are two similar factory functions that emulates these behaviours, `interval` and `timer`.
+`setInterval` and `setTimeout` are asynchronous JavaScript's function that trigger the callback function parameter each time in a fixed interval represented by the second parameter in the former and once after the time indicated by the second parameter in the latter. In RxJs there are two similar factory functions that emulates these behaviors, `interval` and `timer`.
 
 Let's start with `interval` and let's examine this piece of code:
 
@@ -12,7 +12,7 @@ Let's start with `interval` and let's examine this piece of code:
 const intervalObs = interval(1000);
 ```
 
-up to this point we created a new Observable named `intervalObs` who emits integer values, starting from 1, each 1000ms (=1s) for the rest of the program's execution. Notice that a behaviour like this, emitting values without an ending point, can be achieved without resource's waisting because no Observer is attached to the Observable, that is, no value is emitted yet.
+up to this point we created a new Observable named `intervalObs` who emits integer values, starting from 1, each 1000ms (=1s) for the rest of the program's execution. Notice that a behavior like this, emitting values without an ending point, can be achieved without resource's waisting because no Observer is attached to the Observable, that is, no value is emitted yet.
 
 The `interval` method is show in the current figure:
 
@@ -22,17 +22,17 @@ The `interval` method is show in the current figure:
 
 as you can see after given an input value `t` each `t` seconds a new value is produced and flows out from the pipe to the Observer in the same time interval.
 
-The other common method whose logic is more close to an Observable respect to the `interval` is `timer`. Just like the `setTimeout` function in JavaScript, `timer` triggers an event after that the amout of input time is passed, just like the figure below:
+The other common method whose logic is more close to an Observable respect to the `interval` is `timer`. Just like the `setTimeout` function in JavaScript, `timer` triggers an event after that the about of input time is passed, just like the figure below:
 
 <p align="center">
     <img src="../assets/4. Time/Timer.png" alt="Timer Operator" style="width:100%">
 </p>
 
-Now, the question is, why should we use `interval` and `timer` insted of `setInterval` and `setTimeout` that behaves exactly in the same way? The answer is that while JavaScript needs that the allocated resources should be released, RxJs does it authomatically, moreover, `setTimeout` and `setInterval` are callbacks requiring some values outside from then, therefore are not pure functions, while the corresponding methods in RxJs are pure functions.
+Now, the question is, why should we use `interval` and `timer` instead of `setInterval` and `setTimeout` that behaves exactly in the same way? The answer is that while JavaScript needs that the allocated resources should be released, RxJs does it automatically, moreover, `setTimeout` and `setInterval` are callbacks requiring some values outside from then, therefore are not pure functions, while the corresponding methods in RxJs are pure functions.
 
 ## Delay the emission of a value
 
-Up to this point we saw operators that emits values after a certain amout of time, or in a certan interval and the global emission time of the values is not affected, however, there the `delay` operator shifts the emission time of values for the given amout of milliseconds, just like shown in the figure for the `timer` method.
+Up to this point we saw operators that emits values after a certain amount of time, or in a certain interval and the global emission time of the values is not affected, however, there the `delay` operator shifts the emission time of values for the given amount of milliseconds, just like shown in the figure for the `timer` method.
 
 Now, applying the `delay` operator to the Observer generated by the `interval` method, is the emission of each value shifted? The answer is no, `delay` shifts only the starting emission that, therefore, only the emission of the first value is affected while the others no. It's important to notice that it is not affected the generation of the values, these are still generated once an Observer is attached, what is affected is the <u>propagation of the values through the stream</u>.
 
@@ -56,17 +56,17 @@ from([1, 2, 3, 4, 5])
 
 if you expecting that values are printed with a distance of 2s you are wrong. Operators are executed in sequence meaning and do not affects the value's generation process, therefore the array `[1, 2, 3, 4, 5]` is one value's container emitted once, after the emission of these values the entire array flows through the pipe and the observation of these values is shifted to 1s that each one of these are incremented, then shifted of 1s and incremented and finally are observed by the Observer.
 
-## Hanlding dynamic inputs with `debounce` and `throttle`
+## Handling dynamic inputs with `debounce` and `throttle`
 
 Sometimes we have to deal with sources emitting many input values, so that we are not interested in handling all the events but just few of them. Let's consider an user's mouse input event, each time user uses the pointer, a new event is emitted, most of the times such events are so many and maybe we are interested in handling pointer's events for a specific component of our webpage.
 
-`debounce` consists in filtering values emitted only after a certain amount of time is passed from the emission of the previous value. In software terms, **deboucing** means _executes something only after a certain period is passed without anything has been done_. I know that this operator is quite difficult to understand, however, let's consider the following figure:
+`debounce` consists in filtering values emitted only after a certain amount of time is passed from the emission of the previous value. In software terms, **debouncing** means _executes something only after a certain period is passed without anything has been done_. I know that this operator is quite difficult to understand, however, let's consider the following figure:
 
 <p align="center">
     <img src="../assets/4. Time/Debounce.png" alt="Debounce Operator" style="width:100%">
 </p>
 
-the source is emitting some values represeted by squares, circles and diamonds, therefore, the source is not emitting single values types. However, as you can see, differently from the other diagrams, values are not emitted with the same time rate, some values are emitted with a smaller distance from the previous while others are delayed. In this context, `debounce` is a filter, it checks that a certain amout of time, that is `t` is passed from the emission of the last value, if the amount of time is smaller than the input value, the current value is ignored, otherwise, it can reach the Observer.
+the source is emitting some values represented by squares, circles and diamonds, therefore, the source is not emitting single values types. However, as you can see, differently from the other diagrams, values are not emitted with the same time rate, some values are emitted with a smaller distance from the previous while others are delayed. In this context, `debounce` is a filter, it checks that a certain amount of time, that is `t` is passed from the emission of the last value, if the amount of time is smaller than the input value, the current value is ignored, otherwise, it can reach the Observer.
 
 Let's see the this example:
 
@@ -82,7 +82,7 @@ nothing will be printed, because each 1s a new value is emitted, while `debounce
 
 Up to this time, in which context this operator can be used and is effectively useful? If you are implementing a searching box where each time the user writes something making sense makes an HTTP call, you can't make a call for each character of the search string, since it is probably that the user will type something wrong and than deletes the input string to write it again. `debounce` is our solution, because we can use this operator to get strings that are emitted only from 1s from the others, meaning that the user stops typing.
 
-`throttle` is a sort of filter like `debouce`, the difference is that takes a value and delays its emission using the time value passed as input to the function, then other values that are emitted in the time range between value's emission and observation are ignored. The following figure will probably clarify each doubt:
+`throttle` is a sort of filter like `debounce`, the difference is that takes a value and delays its emission using the time value passed as input to the function, then other values that are emitted in the time range between value's emission and observation are ignored. The following figure will probably clarify each doubt:
 
 <p align="center">
     <img src="../assets/4. Time/Throttle.png" alt="Throttle Operator" style="width:100%">
@@ -128,7 +128,7 @@ interval(1000)
       });
 ```
 
-we are creating a source emitting values each 1s, in the stream a buffer is registred who caches values and emitts them flushing the buffer each 2s, using the Observer `interval(2000)` which emits a value each 2s. Finally, the values are printed to the console in the Observer. The expected result should print each 2s an array containing two elements considering that each element is emitted at 1s ratio. Moreover, what happens if the closing Observer emitts a new value each 500ms? The output will be updated printing each 500ms an empty array, and an array of just one value.
+we are creating a source emitting values each 1s, in the stream a buffer is registered who caches values and emits them flushing the buffer each 2s, using the Observer `interval(2000)` which emits a value each 2s. Finally, the values are printed to the console in the Observer. The expected result should print each 2s an array containing two elements considering that each element is emitted at 1s ratio. Moreover, what happens if the closing Observer emits a new value each 500ms? The output will be updated printing each 500ms an empty array, and an array of just one value.
 
 While `buffer` emits values based on a generic condition expressed by the closing Observable, `bufferCount` caches values in the buffer flushing it only once the input size is reached. The working of this operator is shown in the following figure:
 
@@ -154,13 +154,13 @@ interval(500)
 
 what we are going to do is emit values in a rage of 500ms and caching them in a buffer as soon as it reaches the size limit of five elements. Once five elements are in the buffer, we are going to transform the numbers in the buffer in indexes of an array and then on user's usernames. In the end, the final result is printed in the console.
 
-`bufferWhen` cache values as soon as an Observable emits a value similary to `buffer` operator. However, the differnce between the former and the latter is that `bufferWhen` accepts a factory function that creates the Observable, then the values are cached and finally the buffer is flushed. 
+`bufferWhen` cache values as soon as an Observable emits a value similarly to `buffer` operator. However, the difference between the former and the latter is that `bufferWhen` accepts a factory function that creates the Observable, then the values are cached and finally the buffer is flushed. 
 
 <p align="center">
     <img src="../assets/4. Time/BufferWhen.png" alt="Buffer When Operator" style="width:100%">
 </p>
 
-considering the input value `valid=true` as an observable emitting a boolean value, as soon as the given observable created by the factory function emits a value, a collection is generated without having a fixed size necessarly. Considering the previous example emitting users' names, we would like to create an Observable that cached values in the buffer and emitts them only after that the former Observable emitts users' names:
+considering the input value `valid=true` as an observable emitting a boolean value, as soon as the given observable created by the factory function emits a value, a collection is generated without having a fixed size necessarily. Considering the previous example emitting users' names, we would like to create an Observable that cached values in the buffer and emits them only after that the former Observable emits users' names:
 
 ```typescript
 const bufferCount$ = interval(500).pipe(
@@ -174,7 +174,7 @@ bufferCount$.subscribe({
 });
 ```
 
-first of all, let's split the Observale definition and assign it in a variable. Now, let's create our observable passing as parameter to the function `bufferWhen` the `bufferCount$` variable:
+first of all, let's split the Observable definition and assign it in a variable. Now, let's create our observable passing as parameter to the function `bufferWhen` the `bufferCount$` variable:
 
 ```typescript
 interval(1000)
