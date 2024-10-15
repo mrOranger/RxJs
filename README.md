@@ -1,6 +1,12 @@
-# Reactive Programming
+# Reactive Programming and RxJs
+Commonest programs focuses on manage data in synchronous way, however, our daily life is based on event managing, that is, react to external events that does not depends from us and that can't be handled once by time. In fact, **Reactive Programming** is a programming paradigm focuses on data streams that flows asynchronously in our program, and that are known as events. Just like Agile Methodology, Reactive Programming is based on the [**Reactive Manifesto**](.https://www.reactivemanifesto.org/), which defines Reactive Systems as software systems based on the following principles:
 
-Starting from the basis, let's consider the following scenario, you have to make an http request to the server, involving updating users' data, let's suppose that this is done by a function and then, once the server answer with a successful response, you have to update the UI using another function. The resulting code will be something like this:
+* **Responsive**, that is, the Software System must react in time to external events like limit values or errors. Moreover, an higher Responsiveness means a better User Experience, since the system can easily react immediately to errors or limit values.
+* **Resilient** systems stays responsive in face of failure. Making a system resilient means that failure must be isolated and do not compromise the whole.  
+* **Elastic**, under different workloads, an elastic system must remain responsive. Different workload means distribute the resources in an efficient way between all the application's components.
+* **Message Driven**. Reactive Systems are based on asynchronous messaging between different elements, moreover, dispatch events and failures using messaging is an efficient way to use the same construct for different event's communication.
+
+Why do we need to apply Reactive Programming to normal programs? Starting from the basis, let's consider the following scenario: you have to make an http request to the server, involving updating users' data, let's suppose that this is done by a function and then, once the server answer with a successful response, you have to update the UI using another function. The resulting code will be something like this:
 
 ```javascript
 const response = updateUserData(userData);
@@ -9,7 +15,7 @@ updateUI(response);
 
 what is the problem of this code? Well, it is executed **synchronously**, that is, the user must wait the termination of the previous functions before continuing in its tasks. Of course, this is not a suitable scenario for most applications, and due to the JavaScript's single-thread nature, we do not have any built in constructor that helps us in create an asynchronous piece of code.
 
-Luckily, JavaScript provides **callbacks** functions, to handle long-running operations that must be executed asynchronously. We can pass a callback functions as parameters that will be executed once the operation is completed. From a theoretical point of view, the callbacks implements the **inversion of control**, meaning that the execution's flow is passed to the function once it is invoked and then returned to the application's main flow.
+Luckily, JavaScript provides **callbacks** functions, to handle long-running operations. We can pass a callback functions as parameters that will be executed once the operation is completed. From a theoretical point of view, the callbacks implements the **inversion of control**, meaning that the execution's flow is passed to the function once it is invoked and then returned to the application's main flow.
 
 However, callbacks are not a suitable solution for error handling and conditional operations, since require nesting the code like this:
 
@@ -27,7 +33,7 @@ updateUserData(userData, (response) => {
 });
 ```
 
-moreover, callback share the same application's state, that is can change the current status and for this reason they are known as **side-effect** functions. Of course, we would like to minimize the use of side-effect functions using only **pure** functions. Luckily, starting from **ES6**, JavaScript introduces **Promise**. A Promise is a data type that wraps asynchronous code using two callbacks to handle operation's success and failure scenarios, that is our code can be written in a better and cleaner way:
+moreover, callback share the same application's state, that is any changes to the application's internal state could have a **side effect** on each element in the application itself. Of course, we would like to minimize the use of side-effect functions using only **pure** functions. Luckily, starting from **ES6**, JavaScript introduces **Promise**. A Promise is a data type that wraps asynchronous code using two callbacks to handle operation's success and failure scenarios, that is our code can be written in a better and cleaner way:
 
 ```javascript
 updateUserData(userData)
@@ -36,13 +42,13 @@ updateUserData(userData)
       .catch((error) => showMessage(error));
 ```
 
-now our code seems prettier right? However, there are some things that can be improved, in fact, promise's error's does not allows us to handle multiple errors. Moreover, <u>we cannot stop the execution of a promise once it is triggered</u>, which is a serious lack in HTTP calls that require extra resources.
+now our code seems prettier right? However, there are some things that can be improved, in fact, promise's error's does not allows us to handle multiple errors. Moreover, <u>we cannot stop the execution of a promise once it has been triggered</u>, which is a serious lack in HTTP calls that require extra resources.
 
-Therefore, we need a new paradigm to handle asynchronous code, focusing on pure functions and whose execution sequence can be defined by the programmer like in synchronous code. The **reactive paradigm** can help us, because it focuses on merging asynchronous executions with **functional paradigm** elements, allowing us to deal code like a data flow where pure functions are used to define each step of the flow.
+Therefore, we need a new paradigm to handle asynchronous code, focusing on pure functions and whose execution sequence can be defined by the programmer like in synchronous code. **Reactive Programming** can help us, because it focuses on merging asynchronous executions using **Functional Programming** elements, allowing us to deal code like a data flow where pure functions are used to define each step of the flow.
 
 ## RxJs Library
 
-RxJs is the acronyms for **Reactive Extension for JavaScript**, is a useful library based on functional and reactive programming paradigm, focusing on threating data as an unique flow to be consumed, known as **stream**. Moreover, RxJs uses well known patterns like **Observer** and **Iterator**.
+RxJs is the acronyms for **Reactive Extension for JavaScript**, is a useful library based on functional and reactive programming paradigm, focusing on threating data as an unique flow to be consumed, known as **Stream**. Moreover, RxJs uses well known patterns like **Observer** and **Iterator**.
 
 The first and most important step is switching our mindset from the classic imperative approach to the reactive one, let's consider the following example:
 
@@ -65,9 +71,7 @@ let $c = a$.merge(b$).reduce((curr, next) => curr + next, 0);
 
 ### Architectural Concepts
 
-RxJs works on **stream** that is the data flowing process between the source who emits data and who is observing the emitted values, between these two entities there is a **pipeline**, that is a set of operators performed between the emission of the data and the observation of them.
-
-Respect to Promise, a stream is a **lazy data flow**, thus it will start to emit values only if someone has been registered and is observing them, on the other hand, a Promise starts to emit values as soon as is triggered in the normal program's execution flow.
+RxJs works on **Stream** that is the <u>data flowing process between the source who emits data and who is observing the emitted values</u>, between these two entities there is a **Pipeline**, that is a set of operators performed between the emission of the data and the observation of them. Respect to Promise, a stream is a **Lazy Data Flow**, thus it will start to emit values only if someone has been registered and is observing them, on the other hand, a Promise starts to emit values as soon as is triggered in the normal program's execution flow.
 
 Moreover, a stream does not depends on the program's execution flow, that is, it can be triggered many times in the future and will stop its execution only when no one is observing.
 
@@ -77,13 +81,13 @@ In the following figure, we can see the representation of a stream and its compo
     <img src="./assets/Architectural Concepts.png" alt="Architectural Concepts" style="width:70%">
 </p>
 
-- The **observable** is the source of the data that emit values and whose can be observed, technically, it is known also as **producer**.
+- The **Observable** is the source of the data that emit values and whose can be observed, technically, it is known also as **Producer**.
 
-- The values emitted by the observable flows in a **pipe** where some **operators** can be used to transform data before reaching their final destination. There is no limit on the number of operators that can be add in a pipe, moreover, the operators are pure functions as in functional programming.
+- The values emitted by the observable flows in a **Pipe** where some **Operators** can be used to transform data before reaching their final destination. There is no limit on the number of operators that can be add in a pipe, moreover, the operators are pure functions as in Functional Programming.
 
-- Last, the entity who is observing values emitted by the observable is the **observer**, known as the **consumer**.
+- Last, the entity who is observing values emitted by the observable is the **Observer**, known as the **Consumer**.
 
-As you can see, the data can flow starting only from the producer and reaching the consumer as final destination, it is not possible to create an alternative flow. Moreover, as you can see, once a consumer is attached looking for values emitted by a producer, the values can be emitted in time independently by the program's main flow.
+As you can see, the data can flow starting only from the Producer and reaching the Consumer as final destination, it is not possible to create an alternative flow. Moreover, as you can see, once a Consumer is attached looking for values emitted by a Producer, the values can be emitted in time independently by the program's main flow.
 
 ## Observer Design Pattern
 
@@ -226,3 +230,16 @@ class IOSDevice extends Observer<string> {
 ```
 
 Therefore, as you will see from the complete example shown in [`index.ts`](./index.ts), after that a ConcreteObserver is subscripted to the Subject, the `next` function will be triggered and after that the Sensor has been disconnected, each Device will not listen for additional values, even if some values will be emitted from the Sensor later.
+
+## Marble Diagrams
+Learning Reactive Programming is hardly, thus, to help us in learning and switching from Imperative to Reactive Paradigm we can use the **Marble Diagrams**, that are a visual representation of a Stream and the application of Operators to events emitted by the Producer to the Consumer. There are few symbols between a Marble Diagram that we will see in this chapter. Let's start considering the following scenario: a Producer is emitting a set of numbers before terminating, meanwhile an operator is between the Producer and the Consumer, and transforms value in it successor, this situation can be represented by the following Marble Diagram:
+
+<p align="center">
+    <img src="./assets/Marble Diagram.png" alt="Marble Diagram" style="width:70%">
+</p>
+
+the Marble diagram that represents the previous scenario can be written as follows: the upper arrow represents our stream, where each circle containing a number is an event emitted during all the Stream's lifecycle, at the end of the arrow there is a vertical bar, that is the point where the Stream's life is terminated. The lower arrow is the input stream after the application of the operator between them.
+
+In the following case we have just one operator that maps each number in its successor, notice that the operator is no more than an high order function accepting as parameter another function having as parameter a single number `x` and returning another number `x + 1`. Moreover, there is no limit in the number of operators that can be applied to a stream, however, you have to take into account that each operator produces a result, and this result will be the input of the next operator in the chain.
+
+As we can see, Marble Diagrams are an easy solution to an hard concept to understand like Reactive Programming, in the next chapter we will use a lot of Marble Diagrams to explain each operator and theoretical concept that we will encounter.
