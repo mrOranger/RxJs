@@ -1,5 +1,5 @@
-export interface Recipie {
-    id: number;  
+export interface Recipe {
+    id: number;
     name: string;
     image: string;
     rating: number;

@@ -1,6 +1,6 @@
-import { Recipie } from './recipie.interface';
+import { Recipe } from './recipe.interface';
 
-export const recipies: Array<Recipie> = [
+export const recipes: Array<Recipe> = [
       {
             id: 1,
             name: 'Classic Margherita Pizza',

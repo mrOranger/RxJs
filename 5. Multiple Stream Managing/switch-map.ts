@@ -1,12 +1,12 @@
 import { filter, interval, map, switchMap, } from "rxjs";
-import { recipies } from "../Database/recipies.database";
+import { recipes } from "../Database/recipes.database";
 
 interval(2000).pipe(
     map(() => Math.random()),
-    map((randomNumber) => Math.floor(randomNumber * recipies.length) % recipies.length),
-    switchMap((randomIndex) => recipies.slice(randomIndex, randomIndex + 1)),
-    filter((recipie) => recipie.difficulty === 'Easy'),
-    switchMap((recipie) => recipie.instructions),
+    map((randomNumber) => Math.floor(randomNumber * recipes.length) % recipes.length),
+    switchMap((randomIndex) => recipes.slice(randomIndex, randomIndex + 1)),
+    filter((recipe) => recipe.difficulty === 'Easy'),
+    switchMap((recipe) => recipe.instructions),
 ).subscribe({
-    next: (recipies) => console.log(recipies),
+    next: (recipes) => console.log(recipes),
 });
