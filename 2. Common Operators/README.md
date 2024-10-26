@@ -162,7 +162,7 @@ An interesting variation of `reduce` is `scan`, while `reduce` returns only the 
 The working of `scan` is shown in this figure, starting from the `reduce` operator, we do not return the final result, moreover, we are returning each intermediate value:
 
 <p align="center">
-    <img src="../assets/2. Common Operators/sca.png" alt="Scan Operator" style="width:100%">
+    <img src="../assets/2. Common Operators/scan.png" alt="Scan Operator" style="width:100%">
 </p>
 
 The figure representing `scan` is quite similar to previous which represents `reduce`, however, as we can observe and supposing that the curry is 0, each time a new circle is emitted, whose value is the sum of the updated curry and the corresponding emitted circle's value from the source.
