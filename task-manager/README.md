@@ -1,27 +1,7 @@
-# TaskManager
+# Final project, Task Manager
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.6.
+This is our final project for this repository, we will create an offline application for task managing using Angular, RxJs and Rx Database to create and manage the offline database. Hereafter we are going to describe shortly what and how the application should do:
 
-## Development server
+> We would like to create an offline application where users can track tasks. We can create both single users that would like to use the application for their personal purposes, or groups of users belonging to the same enterprise. Each user can create, update or delete an assigned task. Moreover, a task will be identified by a title and a description, and can be assigned to a the creator or to another user of the same enterprise.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+I want to create this application step by step, hereafter, I will slipt the initial description in different conceptual areas, and then, expand each section with more conceptual and technical details, in a certain sense I would like to use an [**Agile approach**](https://en.wikipedia.org/wiki/Agile_software_development).
