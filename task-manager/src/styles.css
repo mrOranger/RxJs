@@ -1,13 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
-      --primary: #ffffff;
+      --primary: #fffffe;
       --secondary: #efe9f4;
       --accent: #f0e2e7;
       --info: #3f84e5;
       --success: #3f784c;
       --warning: #c17817;
       --error: #b20d30;
+      --not-allowed: #c4c4c4;
+
+      --text-primary: #000555;
+      --text-not-allowed: #7a7a7a;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+      height: 100%;
+}
+body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+            'Open Sans', 'Helvetica Neue', sans-serif, 'Helvetica Neue', sans-serif;
+      background-color: var(--primary);
+      color: var(--text-primary);
+}

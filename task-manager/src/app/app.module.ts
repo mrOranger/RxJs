@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LoginComponent } from './components';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
+import { ButtonComponent, InputComponent } from './components/shared';
 
 @NgModule({
-      declarations: [AppComponent],
-      imports: [BrowserModule, AppRoutingModule, FontAwesomeModule, BrowserAnimationsModule],
+      declarations: [AppComponent, LoginComponent],
+      imports: [FontAwesomeModule, BrowserModule, ButtonComponent, InputComponent],
       providers: [],
       bootstrap: [AppComponent],
 })

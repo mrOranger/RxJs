@@ -1,0 +1,41 @@
+:host {
+      border-radius: 0.25rem;
+      border: 0.5px solid gray;
+      padding: 1em 2em;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      background-color: var(--secondary);
+      transition: 0.3s ease;
+}
+
+.text {
+      font-size: 1rem;
+      margin: 0em 0.25em;
+}
+
+.icon {
+      margin: 0rem 0.25rem;
+}
+
+:host:hover {
+      filter: brightness(90%);
+      background-color: var(--accent);
+}
+
+:host:active {
+      transform: scale(0.98);
+      filter: brightness(85%);
+}
+
+:host:disabled {
+      background-color: var(--not-allowed);
+      color: var(--text-not-allowed);
+      cursor: not-allowed;
+}
+
+:host:focus-visible {
+      outline: 2px solid gray;
+}
