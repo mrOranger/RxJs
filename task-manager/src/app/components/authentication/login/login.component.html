@@ -7,8 +7,12 @@
             <form class="body">
                   <h2 class="form-item">Welcome back my friend!</h2>
                   <div class="form-item">
-                        <input class="input" type="text" placeholder="You email address" />
-                        <input class="input" type="text" placeholder="You password" />
+                        <tm-input title="Email" class="form-input" type="email" name="user-email"
+                              placeholder="You email here ...">
+                        </tm-input>
+                        <tm-input title="Password" class="form-input" type="password" name="user-password"
+                              placeholder="You password here ...">
+                        </tm-input>
                   </div>
                   <button tmButton type="button" class="form-button">
                         Login

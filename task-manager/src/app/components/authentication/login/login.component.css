@@ -52,6 +52,10 @@
       align-items: center;
 }
 
+.form-item .form-input {
+      width: 100%;
+}
+
 .form-item .input {
       width: 100%;
       min-height: 50px;
