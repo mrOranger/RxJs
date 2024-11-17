@@ -1,4 +1,4 @@
 <p class="input-container">
-      <label class="label">{{ title }}</label>
-      <input [type]="type" [name]="name" [placeholder]="placeholder" />
+      <ng-content select="label[tmInputLabel]"></ng-content>
+      <ng-content select="input[tmInput]"></ng-content>
 </p>
