@@ -6,12 +6,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components';
-import { ButtonComponent, InputComponent } from './components/shared';
+import { ButtonComponent, InputComponent, RadioGroupComponent } from './components/shared';
 import { StoreLoginFactoryService, StorePasswordService, StoreEmailService } from './services';
 
 @NgModule({
       declarations: [AppComponent, LoginComponent],
-      imports: [FontAwesomeModule, BrowserModule, FormsModule, ButtonComponent, InputComponent],
+      imports: [FontAwesomeModule, BrowserModule, FormsModule, ButtonComponent, InputComponent, RadioGroupComponent],
       providers: [StoreLoginFactoryService, StoreEmailService, StorePasswordService],
       bootstrap: [AppComponent],
 })
