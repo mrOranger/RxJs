@@ -29,7 +29,7 @@
 }
 
 .header .app-title {
-      font-size: minmax(100px, 2em);
+      font-size: var(--large-font-size);
       margin: 0px 1em 0px 1em;
 }
 

@@ -11,6 +11,15 @@
 
       --text-primary: #000555;
       --text-not-allowed: #7a7a7a;
+
+      --regular-font-weight: 400;
+      --light-font-weight: 200;
+      --bold-font-weight: 550;
+
+      --extra-large-font-size: 3rem;
+      --large-font-size: 2rem;
+      --normal-font-size: 1rem;
+      --small-font-size: 0.875rem;
 }
 
 html,
@@ -23,4 +32,6 @@ body {
             'Open Sans', 'Helvetica Neue', sans-serif, 'Helvetica Neue', sans-serif;
       background-color: var(--primary);
       color: var(--text-primary);
+      font-weight: var(--regular-font-weight);
+      font-size: var(--normal-font-size);
 }

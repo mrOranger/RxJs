@@ -7,6 +7,7 @@
 }
 
 .radio-group > button:nth-child(n) {
+      height: 100%;
       border-radius: 0.25rem;
       border: 0.5px solid gray;
       padding: 0.5em 1em;
@@ -17,7 +18,6 @@
       cursor: pointer;
       background-color: var(--secondary);
       transition: 0.3s ease;
-      font-size: 1rem;
 }
 
 .radio-group > button:nth-child(n) {
@@ -50,4 +50,10 @@
 
 .radio-group > button:nth-child(n):focus-visible {
       outline: 1px solid gray;
+}
+
+.radio-group > button.checked {
+      filter: brightness(90%);
+      background-color: var(--accent);
+      font-weight: var(--bold-font-weight);
 }

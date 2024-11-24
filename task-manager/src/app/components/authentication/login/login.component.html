@@ -6,8 +6,11 @@
             </header>
             <form class="body">
                   <app-radio-group class="form-item">
-                        <button tmRadio>I'm a regular user</button>
-                        <button tmRadio>I'm an enterprise employee</button>
+                        <button tmRadio appTmRadio [type]="regularUserType"
+                              [ngClass]="{ checked: selectedType === regularUserType }">I'm a regular user</button>
+                        <button tmRadio appTmRadio [type]="enterpriseUserType"
+                              [ngClass]="{ checked: selectedType === enterpriseUserType }">I'm working on an
+                              enterprise</button>
                   </app-radio-group>
                   <div class="form-item">
                         <tm-input>

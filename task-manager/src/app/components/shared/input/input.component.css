@@ -12,7 +12,6 @@
 .input-container label[tmInputLabel] {
       min-width: 50px;
       min-height: 25px;
-      font-size: 1rem;
       min-height: 15px;
       margin: 0.25rem 0.5rem;
 }
@@ -22,7 +21,6 @@
       height: calc(100% - 2em);
       min-width: 50px;
       min-height: 25px;
-      font-size: 1rem;
       padding: 1em 2em;
       border-radius: 0.25rem;
       border: 0.5px solid gray;

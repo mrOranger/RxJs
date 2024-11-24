@@ -5,13 +5,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components';
-import { ButtonComponent, InputComponent, RadioGroupComponent } from './components/shared';
+import { UserTypeDirective } from './directives';
+import { ButtonComponent, InputComponent, LoginComponent, RadioGroupComponent } from './components';
 import { StoreLoginFactoryService, StorePasswordService, StoreEmailService } from './services';
 
 @NgModule({
-      declarations: [AppComponent, LoginComponent],
-      imports: [FontAwesomeModule, BrowserModule, FormsModule, ButtonComponent, InputComponent, RadioGroupComponent],
+      declarations: [AppComponent, LoginComponent, UserTypeDirective],
+      imports: [FontAwesomeModule, BrowserModule, FormsModule, InputComponent, RadioGroupComponent, ButtonComponent],
       providers: [StoreLoginFactoryService, StoreEmailService, StorePasswordService],
       bootstrap: [AppComponent],
 })

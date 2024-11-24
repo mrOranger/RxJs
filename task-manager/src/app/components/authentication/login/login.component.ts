@@ -3,8 +3,9 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { faSignInAlt, faTasks } from '@fortawesome/free-solid-svg-icons';
 
 import { Subscription } from 'rxjs';
+import { UserType } from 'src/app/enums';
 
-import { StoreLoginFactoryService } from 'src/app/services';
+import { StoreLoginFactoryService, StoreUserTypeService } from 'src/app/services';
 
 @Component({
       selector: 'tm-login',
@@ -13,16 +14,21 @@ import { StoreLoginFactoryService } from 'src/app/services';
 })
 export class LoginComponent implements OnInit, OnDestroy {
       private readonly storeLoginFactoryService: StoreLoginFactoryService;
+      private readonly storeUserTypeService: StoreUserTypeService;
 
       private userEmail: string;
       private userPassword: string;
+      private userType: UserType;
 
       private email$?: Subscription;
       private password$?: Subscription;
+      private userType$?: Subscription;
 
       public constructor() {
+            this.storeUserTypeService = inject(StoreUserTypeService);
             this.storeLoginFactoryService = inject(StoreLoginFactoryService);
 
+            this.userType = this.storeUserTypeService.value;
             this.userEmail = this.storeLoginFactoryService.password$.value;
             this.userPassword = this.storeLoginFactoryService.password$.value;
       }
@@ -34,6 +40,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
             this.password$ = this.storeLoginFactoryService.password$.subscribe({
                   next: (password) => (this.userPassword = password),
+            });
+
+            this.userType$ = this.storeUserTypeService.subscribe({
+                  next: (type) => (this.userType = type),
             });
       }
 
@@ -59,6 +69,18 @@ export class LoginComponent implements OnInit, OnDestroy {
 
       public set password(password: string) {
             this.storeLoginFactoryService.password$.value = password;
+      }
+
+      public get selectedType() {
+            return this.userType;
+      }
+
+      public get regularUserType() {
+            return UserType.REGULAR_USER;
+      }
+
+      public get enterpriseUserType() {
+            return UserType.ENTERPRISE_USER;
       }
 
       public ngOnDestroy(): void {
