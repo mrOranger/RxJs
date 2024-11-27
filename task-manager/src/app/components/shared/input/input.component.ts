@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -9,4 +9,11 @@ import { FormsModule } from '@angular/forms';
       encapsulation: ViewEncapsulation.None,
       imports: [FormsModule],
 })
-export class InputComponent {}
+export class InputComponent {
+
+      @Input() public type!: string;
+      @Input() public name!: string;
+      @Input() public label!: string;
+      @Input() public placeholder?: string;
+
+}

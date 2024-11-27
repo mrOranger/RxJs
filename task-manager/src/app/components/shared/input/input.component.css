@@ -9,14 +9,14 @@
       margin: 0.5em 0em;
 }
 
-.input-container label[tmInputLabel] {
+.input-container label {
       min-width: 50px;
       min-height: 25px;
       min-height: 15px;
       margin: 0.25rem 0.5rem;
 }
 
-.input-container input[tmInput] {
+.input-container input {
       width: calc(100% - 4em);
       height: calc(100% - 2em);
       min-width: 50px;
@@ -27,11 +27,11 @@
       transition: 0.2s ease;
 }
 
-.input-container input[tmInput]:active {
+.input-container input:active {
       outline: 1px solid gray;
 }
 
-.input-container input[tmInput]:focus-visible {
+.input-container input:focus-visible {
       outline: 0.5px solid gray;
       transform: scale(1.01);
 }

@@ -6,22 +6,12 @@
             </header>
             <form class="body">
                   <app-radio-group class="form-item">
-                        <button tmRadio appTmRadio [type]="regularUserType"
-                              [ngClass]="{ checked: selectedType === regularUserType }">I'm a regular user</button>
-                        <button tmRadio appTmRadio [type]="enterpriseUserType"
-                              [ngClass]="{ checked: selectedType === enterpriseUserType }">I'm working on an
-                              enterprise</button>
+                        <tm-radio-button>I'm a regular user</tm-radio-button>
+                        <tm-radio-button>I'm working on an enterprise</tm-radio-button>
                   </app-radio-group>
                   <div class="form-item">
-                        <tm-input>
-                              <label tmInputLabel>Email</label>
-                              <input tmInput [(ngModel)]="email" type="email" name="email"
-                                    placeholder="Your email here ..." />
-                        </tm-input>
-                        <tm-input>
-                              <label tmInputLabel>Password</label>
-                              <input tmInput [(ngModel)]="password" type="password" name="password"
-                                    placeholder="Your password here ..." />
+                        <tm-input label="Email" type="email" name="email" placeholder="Your email here ..."></tm-input>
+                        <tm-input label="Password" type="password" name="password" placeholder="You password here ...">
                         </tm-input>
                   </div>
                   <div class="form-item">
