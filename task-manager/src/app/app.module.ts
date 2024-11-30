@@ -6,9 +6,14 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppComponent } from './app.component';
 import { UserTypeDirective } from './directives';
-import { ButtonComponent, InputComponent, LoginComponent, RadioGroupComponent } from './components';
+import {
+      ButtonComponent,
+      InputComponent,
+      LoginComponent,
+      RadioGroupComponent,
+      RadioButtonComponent,
+} from './components';
 import { StoreLoginFactoryService, StorePasswordService, StoreEmailService, LoginFormService } from './services';
-import { RadioButtonComponent } from './components/shared/radio-button/radio-button.component';
 
 @NgModule({
       declarations: [AppComponent, LoginComponent, UserTypeDirective, RadioButtonComponent],

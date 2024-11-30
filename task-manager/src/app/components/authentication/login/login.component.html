@@ -4,20 +4,50 @@
             <h1 class="app-title">Task Manager</h1>
       </header>
       <form class="body" [formGroup]="formService.form">
-            <app-radio-group class="form-item">
+            <tm-radio-group class="form-item">
                   <tm-radio-button>I'm a regular user</tm-radio-button>
                   <tm-radio-button>I'm working on an enterprise</tm-radio-button>
-            </app-radio-group>
+            </tm-radio-group>
             <div class="form-item">
                   <tm-input label="Email" type="email" name="email" placeholder="Your email here ..."
-                        [formControlName]="formService.emailField"></tm-input>
+                        [formControlName]="formService.emailField">
+                        <p *ngIf="formService.emailControl?.hasError('required')" class="error-message">
+                              • L'indirizzo email è obbligatorio
+                        </p>
+                        <p *ngIf="formService.emailControl?.hasError('email')" class="error-message">
+                              • L'indirizzo email deve essere valido
+                        </p>
+                        <p *ngIf="formService.emailControl?.hasError('maxlength')" class="error-message">
+                              • L'indirizzo email deve essere lungo massimo 255 caratteri
+                        </p>
+                        </tm-input>
                   <tm-input label="Password" type="password" name="password" placeholder="You password here ..."
                         [formControlName]="formService.passwordField">
+                        <p *ngIf="formService.passwordControl?.hasError('required')" class="error-message">
+                              • La password è obbligatoria
+                        </p>
+                        <p *ngIf="formService.passwordControl?.hasError('minlength')" class="error-message">
+                              • L'indirizzo email deve essere valido lungo almeno 8 caratteri
+                        </p>
+                        <p *ngIf="formService.passwordControl?.hasError('maxlength')" class="error-message">
+                              • L'indirizzo email deve essere valido lungo massimo 255 caratteri
+                        </p>
+                        <p *ngIf="formService.passwordControl?.hasError('atLeastANumber')" class="error-message">
+                              • L'indirizzo email deve contenere almeno un numero
+                        </p>
+                        <p *ngIf="formService.passwordControl?.hasError('atLeastAnUpperCaseLetter')"
+                              class="error-message">
+                              • L'indirizzo email deve contenere almeno un carattere maiuscolo
+                        </p>
+                        <p *ngIf="formService.passwordControl?.hasError('atLeastASpecialCharacter')"
+                              class="error-message">
+                              • L'indirizzo email deve contenere almeno un carattere speciale
+                        </p>
                   </tm-input>
             </div>
       </form>
       <footer class="footer">
-            <button tmButton type="button">
+            <button tmButton type="button" [disabled]="formService.form.invalid">
                   Login
                   <fa-icon class="icon" [icon]="signInIcon" size="2x"></fa-icon>
             </button>

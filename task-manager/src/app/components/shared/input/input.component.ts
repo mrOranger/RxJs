@@ -1,12 +1,13 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NgIf } from '@angular/common';
+import { Component, Injector, Input, OnInit } from '@angular/core';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 
 @Component({
       standalone: true,
       selector: 'tm-input',
       templateUrl: './input.component.html',
       styleUrls: ['./input.component.css'],
-      imports: [FormsModule],
+      imports: [FormsModule, NgIf],
       providers: [
             {
                   provide: NG_VALUE_ACCESSOR,
@@ -15,10 +16,15 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
             },
       ],
 })
-export class InputComponent implements ControlValueAccessor {
+export class InputComponent implements ControlValueAccessor, OnInit {
       private internalValue: string;
+      private touched: boolean;
+      private dirty: boolean;
+
       private onTouched?: () => void;
       private onChange?: (value: string) => void;
+
+      public control?: NgControl;
 
       @Input() public type!: string;
       @Input() public name!: string;
@@ -26,9 +32,18 @@ export class InputComponent implements ControlValueAccessor {
       @Input() public disabled: boolean;
       @Input() public placeholder?: string;
 
-      public constructor() {
+      public constructor(private readonly injector: Injector) {
+            this.dirty = false;
+            this.touched = false;
             this.disabled = false;
             this.internalValue = '';
+      }
+
+      public ngOnInit(): void {
+            this.control = this.injector.get(NgControl);
+            if (this.control) {
+                  this.control.valueAccessor = this;
+            }
       }
 
       public writeValue(value: string): void {
@@ -49,6 +64,14 @@ export class InputComponent implements ControlValueAccessor {
 
       public get value() {
             return this.internalValue;
+      }
+
+      public get isDirty() {
+            return this.dirty;
+      }
+
+      public get isTouched() {
+            return this.touched;
       }
 
       public set value(value: string) {

@@ -1,4 +1,5 @@
-<p class="input-container">
+<div class="input-container">
       <label>{{ label }}</label>
       <input [(ngModel)]="value" [type]="type" [name]="name" [placeholder]="placeholder" [disabled]="disabled" />
-</p>
+      <ng-content *ngIf="control?.invalid && (control?.touched || control?.dirty)" selector=".error-messages"></ng-content>
+</div>

@@ -1,19 +1,16 @@
-.radio-group {
-      width: 100%;
-      display: inline-flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
+tm-radio-group {
+      min-height: 25px;
+      min-width: 50px;
 }
 
-.radio-group .radio {
+tm-radio-button {
       border-radius: 0em;
 }
 
-.radio-group tm-radio-button:first-child .radio {
+tm-radio-button:first-child .radio {
       border-radius: 0.25em 0em 0em 0.25em;
 }
 
-.radio-group tm-radio-button:last-child .radio {
+tm-radio-button:last-child .radio {
       border-radius: 0em 0.25em 0.25em 0em;
 }

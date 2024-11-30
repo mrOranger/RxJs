@@ -8,11 +8,6 @@
 
 .card {
       width: 40%;
-      height: 40%;
-      min-height: 400px;
-      min-width: 400px;
-      max-height: 500px;
-      max-width: 500px;
       padding: 0em;
       margin: 0em;
       display: inline-flex;
@@ -23,11 +18,12 @@
       padding: 2em;
       border-radius: 1em;
       background-color: whitesmoke;
+      gap: 2em;
 }
 
 .header {
       width: 100%;
-      height: 10%;
+      min-height: 50px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -44,18 +40,17 @@
 
 .body {
       width: 100%;
-      height: 80%;
       margin: 0em;
       padding: 0em;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      gap: 1em;
 }
 
-app-radio-group.form-item {
+tm-radio-group.form-item {
       width: 100%;
+      height: 100%;
       padding: 0em;
       margin: 0em;
       display: inline-flex;
@@ -81,11 +76,14 @@ div.form-item {
 
 .footer {
       width: 100%;
-      height: 10%;
       margin: 0em;
       padding: 0em;
+      min-height: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: stretch;
+      align-items: stretch;
 }
-
 
 @media screen and (max-width: 768px) {
       .grid {

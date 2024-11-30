@@ -1,9 +1,5 @@
 :host.ng-invalid.ng-touched.ng-dirty .input-container input{
-      border: 1px solid red;
-}
-
-:host.ng-valid.ng-touched.ng-dirty .input-container input{
-      border: 1px solid green;
+      border: 1px solid var(--error);
 }
 
 .input-container {
@@ -48,4 +44,28 @@
       cursor: not-allowed;
       outline: 1px solid gray;
       background-color: whitesmoke;
+}
+
+::ng-deep .error-message {
+      padding: 0em;
+      width: 100%;
+      margin: 0.5em;
+      color: var(--error);
+      font-size: var(--small-font-size);
+      font-weight: var(--normal-font-weight);
+      animation: 0.2s ease-out 0s 1 expand forwards;
+}
+
+@keyframes expand {
+      0% {
+            transform: scale(0);
+      }
+
+      80% {
+            transform: scale(1.05);
+      }
+
+      100% {
+            transform: scale(1);
+      }
 }
