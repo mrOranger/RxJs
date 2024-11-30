@@ -6,7 +6,9 @@ import { UserType } from '../enums';
 export class UserTypeDirective {
       @Input() public type!: UserType;
 
-      public constructor(private readonly storeUserTypeService: StoreUserTypeService) {}
+      public constructor(
+            private readonly storeUserTypeService: StoreUserTypeService
+      ) {}
 
       @HostListener('click', ['$event'])
       public onClick() {

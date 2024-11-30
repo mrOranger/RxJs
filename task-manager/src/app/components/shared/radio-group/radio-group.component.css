@@ -6,54 +6,14 @@
       justify-content: center;
 }
 
-.radio-group > button:nth-child(n) {
-      height: 100%;
-      border-radius: 0.25rem;
-      border: 0.5px solid gray;
-      padding: 0.5em 1em;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      background-color: var(--secondary);
-      transition: 0.3s ease;
-}
-
-.radio-group > button:nth-child(n) {
+.radio-group .radio {
       border-radius: 0em;
 }
 
-.radio-group > button:first-child {
+.radio-group tm-radio-button:first-child .radio {
       border-radius: 0.25em 0em 0em 0.25em;
 }
 
-.radio-group > button:last-child {
+.radio-group tm-radio-button:last-child .radio {
       border-radius: 0em 0.25em 0.25em 0em;
-}
-
-.radio-group > button:nth-child(n):hover {
-      filter: brightness(90%);
-      background-color: var(--accent);
-}
-
-.radio-group > button:nth-child(n):active {
-      transform: scale(0.98);
-      filter: brightness(85%);
-}
-
-.radio-group > button:nth-child(n):disabled {
-      background-color: var(--not-allowed);
-      color: var(--text-not-allowed);
-      cursor: not-allowed;
-}
-
-.radio-group > button:nth-child(n):focus-visible {
-      outline: 1px solid gray;
-}
-
-.radio-group > button.checked {
-      filter: brightness(90%);
-      background-color: var(--accent);
-      font-weight: var(--bold-font-weight);
 }

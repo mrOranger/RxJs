@@ -1,0 +1,38 @@
+.radio {
+      height: 100%;
+      border: 0.5px solid gray;
+      padding: 0.5em 1em;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      background-color: var(--secondary);
+      transition: 0.3s ease;
+}
+
+.radio:hover {
+      filter: brightness(90%);
+      background-color: var(--accent);
+}
+
+.radio:active {
+      transform: scale(0.98);
+      filter: brightness(85%);
+}
+
+.radio:disabled {
+      background-color: var(--not-allowed);
+      color: var(--text-not-allowed);
+      cursor: not-allowed;
+}
+
+.radio:focus-visible {
+      outline: 1px solid gray;
+}
+
+.radio.checked {
+      filter: brightness(90%);
+      background-color: var(--accent);
+      font-weight: var(--bold-font-weight);
+}

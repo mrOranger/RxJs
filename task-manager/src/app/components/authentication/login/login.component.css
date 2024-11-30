@@ -1,27 +1,36 @@
-.grid {
+:host {
       width: 100%;
       height: 100%;
-      display: inline-grid;
-      grid-template-columns: repeat(2, minmax(400px, 1fr));
-      grid-template-rows: minmax(500px, 1fr);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
 }
 
-.logo {
-      width: 100%;
-      height: 100%;
-}
-
-.form {
-      width: 60%;
-      padding: 1em 2em;
-      display: inline-grid;
-      grid-template-rows: minmax(100px, 1fr) minmax(400px, 4fr) minmax(100px, 1fr);
+.card {
+      width: 40%;
+      height: 40%;
+      min-height: 400px;
+      min-width: 400px;
+      max-height: 500px;
+      max-width: 500px;
+      padding: 0em;
+      margin: 0em;
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid var(--secondary);
+      padding: 2em;
+      border-radius: 1em;
+      background-color: whitesmoke;
 }
 
 .header {
-      display: flex;
+      width: 100%;
+      height: 10%;
+      display: inline-flex;
       align-items: center;
-      justify-content: start;
+      justify-content: center;
 }
 
 .header .app-icon {
@@ -33,29 +42,50 @@
       margin: 0px 1em 0px 1em;
 }
 
-.form .body {
+.body {
       width: 100%;
-      height: 100%;
+      height: 80%;
+      margin: 0em;
+      padding: 0em;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
+      gap: 1em;
 }
 
-.form-item {
+app-radio-group.form-item {
       width: 100%;
-      min-height: 50px;
-      display: flex;
+      padding: 0em;
+      margin: 0em;
+      display: inline-flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+}
+
+div.form-item {
+      width: 100%;
+      padding: 0em;
+      margin: 0em;
+      display: inline-flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      margin: 1em 0em;
 }
 
-.form-item tm-input:nth-child(n) {
+.body .form-item tm-input:nth-child(n) {
       width: 100%;
       min-height: 50px;
 }
+
+.footer {
+      width: 100%;
+      height: 10%;
+      margin: 0em;
+      padding: 0em;
+}
+
 
 @media screen and (max-width: 768px) {
       .grid {

@@ -1,27 +1,25 @@
-<main class="grid">
-      <div class="form">
-            <header class="header">
-                  <fa-icon [icon]="applicationIcon" class="app-icon" size="2x"></fa-icon>
-                  <h1 class="app-title">Task Manager</h1>
-            </header>
-            <form class="body">
-                  <app-radio-group class="form-item">
-                        <tm-radio-button>I'm a regular user</tm-radio-button>
-                        <tm-radio-button>I'm working on an enterprise</tm-radio-button>
-                  </app-radio-group>
-                  <div class="form-item">
-                        <tm-input label="Email" type="email" name="email" placeholder="Your email here ..."></tm-input>
-                        <tm-input label="Password" type="password" name="password" placeholder="You password here ...">
-                        </tm-input>
-                  </div>
-                  <div class="form-item">
-                        <button tmButton type="button">
-                              Login
-                              <fa-icon class="icon" [icon]="signInIcon" size="2x"></fa-icon>
-                        </button>
-                  </div>
-            </form>
-            <footer class="footer"></footer>
-      </div>
-      <img class="logo" src="../../../../assets/authentication.svg" alt="Auth icon" />
-</main>
+<div class="card">
+      <header class="header">
+            <fa-icon [icon]="applicationIcon" class="app-icon" size="2x"></fa-icon>
+            <h1 class="app-title">Task Manager</h1>
+      </header>
+      <form class="body" [formGroup]="formService.form">
+            <app-radio-group class="form-item">
+                  <tm-radio-button>I'm a regular user</tm-radio-button>
+                  <tm-radio-button>I'm working on an enterprise</tm-radio-button>
+            </app-radio-group>
+            <div class="form-item">
+                  <tm-input label="Email" type="email" name="email" placeholder="Your email here ..."
+                        [formControlName]="formService.emailField"></tm-input>
+                  <tm-input label="Password" type="password" name="password" placeholder="You password here ..."
+                        [formControlName]="formService.passwordField">
+                  </tm-input>
+            </div>
+      </form>
+      <footer class="footer">
+            <button tmButton type="button">
+                  Login
+                  <fa-icon class="icon" [icon]="signInIcon" size="2x"></fa-icon>
+            </button>
+      </footer>
+</div>

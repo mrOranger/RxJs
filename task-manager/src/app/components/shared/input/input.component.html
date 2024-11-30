@@ -1,4 +1,4 @@
 <p class="input-container">
       <label>{{ label }}</label>
-      <input [type]="type" [name]="name" [placeholder]="placeholder" />
+      <input [(ngModel)]="value" [type]="type" [name]="name" [placeholder]="placeholder" [disabled]="disabled" />
 </p>
