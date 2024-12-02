@@ -40,8 +40,6 @@ export const user: RxJsonSchema<any> = {
                   format: 'date-time',
                   default: new Date().toISOString(),
             },
-      },
-      encrypted: ['password'],
-      attachments: { encrypted: true },
+      },    
       required: ['id', 'firstName', 'lastName', 'email', 'password'],
 };

@@ -7,5 +7,3 @@ platformBrowserDynamic()
       .bootstrapModule(AppModule)
       .then(() => console.log('Module successfully bootstrapped'))
       .catch((err) => console.error(err));
-
-initDatabase();
