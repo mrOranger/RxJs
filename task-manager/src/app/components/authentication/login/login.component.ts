@@ -1,6 +1,7 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 
 import { faSignInAlt, faTasks } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
 
 import { UserType } from 'src/app/enums';
 import { LoginFormService } from 'src/app/services';
@@ -12,6 +13,8 @@ import { LoginFormService } from 'src/app/services';
 })
 export class LoginComponent implements OnInit, OnDestroy {
       private readonly loginFormService: LoginFormService;
+
+      private userCollection$?: Subscription;
 
       public constructor() {
             this.loginFormService = inject(LoginFormService);
