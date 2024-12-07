@@ -23,6 +23,7 @@
             "@fortawesome/angular-fontawesome": "^0.13.0",
             "@fortawesome/fontawesome-svg-core": "~1.2.36",
             "@fortawesome/free-solid-svg-icons": "^5.15.4",
+            "dexie": "^4.0.10",
             "moment": "^2.30.1",
             "rxjs": "~7.8.0",
             "tslib": "^2.3.0",

@@ -5,6 +5,8 @@ import { Subscription } from 'rxjs';
 
 import { UserType } from 'src/app/enums';
 import { LoginFormService } from 'src/app/services';
+import { DatabaseService } from 'src/app/services/database/database.service';
+import { UserCollectionService } from 'src/app/services/database/user-collection.service';
 
 @Component({
       selector: 'tm-login',
@@ -13,10 +15,10 @@ import { LoginFormService } from 'src/app/services';
 })
 export class LoginComponent implements OnInit, OnDestroy {
       private readonly loginFormService: LoginFormService;
-
-      private userCollection$?: Subscription;
+      private readonly userCollectionService: UserCollectionService;
 
       public constructor() {
+            this.userCollectionService = inject(UserCollectionService);
             this.loginFormService = inject(LoginFormService);
       }
 
@@ -40,6 +42,19 @@ export class LoginComponent implements OnInit, OnDestroy {
 
       public get enterpriseUserType() {
             return UserType.ENTERPRISE_USER;
+      }
+
+      public onClick() {
+            this.userCollectionService
+                  .addNewUser({
+                        firstName: 'Edoardo',
+                        lastName: 'Gentile',
+                        email: 'edoardo.gentile@example.com',
+                        password: 'Edoardo123',
+                  })
+                  .subscribe({
+                        next: (result) => console.log(result),
+                  });
       }
 
       public ngOnDestroy(): void {}

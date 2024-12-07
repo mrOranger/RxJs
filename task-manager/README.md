@@ -6,6 +6,9 @@ This is our final project for this repository, we will create an offline applica
 
 I want to create this application step by step, hereafter, I will slipt the initial description in different conceptual areas, and then, expand each section with more conceptual and technical details, in a certain sense I would like to use an [**Agile approach**](https://en.wikipedia.org/wiki/Agile_software_development).
 
+### Dexie Offline Database
+
+
 ## Authenticating a user
 
 Let's suppose that we have two types of users, the former is a standard user that want to use the application for their personal purposes, on the other hand, the latter is a user belonging to an enterprise. Each user belonging to the same enterprise can use the application together. Moreover, each user must create an account, that is, must have a username and a password, in addiction to their personal information. Therefore, we can sum up these information using the following diagram:
