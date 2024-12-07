@@ -8,7 +8,7 @@ import { User } from 'src/app/models';
 import { DatabaseService } from './database.service';
 import { CrudRepository } from '../crud-repository.interface';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class UserCollectionService implements CrudRepository<User, string, 'id'> {
       public constructor(private readonly databaseService: DatabaseService) {}
 
@@ -18,6 +18,17 @@ export class UserCollectionService implements CrudRepository<User, string, 'id'>
 
       public find(key: string): Observable<User> {
             return from(this.databaseService.users.where('id').equalsIgnoreCase(key).first()).pipe(
+                  switchMap((result) => {
+                        if (result) {
+                              return of(result);
+                        }
+                        return throwError(() => 'User not found');
+                  }),
+            );
+      }
+
+      public findByEmailAndPassword(email: string, password: string): Observable<User> {
+            return from(this.databaseService.users.where({ email, password }).first()).pipe(
                   switchMap((result) => {
                         if (result) {
                               return of(result);

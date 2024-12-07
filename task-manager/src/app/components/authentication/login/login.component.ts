@@ -1,11 +1,9 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 
 import { faSignInAlt, faTasks } from '@fortawesome/free-solid-svg-icons';
-import { Subscription } from 'rxjs';
 
 import { UserType } from 'src/app/enums';
 import { LoginFormService } from 'src/app/services';
-import { DatabaseService } from 'src/app/services/database/database.service';
 import { UserCollectionService } from 'src/app/services/database/user-collection.service';
 
 @Component({
@@ -45,16 +43,12 @@ export class LoginComponent implements OnInit, OnDestroy {
       }
 
       public onClick() {
-            this.userCollectionService
-                  .addNewUser({
-                        firstName: 'Edoardo',
-                        lastName: 'Gentile',
-                        email: 'edoardo.gentile@example.com',
-                        password: 'Edoardo123',
-                  })
-                  .subscribe({
-                        next: (result) => console.log(result),
-                  });
+            const email = this.loginFormService.emailControl?.value;
+            const password = this.loginFormService.passwordControl?.value;
+            this.userCollectionService.findByEmailAndPassword(email, password).subscribe({
+                  next: (user) => console.log(user),
+                  error: (error) => console.error(error),
+            });
       }
 
       public ngOnDestroy(): void {}
