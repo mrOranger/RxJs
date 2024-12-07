@@ -1,0 +1,72 @@
+.loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.7);
+      gap: 2em;
+      z-index: 1000;
+}
+
+.dots {
+      width: 100%;
+      display: inline-flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 1em;
+      margin: 0em;
+      padding: 0em;
+}
+
+.dots li:nth-child(n) {
+      width: 25px;
+      height: 25px;
+      list-style: none;
+      border-radius: 9999em;
+      background-color: var(--info);
+      z-index: 1001;
+}
+
+.dots li:nth-child(1) {
+      animation: loading 1.5s ease-in-out infinite;
+      animation-delay: 0s;
+}
+
+.dots li:nth-child(2) {
+      animation: loading 1.5s ease-in-out infinite;
+      animation-delay: 0.3s;
+}
+
+.dots li:nth-child(3) {
+      animation: loading 1.5s ease-in-out infinite;
+      animation-delay: 0.6s;
+}
+
+.dots li:nth-child(4) {
+      animation: loading 1.5s ease-in-out infinite;
+      animation-delay: 0.9s;
+}
+
+@keyframes loading {
+      0% {
+            transform: translateY(0px);
+      }
+
+      25% {
+            transform: translateY(-20px);
+      }
+}
+
+.text {
+      width: 100%;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 400;
+      text-wrap: pretty;
+}

@@ -1,3 +1,4 @@
+<tm-loader></tm-loader>
 <div class="card">
       <header class="header">
             <fa-icon [icon]="applicationIcon" class="app-icon" size="2x"></fa-icon>
@@ -20,7 +21,7 @@
                         <p *ngIf="formService.emailControl?.hasError('maxlength')" class="error-message">
                               • L'indirizzo email deve essere lungo massimo 255 caratteri
                         </p>
-                        </tm-input>
+                  </tm-input>
                   <tm-input label="Password" type="password" name="password" placeholder="You password here ..."
                         [formControlName]="formService.passwordField">
                         <p *ngIf="formService.passwordControl?.hasError('required')" class="error-message">

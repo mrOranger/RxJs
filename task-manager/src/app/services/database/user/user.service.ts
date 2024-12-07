@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { v4 as uuidv4 } from 'uuid';
 
-import { from, Observable, of, switchMap, throwError } from 'rxjs';
+import { catchError, from, Observable, of, switchMap, throwError } from 'rxjs';
 
 import { User } from 'src/app/models';
 import { UserRepository } from './user.repository';

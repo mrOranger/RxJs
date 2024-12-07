@@ -3,7 +3,7 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { faSignInAlt, faTasks } from '@fortawesome/free-solid-svg-icons';
 
 import { UserType } from 'src/app/enums';
-import { LoginFormService, UserService } from 'src/app/services';
+import { LoaderService, LoginFormService, UserService } from 'src/app/services';
 
 @Component({
       selector: 'tm-login',
@@ -12,10 +12,12 @@ import { LoginFormService, UserService } from 'src/app/services';
 })
 export class LoginComponent implements OnInit, OnDestroy {
       private readonly loginFormService: LoginFormService;
+      private readonly loaderService: LoaderService;
       private readonly userService: UserService;
 
       public constructor() {
             this.userService = inject(UserService);
+            this.loaderService = inject(LoaderService);
             this.loginFormService = inject(LoginFormService);
       }
 
@@ -42,11 +44,18 @@ export class LoginComponent implements OnInit, OnDestroy {
       }
 
       public onClick() {
+            this.loaderService.start('Loading ...');
             const email = this.loginFormService.emailControl?.value;
             const password = this.loginFormService.passwordControl?.value;
             this.userService.findByEmailAndPassword(email, password).subscribe({
-                  next: (user) => console.log(user),
-                  error: (error) => console.error(error),
+                  next: (user) => {
+                        console.log(user);
+                        this.loaderService.stop();
+                  },
+                  error: (error) => {
+                        console.error(error);
+                        this.loaderService.stop();
+                  },
             });
       }
 

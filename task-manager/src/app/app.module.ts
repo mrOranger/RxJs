@@ -9,9 +9,10 @@ import { AppComponent } from './app.component';
 import { UserTypeDirective } from './directives';
 
 import {
-      ButtonComponent,
       InputComponent,
       LoginComponent,
+      LoaderComponent,
+      ButtonComponent,
       RadioGroupComponent,
       RadioButtonComponent,
 } from './components';
@@ -26,7 +27,7 @@ import {
 } from './services';
 
 @NgModule({
-      declarations: [AppComponent, LoginComponent, UserTypeDirective, RadioButtonComponent],
+      declarations: [AppComponent, LoginComponent, UserTypeDirective, RadioButtonComponent, LoaderComponent],
       imports: [
             FormsModule,
             BrowserModule,
