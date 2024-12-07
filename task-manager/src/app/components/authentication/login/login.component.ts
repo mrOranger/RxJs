@@ -3,7 +3,7 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { faSignInAlt, faTasks } from '@fortawesome/free-solid-svg-icons';
 
 import { UserType } from 'src/app/enums';
-import { LoaderService, LoginFormService, UserService } from 'src/app/services';
+import { LoaderService, LoginFormService, NotificationService, UserService } from 'src/app/services';
 
 @Component({
       selector: 'tm-login',
@@ -11,6 +11,7 @@ import { LoaderService, LoginFormService, UserService } from 'src/app/services';
       styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
+      private readonly notificationService: NotificationService;
       private readonly loginFormService: LoginFormService;
       private readonly loaderService: LoaderService;
       private readonly userService: UserService;
@@ -19,6 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.userService = inject(UserService);
             this.loaderService = inject(LoaderService);
             this.loginFormService = inject(LoginFormService);
+            this.notificationService = inject(NotificationService);
       }
 
       public ngOnInit(): void {}
@@ -51,10 +53,12 @@ export class LoginComponent implements OnInit, OnDestroy {
                   next: (user) => {
                         console.log(user);
                         this.loaderService.stop();
+                        this.notificationService.success('Login successful', 5000);
                   },
                   error: (error) => {
                         console.error(error);
                         this.loaderService.stop();
+                        this.notificationService.error('Username or password incorrect', 5000);
                   },
             });
       }

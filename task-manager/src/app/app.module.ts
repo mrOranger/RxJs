@@ -15,6 +15,7 @@ import {
       ButtonComponent,
       RadioGroupComponent,
       RadioButtonComponent,
+      NotificationComponent,
 } from './components';
 
 import {
@@ -27,7 +28,14 @@ import {
 } from './services';
 
 @NgModule({
-      declarations: [AppComponent, LoginComponent, UserTypeDirective, RadioButtonComponent, LoaderComponent],
+      declarations: [
+            AppComponent,
+            LoginComponent,
+            UserTypeDirective,
+            RadioButtonComponent,
+            LoaderComponent,
+            NotificationComponent,
+      ],
       imports: [
             FormsModule,
             BrowserModule,
