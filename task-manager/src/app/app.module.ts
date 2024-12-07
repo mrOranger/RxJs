@@ -16,28 +16,33 @@ import {
       RadioButtonComponent,
 } from './components';
 
-import { StoreLoginFactoryService, StorePasswordService, StoreEmailService, LoginFormService } from './services';
-import { DatabaseService } from './services/database/database.service';
-import { UserCollectionService } from './services/database/user-collection.service';
+import {
+      StoreLoginFactoryService,
+      StorePasswordService,
+      StoreEmailService,
+      LoginFormService,
+      UserService,
+      DatabaseService,
+} from './services';
 
 @NgModule({
       declarations: [AppComponent, LoginComponent, UserTypeDirective, RadioButtonComponent],
       imports: [
-            FontAwesomeModule,
-            BrowserModule,
             FormsModule,
+            BrowserModule,
             InputComponent,
-            RadioGroupComponent,
             ButtonComponent,
+            FontAwesomeModule,
             ReactiveFormsModule,
+            RadioGroupComponent,
       ],
       providers: [
-            StoreLoginFactoryService,
+            UserService,
+            DatabaseService,
+            LoginFormService,
             StoreEmailService,
             StorePasswordService,
-            LoginFormService,
-            DatabaseService,
-            UserCollectionService,
+            StoreLoginFactoryService,
       ],
       bootstrap: [AppComponent],
 })

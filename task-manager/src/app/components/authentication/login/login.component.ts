@@ -3,8 +3,7 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { faSignInAlt, faTasks } from '@fortawesome/free-solid-svg-icons';
 
 import { UserType } from 'src/app/enums';
-import { LoginFormService } from 'src/app/services';
-import { UserCollectionService } from 'src/app/services/database/user-collection.service';
+import { LoginFormService, UserService } from 'src/app/services';
 
 @Component({
       selector: 'tm-login',
@@ -13,10 +12,10 @@ import { UserCollectionService } from 'src/app/services/database/user-collection
 })
 export class LoginComponent implements OnInit, OnDestroy {
       private readonly loginFormService: LoginFormService;
-      private readonly userCollectionService: UserCollectionService;
+      private readonly userService: UserService;
 
       public constructor() {
-            this.userCollectionService = inject(UserCollectionService);
+            this.userService = inject(UserService);
             this.loginFormService = inject(LoginFormService);
       }
 
@@ -45,7 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       public onClick() {
             const email = this.loginFormService.emailControl?.value;
             const password = this.loginFormService.passwordControl?.value;
-            this.userCollectionService.findByEmailAndPassword(email, password).subscribe({
+            this.userService.findByEmailAndPassword(email, password).subscribe({
                   next: (user) => console.log(user),
                   error: (error) => console.error(error),
             });

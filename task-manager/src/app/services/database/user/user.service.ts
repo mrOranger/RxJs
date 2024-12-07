@@ -5,11 +5,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { from, Observable, of, switchMap, throwError } from 'rxjs';
 
 import { User } from 'src/app/models';
-import { DatabaseService } from './database.service';
-import { CrudRepository } from '../crud-repository.interface';
+import { UserRepository } from './user.repository';
+import { DatabaseService } from '../database.service';
 
 @Injectable()
-export class UserCollectionService implements CrudRepository<User, string, 'id'> {
+export class UserService implements UserRepository {
       public constructor(private readonly databaseService: DatabaseService) {}
 
       public index(): Observable<User[]> {
