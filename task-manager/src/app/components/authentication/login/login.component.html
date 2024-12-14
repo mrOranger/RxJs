@@ -43,7 +43,8 @@
                         </p>
                   </tm-input>
             </div>
-            <span class="form-footer">Don't have yet an account? <a class="link">Go to sign up</a></span>
+            <span class="form-footer">Don't have yet an account? <a class="link" routerLink="/authentication/signup">Go
+                        to sign up</a></span>
       </form>
       <footer class="footer">
             <button tmButton type="button" [disabled]="formService.form.invalid" (click)="onClick()">

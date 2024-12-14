@@ -26,10 +26,21 @@ import {
       UserService,
       DatabaseService,
 } from './services';
+import { RouterModule } from '@angular/router';
+import { routes } from './app.routes';
+import { SignupComponent } from './components/authentication/signup/signup.component';
 
 @NgModule({
-      declarations: [AppComponent, LoginComponent, UserTypeDirective, LoaderComponent, NotificationComponent],
+      declarations: [
+            AppComponent,
+            LoginComponent,
+            UserTypeDirective,
+            LoaderComponent,
+            NotificationComponent,
+            SignupComponent,
+      ],
       imports: [
+            RouterModule.forRoot(routes),
             FormsModule,
             BrowserModule,
             InputComponent,
