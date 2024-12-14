@@ -6,10 +6,6 @@
             <h1 class="app-title">Task Manager</h1>
       </header>
       <form class="body" [formGroup]="formService.form">
-            <tm-radio-group class="form-item">
-                  <tm-radio-button>I'm a regular user</tm-radio-button>
-                  <tm-radio-button>I'm working on an enterprise</tm-radio-button>
-            </tm-radio-group>
             <div class="form-item">
                   <tm-input label="Email" type="email" name="email" placeholder="Your email here ..."
                         [formControlName]="formService.emailField">
@@ -47,6 +43,7 @@
                         </p>
                   </tm-input>
             </div>
+            <span class="form-footer">Don't have yet an account? <a class="link">Go to sign up</a></span>
       </form>
       <footer class="footer">
             <button tmButton type="button" [disabled]="formService.form.invalid" (click)="onClick()">
