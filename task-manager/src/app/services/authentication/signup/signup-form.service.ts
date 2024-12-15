@@ -2,15 +2,20 @@ import { inject, Injectable } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { SignupFormFields } from 'src/app/enums';
+import { UserService } from '../../database';
+import { catchError, filter, of, switchMap } from 'rxjs';
 
 @Injectable()
 export class SignupFormService {
       private readonly signupForm: FormGroup;
       private readonly formBuilder: FormBuilder;
+      private readonly userService: UserService;
 
       public readonly passwordFormGroupName = 'passwords_group';
 
       public constructor() {
+            this.userService = inject(UserService)
+
             this.formBuilder = inject(FormBuilder);
 
             this.signupForm = this.formBuilder.group({
@@ -60,6 +65,7 @@ export class SignupFormService {
       private get emailForm() {
             return new FormControl('', {
                   validators: [Validators.required, Validators.maxLength(255), Validators.email],
+                  asyncValidators: [this.uniqueEmail$],
             });
       }
 
@@ -99,6 +105,15 @@ export class SignupFormService {
                         this.atLeastAnUpperCaseLetter,
                   ],
             });
+      }
+
+      private get uniqueEmail$() {
+            return (control: AbstractControl) => {
+                  return this.userService.findByEmail(control.value).pipe(
+                        catchError(() => of(null)),
+                        switchMap(() => of({ unique: true })),
+                  );
+            };
       }
 
       private get atLeastANumber() {

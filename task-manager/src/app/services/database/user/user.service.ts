@@ -27,6 +27,17 @@ export class UserService implements UserRepository {
             );
       }
 
+      public findByEmail(email: string): Observable<User> {
+            return from(this.databaseService.users.where({ email }).first()).pipe(
+                  switchMap((result) => {
+                        if (result) {
+                              return of(result);
+                        }
+                        return throwError(() => 'User not found');
+                  }),
+            );
+      }
+
       public findByEmailAndPassword(email: string, password: string): Observable<User> {
             return from(this.databaseService.users.where({ email, password }).first()).pipe(
                   switchMap((result) => {

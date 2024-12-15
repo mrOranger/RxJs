@@ -38,6 +38,9 @@
                   <span *ngIf="formService.emailControl?.hasError('maxlength')" class="error-message">
                         • L'email deve essere lunga massimo 255 caretteri
                   </span>
+                  <span *ngIf="formService.emailControl?.hasError('unique')" class="error-message">
+                        • L'email è già registrata nel sistema
+                  </span>
                   <span *ngIf="formService.emailControl?.hasError('email')" class="error-message">
                         • L'email deve essere valida
                   </span>
