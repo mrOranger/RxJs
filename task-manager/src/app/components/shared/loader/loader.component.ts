@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { LoaderService } from 'src/app/services';
 
 @Component({
@@ -7,5 +7,6 @@ import { LoaderService } from 'src/app/services';
       styleUrls: ['./loader.component.css'],
 })
 export class LoaderComponent {
-      public constructor(public readonly loaderService: LoaderService) {}
+
+      @Input() public label?: string;
 }

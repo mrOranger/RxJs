@@ -1,33 +1,30 @@
-import { Injectable } from '@angular/core';
+import { ApplicationRef, ComponentRef, inject, Injectable, ViewContainerRef } from '@angular/core';
 
-import { BehaviorSubject } from 'rxjs';
+import { LoaderComponent } from 'src/app/components';
 
 @Injectable({ providedIn: 'root' })
 export class LoaderService {
-      private readonly _loader$: BehaviorSubject<boolean>;
-      private readonly _text$: BehaviorSubject<string | undefined>;
+
+      private componentRef: ComponentRef<LoaderComponent> | null;
+      private readonly applicationRef: ApplicationRef;
 
       public constructor() {
-            this._loader$ = new BehaviorSubject<boolean>(false);
-            this._text$ = new BehaviorSubject<string | undefined>(undefined);
-      }
-
-      public get loader$() {
-            return this._loader$;
-      }
-
-      public get text$() {
-            return this._text$;
+            this.componentRef = null;
+            this.applicationRef = inject(ApplicationRef);
       }
 
       public start(text?: string): void {
-            this._loader$.next(true);
-            this._text$.next(text);
+            const container = this.applicationRef.components[0].injector.get(ViewContainerRef);
+            const loaderComponentRef = container.createComponent(LoaderComponent);
+            loaderComponentRef.instance.label = text;
+            this.componentRef = loaderComponentRef;
       }
 
       public stop(): void {
-            this._loader$.next(false);
-            this._text$.next('');
+            if (this.componentRef !== null) {
+                  this.componentRef?.destroy();
+                  this.componentRef = null;
+            }
       }
 
       public startAndStop(fn: () => void, message?: string) {

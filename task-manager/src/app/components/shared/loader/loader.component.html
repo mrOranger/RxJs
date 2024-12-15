@@ -1,9 +1,9 @@
-<div class="loader" *ngIf="(loaderService.loader$ | async) === true">
+<div class="loader">
       <ul class="dots">
             <li></li>
             <li></li>
             <li></li>
             <li></li>
       </ul>
-      <span class="text">{{ loaderService.text$ | async }}</span>
+      <span class="text">{{ label }}</span>
 </div>
