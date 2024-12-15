@@ -1,4 +1,4 @@
-:host.ng-invalid.ng-touched.ng-dirty .input-container input{
+:host.ng-invalid.ng-touched.ng-dirty .input-container input {
       border: 1px solid var(--error);
 }
 
@@ -10,7 +10,6 @@
       flex-direction: column;
       align-items: flex-start;
       justify-content: center;
-      margin: 0.5em 0em;
 }
 
 .input-container label {
