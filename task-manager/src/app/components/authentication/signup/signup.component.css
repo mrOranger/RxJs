@@ -34,4 +34,29 @@ button[type='button'] {
       justify-content: flex-end;
       align-items: center;
       gap: 0.5em;
+      font-size: 0.75rem;
+      font-weight: 400;
+      text-wrap: pretty;
+}
+
+.link {
+      font-size: 0.75rem;
+      font-weight: 400;
+      text-wrap: wrap;
+      color: var(--info);
+      text-decoration: underline;
+      cursor: pointer;
+      transition: 0.5s ease;
+}
+
+.link:active {
+      transform: scale(0.98);
+}
+
+.link:hover {
+      opacity: 0.5;
+}
+
+.link:focus-visible {
+      transform: scale(0.98);
 }
