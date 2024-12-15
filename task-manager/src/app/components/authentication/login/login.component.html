@@ -4,45 +4,41 @@
             <h1 class="app-title">Task Manager</h1>
       </header>
       <form class="body" [formGroup]="formService.form">
-            <div class="form-item">
-                  <tm-input label="Email" type="email" name="email" placeholder="Your email here ..."
-                        [formControlName]="formService.emailField">
-                        <p *ngIf="formService.emailControl?.hasError('required')" class="error-message">
-                              • L'indirizzo email è obbligatorio
-                        </p>
-                        <p *ngIf="formService.emailControl?.hasError('email')" class="error-message">
-                              • L'indirizzo email deve essere valido
-                        </p>
-                        <p *ngIf="formService.emailControl?.hasError('maxlength')" class="error-message">
-                              • L'indirizzo email deve essere lungo massimo 255 caratteri
-                        </p>
-                  </tm-input>
-                  <tm-input label="Password" type="password" name="password" placeholder="You password here ..."
-                        [formControlName]="formService.passwordField">
-                        <p *ngIf="formService.passwordControl?.hasError('required')" class="error-message">
-                              • La password è obbligatoria
-                        </p>
-                        <p *ngIf="formService.passwordControl?.hasError('minlength')" class="error-message">
-                              • La password deve contenere almeno 8 caretteri
-                        </p>
-                        <p *ngIf="formService.passwordControl?.hasError('maxlength')" class="error-message">
-                              • La password deve contenere al massimo 255 caratteri
-                        </p>
-                        <p *ngIf="formService.passwordControl?.hasError('atLeastANumber')" class="error-message">
-                              • La password deve contenere almeno un carattere numerico
-                        </p>
-                        <p *ngIf="formService.passwordControl?.hasError('atLeastAnUpperCaseLetter')"
-                              class="error-message">
-                              • La password deve contenere almeno un carattere maiuscolo
-                        </p>
-                        <p *ngIf="formService.passwordControl?.hasError('atLeastASpecialCharacter')"
-                              class="error-message">
-                              • La password deve contenere almeno un carattere speciale
-                        </p>
-                  </tm-input>
-            </div>
-            <span class="form-footer">Don't have yet an account? <a class="link" routerLink="/authentication/signup">Go
-                        to sign up</a></span>
+            <tm-input label="Email" type="email" name="email" placeholder="Your email here ..."
+                  [formControlName]="formService.emailField">
+                  <p *ngIf="formService.emailControl?.hasError('required')" class="error-message">
+                        • L'indirizzo email è obbligatorio
+                  </p>
+                  <p *ngIf="formService.emailControl?.hasError('email')" class="error-message">
+                        • L'indirizzo email deve essere valido
+                  </p>
+                  <p *ngIf="formService.emailControl?.hasError('maxlength')" class="error-message">
+                        • L'indirizzo email deve essere lungo massimo 255 caratteri
+                  </p>
+            </tm-input>
+            <tm-input label="Password" type="password" name="password" placeholder="You password here ..."
+                  [formControlName]="formService.passwordField">
+                  <p *ngIf="formService.passwordControl?.hasError('required')" class="error-message">
+                        • La password è obbligatoria
+                  </p>
+                  <p *ngIf="formService.passwordControl?.hasError('minlength')" class="error-message">
+                        • La password deve contenere almeno 8 caretteri
+                  </p>
+                  <p *ngIf="formService.passwordControl?.hasError('maxlength')" class="error-message">
+                        • La password deve contenere al massimo 255 caratteri
+                  </p>
+                  <p *ngIf="formService.passwordControl?.hasError('atLeastANumber')" class="error-message">
+                        • La password deve contenere almeno un carattere numerico
+                  </p>
+                  <p *ngIf="formService.passwordControl?.hasError('atLeastAnUpperCaseLetter')" class="error-message">
+                        • La password deve contenere almeno un carattere maiuscolo
+                  </p>
+                  <p *ngIf="formService.passwordControl?.hasError('atLeastASpecialCharacter')" class="error-message">
+                        • La password deve contenere almeno un carattere speciale
+                  </p>
+            </tm-input>
+            <span class="link">Don't have yet an account?
+                  <a class="link ref" routerLink="/authentication/signup">Go to sign up</a></span>
       </form>
       <footer class="footer">
             <button tmButton type="button" [disabled]="formService.form.invalid" (click)="onClick()">

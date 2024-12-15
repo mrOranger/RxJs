@@ -17,6 +17,11 @@ tm-input[type='email'] {
       height: 100%;
 }
 
+.link {
+      width: 100%;
+      text-align: right;
+}
+
 .body .password-data {
       display: inline-grid;
       grid-template-columns: repeat(2, 1fr);
@@ -25,38 +30,4 @@ tm-input[type='email'] {
 
 button[type='button'] {
       width: 100%;
-}
-
-.body .form-footer {
-      width: 100%;
-      display: inline-flex;
-      flex-direction: row;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 0.5em;
-      font-size: 0.75rem;
-      font-weight: 400;
-      text-wrap: pretty;
-}
-
-.link {
-      font-size: 0.75rem;
-      font-weight: 400;
-      text-wrap: wrap;
-      color: var(--info);
-      text-decoration: underline;
-      cursor: pointer;
-      transition: 0.5s ease;
-}
-
-.link:active {
-      transform: scale(0.98);
-}
-
-.link:hover {
-      opacity: 0.5;
-}
-
-.link:focus-visible {
-      transform: scale(0.98);
 }
