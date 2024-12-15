@@ -7,71 +7,71 @@
             <div class="user-data">
                   <tm-input label="First name" type="text" name="first-name" placeholder="Your first name here ..."
                         [formControlName]="formService.firstNameField">
-                        <p *ngIf="formService.firstNameControl?.hasError('required')" class="error-message">
+                        <span *ngIf="formService.firstNameControl?.hasError('required')" class="error-message">
                               • Il nome è obbligatorio
-                        </p>
-                        <p *ngIf="formService.firstNameControl?.hasError('minlength')" class="error-message">
+                        </span>
+                        <span *ngIf="formService.firstNameControl?.hasError('minlength')" class="error-message">
                               • Il nome deve essere lungo minimo 2 caratteri
-                        </p>
-                        <p *ngIf="formService.firstNameControl?.hasError('maxlength')" class="error-message">
+                        </span>
+                        <span *ngIf="formService.firstNameControl?.hasError('maxlength')" class="error-message">
                               • Il nome deve essere lungo massimo 255 caratteri
-                        </p>
+                        </span>
                   </tm-input>
                   <tm-input label="Last name" type="text" name="last-name" placeholder="Your last name here ..."
                         [formControlName]="formService.lastNameField">
-                        <p *ngIf="formService.lastNameControl?.hasError('required')" class="error-message">
+                        <span *ngIf="formService.lastNameControl?.hasError('required')" class="error-message">
                               • Il cognome è obbligatorio
-                        </p>
-                        <p *ngIf="formService.lastNameControl?.hasError('minlength')" class="error-message">
+                        </span>
+                        <span *ngIf="formService.lastNameControl?.hasError('minlength')" class="error-message">
                               • Il cognome deve essere lungo minimo 2 caratteri
-                        </p>
-                        <p *ngIf="formService.lastNameControl?.hasError('maxlength')" class="error-message">
+                        </span>
+                        <span *ngIf="formService.lastNameControl?.hasError('maxlength')" class="error-message">
                               • Il cognome deve essere lungo massimo 255 caratteri
-                        </p>
+                        </span>
                   </tm-input>
             </div>
             <tm-input label="Email" type="email" name="email" placeholder="Your email here ..."
                   [formControlName]="formService.emailField">
-                  <p *ngIf="formService.emailControl?.hasError('required')" class="error-message">
+                  <span *ngIf="formService.emailControl?.hasError('required')" class="error-message">
                         • L'email deve essere obbligatoria
-                  </p>
-                  <p *ngIf="formService.emailControl?.hasError('maxlength')" class="error-message">
+                  </span>
+                  <span *ngIf="formService.emailControl?.hasError('maxlength')" class="error-message">
                         • L'email deve essere lunga massimo 255 caretteri
-                  </p>
-                  <p *ngIf="formService.emailControl?.hasError('email')" class="error-message">
+                  </span>
+                  <span *ngIf="formService.emailControl?.hasError('email')" class="error-message">
                         • L'email deve essere valida
-                  </p>
+                  </span>
             </tm-input>
 
             <div class="password-data" [formGroupName]="formService.passwordFormGroupName">
                   <tm-input label="Password" type="password" name="password" placeholder="Your password here ..."
                         [formControlName]="formService.passwordField">
-                        <p *ngIf="formService.passwordControl?.hasError('required')" class="error-message">
+                        <span *ngIf="formService.passwordControl?.hasError('required')" class="error-message">
                               • La password è obbligatoria
-                        </p>
-                        <p *ngIf="formService.passwordControl?.hasError('minlength')" class="error-message">
+                        </span>
+                        <span *ngIf="formService.passwordControl?.hasError('minlength')" class="error-message">
                               • La password deve contenere almeno 8 caretteri
-                        </p>
-                        <p *ngIf="formService.passwordControl?.hasError('maxlength')" class="error-message">
+                        </span>
+                        <span *ngIf="formService.passwordControl?.hasError('maxlength')" class="error-message">
                               • La password deve contenere al massimo 255 caratteri
-                        </p>
-                        <p *ngIf="formService.passwordControl?.hasError('atLeastANumber')" class="error-message">
+                        </span>
+                        <span *ngIf="formService.passwordControl?.hasError('atLeastANumber')" class="error-message">
                               • La password deve contenere almeno un carattere numerico
-                        </p>
-                        <p *ngIf="formService.passwordControl?.hasError('atLeastAnUpperCaseLetter')"
+                        </span>
+                        <span *ngIf="formService.passwordControl?.hasError('atLeastAnUpperCaseLetter')"
                               class="error-message">
                               • La password deve contenere almeno un carattere maiuscolo
-                        </p>
-                        <p *ngIf="formService.passwordControl?.hasError('atLeastASpecialCharacter')"
+                        </span>
+                        <span *ngIf="formService.passwordControl?.hasError('atLeastASpecialCharacter')"
                               class="error-message">
                               • La password deve contenere almeno un carattere speciale
-                        </p>
+                        </span>
                   </tm-input>
                   <tm-input label="Confirm password" type="password" name="confirm-password"
                         placeholder="Confirm the password ..." [formControlName]="formService.confirmPasswordField">
-                        <p *ngIf="formService.passwordsGroupControl?.hasError('matching')" class="error-message">
+                        <span *ngIf="formService.passwordsGroupControl?.hasError('matching')" class="error-message">
                               • Le password non coincidono
-                        </p>
+                        </span>
                   </tm-input>
             </div>
             <span class="link">Already have an account? <a class="link ref" routerLink="/authentication/login">Go to

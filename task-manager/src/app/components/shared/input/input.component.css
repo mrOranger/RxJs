@@ -8,7 +8,7 @@
 
 .input-container {
       width: 100%;
-      display: flex;
+      display: inline-flex;
       flex-direction: column;
       align-items: flex-start;
       justify-content: center;
@@ -22,8 +22,8 @@
 }
 
 .input-container input {
-      width: calc(100% - 4em);
-      height: calc(100% - 2em);
+      width: 100%;
+      box-sizing: border-box;
       padding: 1em 2em;
       border-radius: 0.25rem;
       border: 0.5px solid gray;
@@ -45,11 +45,13 @@
       background-color: whitesmoke;
 }
 
-::ng-deep .error-message {
-      padding: 0em;
-      width: 100%;
-      margin: 0.5em;
+::ng-deep .input-container .error-message {
+      overflow-y: scroll;
+      padding: 0.25em;
+      display: block;
+      overflow: hidden;
       color: var(--error);
+      word-wrap: break-word;
       font-size: var(--small-font-size);
       font-weight: var(--normal-font-weight);
       animation: 0.2s ease-out 0s 1 expand forwards;

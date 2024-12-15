@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { v4 as uuidv4 } from 'uuid';
 
-import { catchError, from, Observable, of, switchMap, throwError } from 'rxjs';
+import { from, Observable, of, switchMap, throwError } from 'rxjs';
 
 import { User } from 'src/app/models';
 import { UserRepository } from './user.repository';
@@ -38,12 +38,12 @@ export class UserService implements UserRepository {
             );
       }
 
-      public save(value: Omit<User, 'id'>): Observable<User> {
+      public save(value: Omit<User, 'id' | 'createdAt' | 'updatedAt'>): Observable<User> {
             const newUser = { id: uuidv4(), ...value, createdAt: new Date(), updatedAt: new Date() };
             return from(this.databaseService.users.add(newUser)).pipe(switchMap(() => of(newUser)));
       }
 
-      public update(key: string, value: Omit<User, 'id'>): Observable<User> {
+      public update(key: string, value: Omit<User, 'id' | 'createdAt' | 'updatedAt'>): Observable<User> {
             const updatedUser = { ...value, createdAt: new Date(), updatedAt: new Date() };
             return from(this.databaseService.users.update(key, updatedUser)).pipe(
                   switchMap((updatedUsers) => {

@@ -17,10 +17,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       private readonly userService: UserService;
 
       public constructor() {
-            this.userService = inject(UserService);
-            this.loaderService = inject(LoaderService);
-            this.loginFormService = inject(LoginFormService);
             this.notificationService = inject(NotificationService);
+            this.loginFormService = inject(LoginFormService);
+            this.loaderService = inject(LoaderService);
+            this.userService = inject(UserService);
       }
 
       public ngOnInit(): void {}

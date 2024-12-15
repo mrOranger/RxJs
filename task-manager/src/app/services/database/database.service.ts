@@ -12,7 +12,7 @@ export class DatabaseService extends Dexie {
             super('TaskManagerDB');
 
             this.version(1).stores({
-                  users: 'id, firstName, lastName, [email+password], createdAt, updatedAt',
+                  users: 'id, firstName, lastName, &email, [email+password], createdAt, updatedAt',
             });
 
             this.users.mapToClass(UserEntity);
