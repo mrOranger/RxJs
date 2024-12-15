@@ -1,55 +1,41 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { ApplicationRef, ComponentRef, inject, Injectable, ViewChild, ViewContainerRef } from '@angular/core';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { faCheckCircle, faCross, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+
+import { NotificationComponent } from 'src/app/components';
 
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
-      private readonly notificationType$: BehaviorSubject<'success' | 'error'>;
-      private readonly notificationMessage$: BehaviorSubject<string>;
-      private readonly notificationTitle$: BehaviorSubject<string>;
-      private readonly notification$: BehaviorSubject<boolean>;
+
+      private readonly applicationRef: ApplicationRef;
 
       public constructor() {
-            this.notificationTitle$ = new BehaviorSubject<string>('');
-            this.notificationMessage$ = new BehaviorSubject<string>('');
-            this.notification$ = new BehaviorSubject<boolean>(false);
-            this.notificationType$ = new BehaviorSubject<'success' | 'error'>('success');
-      }
-
-      public get type$() {
-            return this.notificationType$;
-      }
-
-      public get show$() {
-            return this.notification$;
-      }
-
-      public get title$() {
-            return this.notificationTitle$;
-      }
-
-      public get message$() {
-            return this.notificationMessage$;
+            this.applicationRef = inject(ApplicationRef);
       }
 
       public success(message: string, delay: number = 3000) {
-            this.notificationType$.next('success');
-            this.notificationMessage$.next(message);
-            this.notificationTitle$.next('Success');
-            this.notification$.next(true);
-            this.hide(delay);
+            const componentRef = this.create(faCheckCircle, 'success', 'Success', message);
+            this.hide(componentRef, delay);
       }
 
       public error(message: string, delay: number = 3000) {
-            this.notificationType$.next('error');
-            this.notificationMessage$.next(message);
-            this.notificationTitle$.next('Something went wrong');
-            this.notification$.next(true);
-            this.hide(delay);
+            const componentRef = this.create(faExclamationCircle, 'error', 'Error', message);
+            this.hide(componentRef, delay);
       }
 
-      private hide(delay: number) {
+      private create(icon: IconDefinition, type: 'success' | 'error', title: string, message: string) {
+            const container = this.applicationRef.components[0].injector.get(ViewContainerRef);
+            const notificationRef = container.createComponent(NotificationComponent);
+            notificationRef.setInput('icon', icon);
+            notificationRef.setInput('type', type);
+            notificationRef.setInput('title', title);
+            notificationRef.setInput('message', message);
+            return notificationRef;
+      }
+
+      private hide(componentRef: ComponentRef<NotificationComponent>, delay: number) {
             const timeoutRef = setTimeout(() => {
-                  this.notification$.next(false);
+                  componentRef.destroy();
                   clearTimeout(timeoutRef);
             }, delay);
       }

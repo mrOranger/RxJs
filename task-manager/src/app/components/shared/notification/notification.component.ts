@@ -1,27 +1,17 @@
-import { Component, inject } from '@angular/core';
-import { faCheckCircle, faExclamationCircle, faInfo, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { NotificationService } from 'src/app/services/shared/notification/notification.service';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
       selector: 'tm-notification',
       templateUrl: './notification.component.html',
       styleUrls: ['./notification.component.css'],
+      changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationComponent {
-      private readonly notificationService: NotificationService;
 
-      public constructor() {
-            this.notificationService = inject(NotificationService);
-      }
+      @Input() public icon!: IconDefinition;
+      @Input() public type!: 'error' | 'success';
+      @Input() public title!: string;
+      @Input() public message!: string;
 
-      public get service() {
-            return this.notificationService;
-      }
-
-      public get infoIcon() {
-            if (this.notificationService.type$.value === 'error') {
-                  return faExclamationCircle;
-            }
-            return faCheckCircle;
-      }
 }

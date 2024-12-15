@@ -111,7 +111,12 @@ export class SignupFormService {
             return (control: AbstractControl) => {
                   return this.userService.findByEmail(control.value).pipe(
                         catchError(() => of(null)),
-                        switchMap(() => of({ unique: true })),
+                        switchMap((user) => {
+                              if (!user) {
+                                    return of(null);
+                              }
+                              return of({ unique: true });
+                        }),
                   );
             };
       }

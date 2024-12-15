@@ -30,10 +30,12 @@
                   <span [hidden]="!formService.passwordControl?.hasError('atLeastANumber')" class="error-message">
                         • La password deve contenere almeno un carattere numerico
                   </span>
-                  <span [hidden]="!formService.passwordControl?.hasError('atLeastAnUpperCaseLetter')" class="error-message">
+                  <span [hidden]="!formService.passwordControl?.hasError('atLeastAnUpperCaseLetter')"
+                        class="error-message">
                         • La password deve contenere almeno un carattere maiuscolo
                   </span>
-                  <span [hidden]="!formService.passwordControl?.hasError('atLeastASpecialCharacter')" class="error-message">
+                  <span [hidden]="!formService.passwordControl?.hasError('atLeastASpecialCharacter')"
+                        class="error-message">
                         • La password deve contenere almeno un carattere speciale
                   </span>
             </tm-input>

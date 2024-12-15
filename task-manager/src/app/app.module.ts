@@ -25,6 +25,7 @@ import {
       LoginFormService,
       UserService,
       DatabaseService,
+      SignupFormService,
 } from './services';
 import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
@@ -55,6 +56,7 @@ import { SignupComponent } from './components/authentication/signup/signup.compo
             DatabaseService,
             LoginFormService,
             StoreEmailService,
+            SignupFormService,
             StorePasswordService,
             StoreLoginFactoryService,
       ],

@@ -1,22 +1,24 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { faSignInAlt, faTasks } from '@fortawesome/free-solid-svg-icons';
-import { User } from 'src/app/models';
-import { SignupFormService, UserService } from 'src/app/services';
+
+import { NotificationService, SignupFormService, UserService } from 'src/app/services';
 
 @Component({
-      selector: 'app-signup',
+      selector: 'tm-signup',
       templateUrl: './signup.component.html',
       styleUrls: ['./signup.component.css'],
       changeDetection: ChangeDetectionStrategy.OnPush,
-      providers: [SignupFormService],
 })
 export class SignupComponent {
-      private readonly signupFormService: SignupFormService;
+
       private readonly userService: UserService;
+      private readonly signupFormService: SignupFormService;
+      private readonly notificationService: NotificationService;
 
       public constructor() {
             this.userService = inject(UserService);
             this.signupFormService = inject(SignupFormService);
+            this.notificationService = inject(NotificationService);
       }
 
       public get formService() {
@@ -38,11 +40,10 @@ export class SignupComponent {
                   email: this.signupFormService.emailControl?.value,
                   password: this.signupFormService.passwordControl?.value,
             }).subscribe({
-                  next: (savedUser) => {
-                        console.log(savedUser);
-                  },
+                  next: (savedUser) => this.notificationService.success('You have been successfully signed in.', 5000),
                   error: (error) => {
                         console.error(error);
+                        this.notificationService.error('An error occurred, please try again later.', 5000);
                   },
             });
       }
