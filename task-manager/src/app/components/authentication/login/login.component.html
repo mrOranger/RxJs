@@ -1,5 +1,3 @@
-<tm-loader></tm-loader>
-<tm-notification></tm-notification>
 <div class="card">
       <header class="header">
             <fa-icon [icon]="applicationIcon" class="app-icon" size="2x"></fa-icon>
@@ -25,21 +23,21 @@
                               • La password è obbligatoria
                         </p>
                         <p *ngIf="formService.passwordControl?.hasError('minlength')" class="error-message">
-                              • L'indirizzo email deve essere valido lungo almeno 8 caratteri
+                              • La password deve contenere almeno 8 caretteri
                         </p>
                         <p *ngIf="formService.passwordControl?.hasError('maxlength')" class="error-message">
-                              • L'indirizzo email deve essere valido lungo massimo 255 caratteri
+                              • La password deve contenere al massimo 255 caratteri
                         </p>
                         <p *ngIf="formService.passwordControl?.hasError('atLeastANumber')" class="error-message">
-                              • L'indirizzo email deve contenere almeno un numero
+                              • La password deve contenere almeno un carattere numerico
                         </p>
                         <p *ngIf="formService.passwordControl?.hasError('atLeastAnUpperCaseLetter')"
                               class="error-message">
-                              • L'indirizzo email deve contenere almeno un carattere maiuscolo
+                              • La password deve contenere almeno un carattere maiuscolo
                         </p>
                         <p *ngIf="formService.passwordControl?.hasError('atLeastASpecialCharacter')"
                               class="error-message">
-                              • L'indirizzo email deve contenere almeno un carattere speciale
+                              • La password deve contenere almeno un carattere speciale
                         </p>
                   </tm-input>
             </div>

@@ -8,6 +8,8 @@ export class SignupFormService {
       private readonly signupForm: FormGroup;
       private readonly formBuilder: FormBuilder;
 
+      public readonly passwordFormGroupName = 'passwords_group';
+
       public constructor() {
             this.formBuilder = inject(FormBuilder);
 
@@ -15,9 +17,32 @@ export class SignupFormService {
                   [SignupFormFields.FIRST_NAME]: this.firstNameForm,
                   [SignupFormFields.LAST_NAME]: this.lastNameForm,
                   [SignupFormFields.EMAIL]: this.emailForm,
-                  [SignupFormFields.PASSWORD]: this.passwordForm,
-                  [SignupFormFields.CONFIRM_PASSWORD]: this.confirmPasswordForm,
+                  [this.passwordFormGroupName]: this.passwordsForm,
             });
+      }
+
+      public get form() {
+            return this.signupForm;
+      }
+
+      public get firstNameField() {
+            return SignupFormFields.FIRST_NAME;
+      }
+
+      public get lastNameField() {
+            return SignupFormFields.LAST_NAME;
+      }
+
+      public get emailField() {
+            return SignupFormFields.EMAIL;
+      }
+
+      public get passwordField() {
+            return SignupFormFields.PASSWORD;
+      }
+
+      public get confirmPasswordField() {
+            return SignupFormFields.CONFIRM_PASSWORD;
       }
 
       private get firstNameForm() {
@@ -38,6 +63,18 @@ export class SignupFormService {
             });
       }
 
+      private get passwordsForm() {
+            return new FormGroup(
+                  {
+                        [SignupFormFields.PASSWORD]: this.passwordForm,
+                        [SignupFormFields.CONFIRM_PASSWORD]: this.confirmPasswordForm,
+                  },
+                  {
+                        validators: [this.matching],
+                  },
+            );
+      }
+
       private get passwordForm() {
             return new FormControl('', {
                   validators: [
@@ -53,7 +90,14 @@ export class SignupFormService {
 
       private get confirmPasswordForm() {
             return new FormControl('', {
-                  validators: [Validators.required, this.matching],
+                  validators: [
+                        Validators.required,
+                        Validators.minLength(8),
+                        Validators.maxLength(255),
+                        this.atLeastANumber,
+                        this.atLeastASpecialCharacter,
+                        this.atLeastAnUpperCaseLetter,
+                  ],
             });
       }
 
@@ -80,9 +124,9 @@ export class SignupFormService {
 
       public get matching() {
             return (control: AbstractControl) => {
-                  const currentPassword = control.value as string;
-                  const prevPassword = this.passwordForm.value as string;
-                  return currentPassword !== prevPassword ? { matching: false } : null;
+                  const password = control.get(SignupFormFields.PASSWORD)?.value;
+                  const confirm = control.get(SignupFormFields.CONFIRM_PASSWORD)?.value;
+                  return password === confirm ? null : { matching: true };
             };
       }
 
@@ -98,11 +142,19 @@ export class SignupFormService {
             return this.signupForm.get(SignupFormFields.EMAIL);
       }
 
+      public get passwordsGroupControl() {
+            return this.signupForm.get(this.passwordFormGroupName);
+      }
+
       public get passwordControl() {
-            return this.signupForm.get(SignupFormFields.PASSWORD);
+            return this.signupForm
+                  .get(this.passwordFormGroupName)
+                  ?.get(SignupFormFields.PASSWORD);
       }
 
       public get confirmPasswordControl() {
-            return this.signupForm.get(SignupFormFields.CONFIRM_PASSWORD);
+            return this.signupForm
+                  .get(this.passwordFormGroupName)
+                  ?.get(SignupFormFields.CONFIRM_PASSWORD);
       }
 }
