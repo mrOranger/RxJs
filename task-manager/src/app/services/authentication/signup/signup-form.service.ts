@@ -6,18 +6,20 @@ import { catchError, of, switchMap } from 'rxjs';
 import { UserService } from '../../database';
 import { SignupFormFields } from 'src/app/enums';
 import { SignupValidators } from 'src/app/validators';
+import { StoreSignupService } from './store-signup.service';
 
 @Injectable()
 export class SignupFormService {
-      private readonly signupForm: FormGroup;
-      private readonly formBuilder: FormBuilder;
+      private readonly storeSignupService: StoreSignupService;
       private readonly userService: UserService;
+      private readonly formBuilder: FormBuilder;
+      private readonly signupForm: FormGroup;
 
       public readonly passwordFormGroupName = 'passwords_group';
 
       public constructor() {
+            this.storeSignupService = inject(StoreSignupService);
             this.userService = inject(UserService)
-
             this.formBuilder = inject(FormBuilder);
 
             this.signupForm = this.formBuilder.group({
@@ -25,6 +27,16 @@ export class SignupFormService {
                   [SignupFormFields.LAST_NAME]: this.lastNameForm,
                   [SignupFormFields.EMAIL]: this.emailForm,
                   [this.passwordFormGroupName]: this.passwordsForm,
+            });
+
+            this.storeSignupService.subscribe({
+                  next: (values) => {
+                        this.firstNameControl?.setValue(values?.firstName);
+                        this.lastNameControl?.setValue(values?.lastName);
+                        this.emailControl?.setValue(values?.email);
+                        this.passwordControl?.setValue(values?.password);
+                        this.signupForm.updateValueAndValidity();
+                  }
             });
       }
 

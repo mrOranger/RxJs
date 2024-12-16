@@ -6,7 +6,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppComponent } from './app.component';
 
-import { UserTypeDirective } from './directives';
+import { RouterModule } from '@angular/router';
+
+import { routes } from './app.routes';
 
 import {
       InputComponent,
@@ -16,26 +18,23 @@ import {
       RadioGroupComponent,
       NotificationComponent,
       RadioButtonComponent,
+      SignupComponent,
 } from './components';
 
 import {
-      StoreLoginFactoryService,
-      StorePasswordService,
-      StoreEmailService,
       LoginFormService,
       UserService,
       DatabaseService,
       SignupFormService,
+      StoreLoginService,
+      StoreSignupService,
 } from './services';
-import { RouterModule } from '@angular/router';
-import { routes } from './app.routes';
-import { SignupComponent } from './components/authentication/signup/signup.component';
+
 
 @NgModule({
       declarations: [
             AppComponent,
             LoginComponent,
-            UserTypeDirective,
             LoaderComponent,
             NotificationComponent,
             SignupComponent,
@@ -55,10 +54,9 @@ import { SignupComponent } from './components/authentication/signup/signup.compo
             UserService,
             DatabaseService,
             LoginFormService,
-            StoreEmailService,
             SignupFormService,
-            StorePasswordService,
-            StoreLoginFactoryService,
+            StoreLoginService,
+            StoreSignupService,
       ],
       bootstrap: [AppComponent],
 })
