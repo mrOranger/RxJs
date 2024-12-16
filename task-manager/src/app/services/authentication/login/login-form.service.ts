@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginFormFields } from 'src/app/enums';
+import { LoginValidators } from 'src/app/validators';
 
 @Injectable()
 export class LoginFormService {
@@ -17,42 +18,21 @@ export class LoginFormService {
 
       private get emailForm() {
             return new FormControl(null, {
-                  validators: [Validators.required, Validators.maxLength(255), Validators.email],
+                  validators: [LoginValidators.required, LoginValidators.maxLength(255), LoginValidators.email],
             });
       }
 
       private get passwordForm() {
             return new FormControl(null, {
                   validators: [
-                        Validators.required,
-                        Validators.minLength(8),
-                        Validators.maxLength(255),
-                        this.atLeastANumber,
-                        this.atLeastASpecialCharacter,
-                        this.atLeastAnUpperCaseLetter,
+                        LoginValidators.required,
+                        LoginValidators.minLength(8),
+                        LoginValidators.maxLength(255),
+                        LoginValidators.atLeastANumber,
+                        LoginValidators.atLeastASpecialCharacter,
+                        LoginValidators.atLeastAnUpperCaseLetter,
                   ],
             });
-      }
-
-      private get atLeastANumber() {
-            return function (control: AbstractControl) {
-                  const value = control.value as string;
-                  return /\d/.test(value) ? null : { atLeastANumber: true };
-            };
-      }
-
-      public get atLeastAnUpperCaseLetter() {
-            return function (control: AbstractControl) {
-                  const value = control.value as string;
-                  return /[A-Z]/.test(value) ? null : { atLeastAnUpperCaseLetter: true };
-            };
-      }
-
-      public get atLeastASpecialCharacter() {
-            return function (control: AbstractControl) {
-                  const value = control.value as string;
-                  return /[!@#$%^&*]/.test(value) ? null : { atLeastASpecialCharacter: true };
-            };
       }
 
       public get form() {

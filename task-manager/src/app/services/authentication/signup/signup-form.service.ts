@@ -1,9 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { SignupFormFields } from 'src/app/enums';
+import { catchError, of, switchMap } from 'rxjs';
+
 import { UserService } from '../../database';
-import { catchError, filter, of, switchMap } from 'rxjs';
+import { SignupFormFields } from 'src/app/enums';
+import { SignupValidators } from 'src/app/validators';
 
 @Injectable()
 export class SignupFormService {
@@ -52,19 +54,19 @@ export class SignupFormService {
 
       private get firstNameForm() {
             return new FormControl('', {
-                  validators: [Validators.required, Validators.minLength(2), Validators.maxLength(255)],
+                  validators: [SignupValidators.required, SignupValidators.minLength(2), SignupValidators.maxLength(255)],
             });
       }
 
       private get lastNameForm() {
             return new FormControl('', {
-                  validators: [Validators.required, Validators.minLength(2), Validators.maxLength(255)],
+                  validators: [SignupValidators.required, SignupValidators.minLength(2), SignupValidators.maxLength(255)],
             });
       }
 
       private get emailForm() {
             return new FormControl('', {
-                  validators: [Validators.required, Validators.maxLength(255), Validators.email],
+                  validators: [SignupValidators.required, SignupValidators.maxLength(255), SignupValidators.email],
                   asyncValidators: [this.uniqueEmail$],
             });
       }
@@ -76,7 +78,7 @@ export class SignupFormService {
                         [SignupFormFields.CONFIRM_PASSWORD]: this.confirmPasswordForm,
                   },
                   {
-                        validators: [this.matching],
+                        validators: [SignupValidators.matching],
                   },
             );
       }
@@ -84,12 +86,12 @@ export class SignupFormService {
       private get passwordForm() {
             return new FormControl('', {
                   validators: [
-                        Validators.required,
-                        Validators.minLength(8),
-                        Validators.maxLength(255),
-                        this.atLeastANumber,
-                        this.atLeastASpecialCharacter,
-                        this.atLeastAnUpperCaseLetter,
+                        SignupValidators.required,
+                        SignupValidators.minLength(8),
+                        SignupValidators.maxLength(255),
+                        SignupValidators.atLeastANumber,
+                        SignupValidators.atLeastASpecialCharacter,
+                        SignupValidators.atLeastAnUpperCaseLetter,
                   ],
             });
       }
@@ -97,12 +99,12 @@ export class SignupFormService {
       private get confirmPasswordForm() {
             return new FormControl('', {
                   validators: [
-                        Validators.required,
-                        Validators.minLength(8),
-                        Validators.maxLength(255),
-                        this.atLeastANumber,
-                        this.atLeastASpecialCharacter,
-                        this.atLeastAnUpperCaseLetter,
+                        SignupValidators.required,
+                        SignupValidators.minLength(8),
+                        SignupValidators.maxLength(255),
+                        SignupValidators.atLeastANumber,
+                        SignupValidators.atLeastASpecialCharacter,
+                        SignupValidators.atLeastAnUpperCaseLetter,
                   ],
             });
       }
@@ -118,35 +120,6 @@ export class SignupFormService {
                               return of({ unique: true });
                         }),
                   );
-            };
-      }
-
-      private get atLeastANumber() {
-            return (control: AbstractControl) => {
-                  const value = control.value as string;
-                  return /\d/.test(value) ? null : { atLeastANumber: true };
-            };
-      }
-
-      public get atLeastAnUpperCaseLetter() {
-            return (control: AbstractControl) => {
-                  const value = control.value as string;
-                  return /[A-Z]/.test(value) ? null : { atLeastAnUpperCaseLetter: true };
-            };
-      }
-
-      public get atLeastASpecialCharacter() {
-            return (control: AbstractControl) => {
-                  const value = control.value as string;
-                  return /[!@#$%^&*]/.test(value) ? null : { atLeastASpecialCharacter: true };
-            };
-      }
-
-      public get matching() {
-            return (control: AbstractControl) => {
-                  const password = control.get(SignupFormFields.PASSWORD)?.value;
-                  const confirm = control.get(SignupFormFields.CONFIRM_PASSWORD)?.value;
-                  return password === confirm ? null : { matching: true };
             };
       }
 
