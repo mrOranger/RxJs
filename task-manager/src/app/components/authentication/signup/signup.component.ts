@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, inject } from '@angular/core';
 import { faSignInAlt, faTasks } from '@fortawesome/free-solid-svg-icons';
 
-import { NotificationService, SignupFormService, UserService } from 'src/app/services';
+import { NotificationService, SignupFormService, UserRepository } from 'src/app/services';
 
 @Component({
       selector: 'tm-signup',
@@ -11,12 +11,12 @@ import { NotificationService, SignupFormService, UserService } from 'src/app/ser
 })
 export class SignupComponent {
 
-      private readonly userService: UserService;
       private readonly signupFormService: SignupFormService;
       private readonly notificationService: NotificationService;
 
-      public constructor() {
-            this.userService = inject(UserService);
+      public constructor(
+            @Inject('UserRepository') private readonly userRepository: UserRepository
+      ) {
             this.signupFormService = inject(SignupFormService);
             this.notificationService = inject(NotificationService);
       }
@@ -34,7 +34,7 @@ export class SignupComponent {
       }
 
       public onClick() {
-            this.userService.save({
+            this.userRepository.save({
                   firstName: this.signupFormService.firstNameControl?.value,
                   lastName: this.signupFormService.lastNameControl?.value,
                   email: this.signupFormService.emailControl?.value,

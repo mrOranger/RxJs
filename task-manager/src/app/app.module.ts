@@ -51,6 +51,7 @@ import {
             RadioButtonComponent,
       ],
       providers: [
+            { provide: 'UserRepository', useClass: UserService },
             UserService,
             DatabaseService,
             LoginFormService,

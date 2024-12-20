@@ -1,16 +1,8 @@
-tm-radio-group {
-      min-height: 25px;
-      min-width: 50px;
-}
-
-tm-radio-button {
-      border-radius: 0em;
-}
-
-tm-radio-button:first-child .radio {
-      border-radius: 0.25em 0em 0em 0.25em;
-}
-
-tm-radio-button:last-child .radio {
-      border-radius: 0em 0.25em 0.25em 0em;
+:host {
+      width: 100%;
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: start;
+      gap: 1em;
 }

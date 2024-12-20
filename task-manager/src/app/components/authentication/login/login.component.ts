@@ -1,9 +1,9 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, inject, OnDestroy, OnInit } from '@angular/core';
 
 import { faSignInAlt, faTasks } from '@fortawesome/free-solid-svg-icons';
 
 import { UserType } from 'src/app/enums';
-import { LoaderService, LoginFormService, NotificationService, UserService } from 'src/app/services';
+import { LoaderService, LoginFormService, NotificationService, UserRepository } from 'src/app/services';
 
 @Component({
       selector: 'tm-login',
@@ -14,13 +14,13 @@ export class LoginComponent implements OnInit, OnDestroy {
       private readonly notificationService: NotificationService;
       private readonly loginFormService: LoginFormService;
       private readonly loaderService: LoaderService;
-      private readonly userService: UserService;
 
-      public constructor() {
+      public constructor(
+            @Inject('UserRepository') private readonly userRepository: UserRepository
+      ) {
             this.notificationService = inject(NotificationService);
             this.loginFormService = inject(LoginFormService);
             this.loaderService = inject(LoaderService);
-            this.userService = inject(UserService);
       }
 
       public ngOnInit(): void {}
@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.loaderService.start('Loading ...');
             const email = this.loginFormService.emailControl?.value;
             const password = this.loginFormService.passwordControl?.value;
-            this.userService.findByEmailAndPassword(email, password).subscribe({
+            this.userRepository.findByEmailAndPassword(email, password).subscribe({
                   next: (user) => {
                         console.log(user);
                         this.loaderService.stop();

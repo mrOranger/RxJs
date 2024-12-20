@@ -34,3 +34,11 @@ tm-input[type='email'] {
 button[type='button'] {
       width: 100%;
 }
+
+.user-type {
+      width: 100%;
+      display: inline-flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+}
