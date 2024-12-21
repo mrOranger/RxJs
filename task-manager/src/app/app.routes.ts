@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { LoginComponent, SignupComponent } from './components';
+import { LoginComponent, NotFoundComponent, SignupComponent } from './components';
 
 export const routes: Routes = [
       {
@@ -10,4 +10,8 @@ export const routes: Routes = [
             path: 'authentication/signup',
             component: SignupComponent,
       },
+      {
+            path: '**',
+            component: NotFoundComponent,
+      }
 ];
