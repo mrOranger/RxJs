@@ -1,3 +1,3 @@
-export * from './shared';
-export * from './database';
-export * from './authentication';
+export * from './user';
+
+export { DatabaseService } from './database.service';

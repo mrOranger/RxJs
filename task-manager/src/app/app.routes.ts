@@ -1,14 +1,16 @@
 import { Routes } from '@angular/router';
-import { LoginComponent, NotFoundComponent, SignupComponent } from './components';
+import { routes as authenticationRoutes } from './authentication/authentication.routes';
+import { NotFoundComponent } from './shared';
 
 export const routes: Routes = [
       {
-            path: 'authentication/login',
-            component: LoginComponent,
+            path: '',
+            redirectTo: '/authentication/login',
+            pathMatch: 'full',
       },
       {
-            path: 'authentication/signup',
-            component: SignupComponent,
+            path: 'authentication',
+            children: authenticationRoutes
       },
       {
             path: '**',

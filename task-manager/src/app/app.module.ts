@@ -9,35 +9,20 @@ import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 
 import { routes } from './app.routes';
-
-import {
-      InputComponent,
-      LoginComponent,
-      LoaderComponent,
-      ButtonComponent,
-      RadioGroupComponent,
-      NotificationComponent,
-      RadioButtonComponent,
-      SignupComponent,
-} from './components';
-
-import {
-      LoginFormService,
-      UserService,
-      DatabaseService,
-      SignupFormService,
-      StoreLoginService,
-      StoreSignupService,
-} from './services';
+import { LoginComponent, SignupComponent } from './authentication/components';
+import { ButtonComponent, InputComponent, LoaderComponent, NotificationComponent, RadioButtonComponent, RadioGroupComponent } from './shared';
+import { DatabaseService, UserService } from './services';
+import { LoginFormService, SignupFormService, StoreLoginService, StoreSignupService } from './authentication/services';
+import { USER_REPOSITORY_TOKEN } from './injection-tokens';
 
 
 @NgModule({
       declarations: [
             AppComponent,
             LoginComponent,
+            SignupComponent,
             LoaderComponent,
             NotificationComponent,
-            SignupComponent,
       ],
       imports: [
             RouterModule.forRoot(routes),
@@ -51,7 +36,7 @@ import {
             RadioButtonComponent,
       ],
       providers: [
-            { provide: 'UserRepository', useClass: UserService },
+            { provide: USER_REPOSITORY_TOKEN, useClass: UserService },
             UserService,
             DatabaseService,
             LoginFormService,
