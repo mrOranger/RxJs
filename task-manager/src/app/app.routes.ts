@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { routes as authenticationRoutes } from './authentication/authentication.routes';
 import { NotFoundComponent } from './shared';
 
 export const routes: Routes = [
@@ -10,7 +9,7 @@ export const routes: Routes = [
       },
       {
             path: 'authentication',
-            children: authenticationRoutes
+            loadChildren: () => import('./authentication/authentication.routes').then((m) => m.routes),
       },
       {
             path: '**',

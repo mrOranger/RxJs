@@ -5,12 +5,12 @@ import { authGuard } from './guards/auth.guard';
 export const routes: Routes = [
       {
             path: 'login',
-            component: LoginComponent,
             canActivate: [authGuard()],
+            loadComponent: () => import('./components/login/login.component').then((mod) => mod.LoginComponent),
       },
       {
             path: 'signup',
-            component: SignupComponent,
             canActivate: [authGuard()],
+            loadComponent: () => import('./components/signup/signup.component').then((mod) => mod.SignupComponent),
       },
 ];
