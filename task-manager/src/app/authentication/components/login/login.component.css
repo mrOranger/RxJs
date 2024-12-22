@@ -7,10 +7,6 @@
       align-items: center;
 }
 
-.card {
-      max-width: 500px;
-}
-
 tm-input {
       width: 100%;
 }

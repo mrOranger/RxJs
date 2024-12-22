@@ -75,12 +75,12 @@ export class LoginComponent implements OnInit, OnDestroy {
                   next: (user) => {
                         console.log(user);
                         this.loaderService.stop();
-                        this.notificationService.success('Login successful', 5000);
+                        this.notificationService.success('Login successful', 50000);
                   },
                   error: (error) => {
                         console.error(error);
                         this.loaderService.stop();
-                        this.notificationService.error('Username or password incorrect', 5000);
+                        this.notificationService.error('Username or password incorrect', 50000);
                   },
             });
       }

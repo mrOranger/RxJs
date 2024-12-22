@@ -1,5 +1,5 @@
 :host {
-      border-radius: 0.25rem;
+      border-radius: var(--default-border-radius);
       border: 0.5px solid gray;
       cursor: pointer;
       background-color: var(--secondary);

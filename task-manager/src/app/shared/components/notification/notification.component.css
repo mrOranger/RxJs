@@ -1,12 +1,13 @@
 .notification {
+      min-width: 400px;
+      max-width: 20%;
       position: absolute;
       top: 5%;
-      left: 70%;
       right: 5%;
       padding: 1em;
       display: inline-grid;
-      border-radius: 0.5em;
-      background-color: whitesmoke;
+      border-radius: var(--default-border-radius);
+      background-color: var(--card-background);
       box-shadow: 0em 0.25em 0.25em lightgray;
       animation: 0.5s ease-out 0s 1 expand forwards;
 
@@ -54,7 +55,11 @@
 }
 
 .notification-icon {
-      width: fit-content;
+      width: 100%;
+      height: 100%;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
 }
 
 .notification-message {

@@ -7,6 +7,7 @@
       --warning: #c17817;
       --error: #b20d30;
       --not-allowed: #c4c4c4;
+      --card-background: whitesmoke;
 
       --text-primary: #000555;
       --text-not-allowed: #7a7a7a;
@@ -19,6 +20,8 @@
       --large-font-size: 2rem;
       --normal-font-size: 1rem;
       --small-font-size: 0.875rem;
+
+      --default-border-radius: 0.25rem;
 }
 
 html,
@@ -46,8 +49,8 @@ body {
       align-items: center;
       border: 1px solid var(--secondary);
       padding: 2em;
-      border-radius: 1em;
-      background-color: whitesmoke;
+      border-radius: var(--default-border-radius);
+      background-color: var(--card-background);
       gap: 2em;
       box-shadow: 0em 0.5em 0.5em lightgray;
 }
