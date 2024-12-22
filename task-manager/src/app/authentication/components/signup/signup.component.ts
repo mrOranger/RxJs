@@ -1,16 +1,36 @@
 import { ChangeDetectionStrategy, Component, Inject, inject } from '@angular/core';
 import { faSignInAlt, faTasks } from '@fortawesome/free-solid-svg-icons';
 
-import { UserRepository } from 'src/app/services';
-import { SignupFormService } from '../../services';
-import { NotificationService } from 'src/app/shared';
+import { DatabaseService, UserRepository, UserService } from 'src/app/services';
+import { SignupFormService, StoreSignupService } from '../../services';
+import { ButtonComponent, InputComponent, NotificationService } from 'src/app/shared';
 import { USER_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { RouterLink } from '@angular/router';
+import { NgIf } from '@angular/common';
 
 @Component({
+      standalone: true,
       selector: 'tm-signup',
       templateUrl: './signup.component.html',
       styleUrls: ['./signup.component.css'],
       changeDetection: ChangeDetectionStrategy.OnPush,
+      imports: [
+            NgIf,
+            RouterLink,
+            FormsModule,
+            InputComponent,
+            ButtonComponent,
+            FontAwesomeModule,
+            ReactiveFormsModule,
+      ],
+      providers: [
+            { provide: USER_REPOSITORY_TOKEN, useClass: UserService },
+            DatabaseService,
+            SignupFormService,
+            StoreSignupService,
+      ]
 })
 export class SignupComponent {
 

@@ -6,7 +6,7 @@ export function authGuard (): CanActivateFn {
       return function (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
             const router = inject(Router);
-            const isAuthenticated = false;
+            const isAuthenticated = true;
 
             if (isAuthenticated) {
                   return Promise.resolve(true);

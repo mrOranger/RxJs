@@ -2,17 +2,35 @@ import { ChangeDetectionStrategy, Component, Inject, inject, OnDestroy, OnInit }
 
 import { faSignInAlt, faTasks } from '@fortawesome/free-solid-svg-icons';
 
-import { UserRepository } from 'src/app/services';
-import { LoginFormService } from '../../services';
+import { DatabaseService, UserRepository, UserService } from 'src/app/services';
+import { LoginFormService, StoreLoginService } from '../../services';
 import { UserType } from '../../enums';
-import { LoaderService, NotificationService } from 'src/app/shared';
+import { ButtonComponent, InputComponent, LoaderService, NotificationService } from 'src/app/shared';
 import { USER_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { RouterLink } from '@angular/router';
 
 @Component({
+      standalone: true,
       selector: 'tm-login',
       templateUrl: './login.component.html',
       styleUrls: ['./login.component.css'],
       changeDetection: ChangeDetectionStrategy.OnPush,
+      imports: [
+            RouterLink,
+            FormsModule,
+            InputComponent,
+            ButtonComponent,
+            FontAwesomeModule,
+            ReactiveFormsModule,
+      ],
+      providers: [
+            { provide: USER_REPOSITORY_TOKEN, useClass: UserService },
+            DatabaseService,
+            LoginFormService,
+            StoreLoginService,
+      ]
 })
 export class LoginComponent implements OnInit, OnDestroy {
       private readonly notificationService: NotificationService;
