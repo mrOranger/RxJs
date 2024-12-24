@@ -1,5 +1,5 @@
 import { Entity } from 'dexie';
-import { DatabaseService } from 'src/app/services';
+import { DatabaseService } from '../../services';
 
 export class UserEntity extends Entity<DatabaseService> {
       public id!: string;

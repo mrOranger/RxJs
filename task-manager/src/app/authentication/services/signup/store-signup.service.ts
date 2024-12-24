@@ -1,6 +1,6 @@
-import { User } from "src/app/models";
+import { User } from "src/app/shared/models";
 
-import { StoreService } from "../../../services/store.service";
+import { StoreService } from "../../../shared/services/store.service";
 import { Injectable } from "@angular/core";
 
 @Injectable()

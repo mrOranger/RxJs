@@ -3,11 +3,10 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/f
 
 import { catchError, of, switchMap } from 'rxjs';
 
-import { UserRepository } from 'src/app/services';
-
 import { SignupFormFields } from '../../enums';
 import { SignupValidators } from '../../validators';
 
+import { UserRepository } from 'src/app/shared';
 import { StoreSignupService } from './store-signup.service';
 import { USER_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
 

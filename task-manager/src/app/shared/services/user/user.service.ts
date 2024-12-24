@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { from, Observable, of, switchMap, throwError } from 'rxjs';
 
-import { User } from 'src/app/models';
+import { User } from 'src/app/shared/models';
 import { UserRepository } from './user.repository';
 import { DatabaseService } from '../database.service';
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import Dexie, { EntityTable } from 'dexie';
 
-import { UserEntity } from 'src/app/models/database/user.entity';
+import { UserEntity } from 'src/app/shared/models/database/user.entity';
 
 @Injectable()
 export class DatabaseService extends Dexie {
