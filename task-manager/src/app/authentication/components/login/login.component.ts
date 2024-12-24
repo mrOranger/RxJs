@@ -5,6 +5,8 @@ import { RouterLink } from '@angular/router';
 import { faSignInAlt, faTasks } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
+import { v4 as uuid4 } from 'uuid';
+
 import {
       ButtonComponent,
       InputComponent,
@@ -13,6 +15,7 @@ import {
       DatabaseService,
       UserRepository,
       UserService,
+      LocalStorageService,
 } from 'src/app/shared';
 import { LoginFormService, StoreLoginService } from '../../services';
 import { USER_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
@@ -30,14 +33,17 @@ import { UserType } from '../../enums';
             DatabaseService,
             LoginFormService,
             StoreLoginService,
+            LocalStorageService,
       ],
 })
 export class LoginComponent {
       private readonly notificationService: NotificationService;
+      private readonly localStorageService: LocalStorageService;
       private readonly loginFormService: LoginFormService;
       private readonly loaderService: LoaderService;
 
       public constructor(@Inject(USER_REPOSITORY_TOKEN) private readonly userRepository: UserRepository) {
+            this.localStorageService = inject(LocalStorageService);
             this.notificationService = inject(NotificationService);
             this.loginFormService = inject(LoginFormService);
             this.loaderService = inject(LoaderService);
@@ -68,9 +74,9 @@ export class LoginComponent {
             const email = this.loginFormService.emailControl?.value;
             const password = this.loginFormService.passwordControl?.value;
             this.userRepository.findByEmailAndPassword(email, password).subscribe({
-                  next: (user) => {
-                        console.log(user);
+                  next: () => {
                         this.loaderService.stop();
+                        this.localStorageService.authKey = uuid4();
                         this.notificationService.success('Login successful', 50000);
                   },
                   error: (error) => {

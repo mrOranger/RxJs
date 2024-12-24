@@ -8,7 +8,7 @@ export function authGuard (): CanActivateFn {
             const router = inject(Router);
             const isAuthenticated = true;
 
-            if (isAuthenticated) {
+            if (localStorage.getItem('auth_key')) {
                   return Promise.resolve(true);
             }
 
