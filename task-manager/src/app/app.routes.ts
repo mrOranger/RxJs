@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { NotFoundComponent } from './shared';
+import { authGuard, NotFoundComponent } from './shared';
 
 export const routes: Routes = [
       {
@@ -10,6 +10,7 @@ export const routes: Routes = [
       {
             path: 'authentication',
             loadChildren: () => import('./authentication/authentication.routes').then((m) => m.routes),
+            canActivateChild: [ authGuard(false) ],
       },
       {
             path: '**',
