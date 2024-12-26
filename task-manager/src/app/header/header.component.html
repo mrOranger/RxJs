@@ -1,17 +1,42 @@
+<fa-icon [icon]="appIcon" size="2x" class="app-icon"></fa-icon>
 <ul class="header-nav">
-      <li class="nav-item">
+      <li class="nav-item" routerLink="/home" routerLinkActive="active">
             <fa-icon size="lg" [icon]="homeIcon"></fa-icon>
             <p class="nav-text">Home</p>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" routerLink="/projects" routerLinkActive="active">
             <fa-icon size="lg" [icon]="projectIcon"></fa-icon>
             <p class="nav-text">Project</p>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" routerLink="/statistics" routerLinkActive="active">
             <fa-icon size="lg" [icon]="statisticsIcon"></fa-icon>
             <p class="nav-text">Statistics</p>
       </li>
       <li class="nav-item">
+            <fa-icon size="lg" [icon]="logoutIcon"></fa-icon>
+            <p class="nav-text">Logout</p>
+      </li>
+</ul>
+<ul class="hamburger-menu" [attr.active]="active" (click)="onToggleHamburgerMenu()">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+</ul>
+<ul class="mobile-menu" [attr.active]="active">
+      <li routerLink="/home" routerLinkActive="active">
+            <fa-icon size="lg" [icon]="homeIcon"></fa-icon>
+            <p class="nav-text">Home</p>
+      </li>
+      <li routerLink="/projects" routerLinkActive="active">
+            <fa-icon size="lg" [icon]="projectIcon"></fa-icon>
+            <p class="nav-text">Project</p>
+      </li>
+      <li routerLink="/statistics" routerLinkActive="active">
+            <fa-icon size="lg" [icon]="statisticsIcon"></fa-icon>
+            <p class="nav-text">Statistics</p>
+      </li>
+      <li>
             <fa-icon size="lg" [icon]="logoutIcon"></fa-icon>
             <p class="nav-text">Logout</p>
       </li>
