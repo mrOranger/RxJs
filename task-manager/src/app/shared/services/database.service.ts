@@ -14,10 +14,11 @@ export class DatabaseService extends Dexie {
 
             this.version(1).stores({
                   users: 'id, firstName, lastName, &email, [email+password], createdAt, updatedAt',
-                  tasks: 'id, title, description, assignedTo, createdAt, updatedAt'
+                  tasks: 'id, title, description, assignedTo, createdAt, updatedAt',
             });
 
             this.users.mapToClass(UserEntity);
             this.tasks.mapToClass(TaskEntity);
+
       }
 }

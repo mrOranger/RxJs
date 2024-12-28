@@ -16,6 +16,7 @@ export class TaskService implements TaskRepository {
       public index(): Observable<Task[]> {
             return from(this.databaseService.tasks.toArray());
       }
+
       public find(key: string): Observable<Task> {
             return from(this.databaseService.tasks.where('id').equalsIgnoreCase(key).first()).pipe(
                   switchMap((result) => {

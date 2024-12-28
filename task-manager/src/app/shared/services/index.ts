@@ -1,4 +1,5 @@
 export * from './user';
+export * from './task';
 export * from './loader';
 export * from './storage';
 export * from './notification';
