@@ -2,19 +2,22 @@ import { Injectable } from '@angular/core';
 
 import Dexie, { EntityTable } from 'dexie';
 
-import { UserEntity } from 'src/app/shared/models/database/user.entity';
+import { TaskEntity, UserEntity } from '../models';
 
 @Injectable()
 export class DatabaseService extends Dexie {
       public readonly users!: EntityTable<UserEntity, 'id'>;
+      public readonly tasks!: EntityTable<TaskEntity, 'id'>;
 
       public constructor() {
             super('TaskManagerDB');
 
             this.version(1).stores({
                   users: 'id, firstName, lastName, &email, [email+password], createdAt, updatedAt',
+                  tasks: 'id, title, description, assignedTo, createdAt, updatedAt'
             });
 
             this.users.mapToClass(UserEntity);
+            this.tasks.mapToClass(TaskEntity);
       }
 }
