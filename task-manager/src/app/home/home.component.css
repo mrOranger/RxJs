@@ -1,0 +1,9 @@
+:host {
+      height: 100%;
+      width: 100%;
+      display: inline-grid;
+      box-sizing: border-box;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 1em 2em;
+      gap: 1em;
+}

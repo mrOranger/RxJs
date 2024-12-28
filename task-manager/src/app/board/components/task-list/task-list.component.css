@@ -1,0 +1,35 @@
+:host {
+      gap: 0.5em;
+      align-items: center;
+      display: inline-flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      justify-content: space-between;
+      background-color: var(--secondary);
+      border-radius: var(--default-border-radius);
+}
+
+.column-title {
+      top: 0em;
+      width: 100%;
+      margin: 0em;
+      z-index: 9999;
+      max-height: 100px;
+      position: sticky;
+      padding: 1em 2em;
+      text-align: center;
+      box-sizing: border-box;
+      background-color: var(--info);
+      font-size: var(--large-font-size);
+      border-radius: var(--default-border-radius) var(--default-border-radius) 0em 0em;
+}
+
+.column-body {
+      overflow-y: auto;
+      overflow-y: scroll;
+      text-align: justify;
+      box-sizing: border-box;
+      max-height: calc(100vh - 300px);
+      font-size: var(--small-font-size);
+      font-weight: var(--regular-font-weight);
+}

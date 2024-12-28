@@ -1,4 +1,7 @@
 .container {
+      margin: 0em;
+      padding: 0em;
+      box-sizing: border-box;
       display: grid;
       grid-template-rows: 75px calc(100vh - 150px) 75px;
       grid-template-columns: 200px 1fr;
@@ -11,18 +14,23 @@
 .header {
       grid-area: header;
       border-bottom: 2px solid var(--accent);
+      box-sizing: border-box;
 }
 
 .sidebar-left {
       grid-area: sidebar-left;
+      box-sizing: border-box;
 }
 
 .main {
       grid-area: main;
+      overflow-y: auto;
+      box-sizing: border-box;
 }
 
 .footer {
       grid-area: footer;
+      box-sizing: border-box;
 }
 
 @media screen and (max-width: 425px) {
