@@ -1,9 +1,10 @@
-.container {
+:host {
+      width: 100%;
       margin: 0em;
       padding: 0em;
       box-sizing: border-box;
       display: grid;
-      grid-template-rows: 75px calc(100vh - 150px) 75px;
+      grid-template-rows: 75px calc(100vh - 154px) 75px;
       grid-template-columns: 200px 1fr;
       grid-template-areas:
             'header header'
