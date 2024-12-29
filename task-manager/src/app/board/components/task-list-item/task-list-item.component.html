@@ -1,0 +1,17 @@
+<div class="card task-card">
+      <header class="task-header">
+            <h1 class="task-title">{{ task.title }}</h1>
+      </header>
+      <main class="task-body">
+            <h2 class="task-description">{{ task.description }}</h2>
+            <ul class="task-assignation">
+                  <li *ngFor="let user of taskUsers">
+                        <p class="task-assignation-user">{{ user.firstName }} {{ user.lastName }}</p>
+                  </li>
+            </ul>
+      </main>
+      <footer class="task-footer">
+            <h4 class="task-created-at">Created at: {{ createdAt | titlecase }}</h4>
+            <h4 class="task-updated-at">Last update: {{ updatedAt | titlecase }}</h4>
+      </footer>
+</div>
