@@ -25,13 +25,13 @@ export class ModalComponent {
       }
 
       public submit(): void {
-            this.elementRef?.nativeElement.remove();
             this.submitEvent.emit();
+            this.elementRef?.nativeElement.remove();
       }
 
       public close(): void {
-            this.elementRef?.nativeElement.remove();
             this.closeEvent.emit();
+            this.elementRef?.nativeElement.remove();
       }
 
 }
