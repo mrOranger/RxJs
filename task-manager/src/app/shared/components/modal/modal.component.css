@@ -1,0 +1,18 @@
+:host {
+      min-width: 200px;
+      min-height: 300px;
+
+      max-width: 70%;
+      max-height: 80%;
+
+      position: absolute;
+      top: 50%;
+      left: 50%;
+
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+
+      border-radius: var(--default-border-radius);
+}
