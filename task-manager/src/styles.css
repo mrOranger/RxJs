@@ -16,10 +16,11 @@
       --light-font-weight: 200;
       --bold-font-weight: 550;
 
-      --extra-large-font-size: 3rem;
-      --large-font-size: 2rem;
+      --extra-large-font-size: 1.25rem;
+      --large-font-size: 1.125rem;
       --normal-font-size: 1rem;
       --small-font-size: 0.875rem;
+      --extra-small-font-size: 0.75rem;
 
       --default-border-radius: 0.25rem;
 }

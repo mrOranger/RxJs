@@ -25,11 +25,11 @@
 }
 
 .column-body {
-      overflow-y: auto;
-      overflow-y: scroll;
-      text-align: justify;
-      box-sizing: border-box;
-      max-height: calc(100vh - 300px);
-      font-size: var(--small-font-size);
-      font-weight: var(--regular-font-weight);
+      width: 100%;
+      align-items: center;
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 0.5em 1em;
+      gap: 0.5em;
 }
