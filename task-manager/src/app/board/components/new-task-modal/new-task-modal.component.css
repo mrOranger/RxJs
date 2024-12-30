@@ -1,0 +1,25 @@
+:host {
+      display: inline-flex;
+      width: 100%;
+      height: 100%;
+}
+
+.form {
+      width: 100%;
+      height: 100%;
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 1em;
+      box-sizing: border-box;
+      padding: 2em 0em;
+}
+
+tm-input[name='title'] {
+      width: 100%;
+}
+
+tm-input[name='description'] {
+      width: 100%;
+}

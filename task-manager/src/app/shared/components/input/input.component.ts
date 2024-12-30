@@ -1,13 +1,13 @@
 import { NgIf } from '@angular/common';
 import { Component, Injector, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, NgControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
       standalone: true,
       selector: 'tm-input',
       templateUrl: './input.component.html',
       styleUrls: ['./input.component.css'],
-      imports: [FormsModule, NgIf],
+      imports: [FormsModule, ReactiveFormsModule, NgIf],
       providers: [
             {
                   provide: NG_VALUE_ACCESSOR,

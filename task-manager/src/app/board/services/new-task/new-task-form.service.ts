@@ -4,14 +4,15 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 @Injectable()
 export class NewTaskFormService {
 
-      private readonly form: FormGroup;
+      private readonly newTaskForm: FormGroup;
       private readonly formBuilder: FormBuilder;
 
       public constructor() {
             this.formBuilder = inject(FormBuilder);
-            this.form = this.formBuilder.group({
-                  [this.titleFormName]: this.titleForm,
-                  [this.descriptionFormName]: this.descriptionForm,
+
+            this.newTaskForm = this.formBuilder.group({
+                  [this.titleFormName]: this.titleFormControl,
+                  [this.descriptionFormName]: this.descriptionFormControl,
             });
       }
 
@@ -19,8 +20,8 @@ export class NewTaskFormService {
             return 'title';
       }
 
-      public get titleForm() {
-            return new FormControl(null, {
+      public get titleFormControl() {
+            return new FormControl('', {
                   validators: [Validators.required, Validators.minLength(2), Validators.maxLength(255)],
             });
       }
@@ -29,9 +30,13 @@ export class NewTaskFormService {
             return 'description';
       }
 
-      public get descriptionForm() {
-            return new FormControl(null, {
+      public get descriptionFormControl() {
+            return new FormControl('', {
                   validators: [Validators.required, Validators.minLength(2), Validators.maxLength(255)],
             });
+      }
+
+      public get form() {
+            return this.newTaskForm;
       }
 }

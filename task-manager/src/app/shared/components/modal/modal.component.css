@@ -1,9 +1,6 @@
 :host {
-      min-width: 200px;
-      min-height: 300px;
-
-      max-width: 70%;
-      max-height: 80%;
+      min-width: 500px;
+      min-height: 400px;
 
       position: absolute;
       top: 50%;
@@ -36,6 +33,11 @@
       margin: 0em;
       font-size: var(--three-extra-large-font-size);
       font-weight: var(--regular-font-weight);
+}
+
+.main {
+      width: 100%;
+      height: 100%;
 }
 
 .footer {

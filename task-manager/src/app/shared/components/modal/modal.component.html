@@ -5,6 +5,6 @@
       <ng-content></ng-content>
 </main>
 <footer class="footer">
-      <button tmButton class="confirm" (click)="onSubmit()">Confirm</button>
-      <button tmButton class="cancel" (click)="onClose()">Cancel</button>
+      <button tmButton class="confirm" (click)="onSubmit()" [disabled]="disableSubmit">Confirm</button>
+      <button tmButton class="cancel" (click)="onClose()" [disabled]="disableCancel">Cancel</button>
 </footer>
