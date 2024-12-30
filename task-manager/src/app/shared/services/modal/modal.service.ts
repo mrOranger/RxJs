@@ -13,15 +13,19 @@ export class ModalService {
       public create <T> (params: { component: Type<T>, title: string, close: () => void, submit: () => void }): void {
             const { title, close, submit, component } = params;
 
-            const container = this.applicationRef.components[0].injector.get(ViewContainerRef);
-            const modalComponentRef = container.createComponent(ModalComponent);
-            const modalViewContainer = modalComponentRef.location.nativeElement.querySelector('.main')
-            const componentRef = container.createComponent(component);
+            const rootComponent = this.applicationRef.components.at(0);
+            rootComponent?.location.nativeElement.classList.add('blur');
+            const rootComponentViewContainer = rootComponent!.injector.get(ViewContainerRef);
+
+            const modalComponentRef = rootComponentViewContainer?.createComponent(ModalComponent);
+            const modalViewContainer = modalComponentRef?.location.nativeElement.querySelector('.main');
+
+            const injectedComponentRef = rootComponentViewContainer?.createComponent(component);
 
             modalComponentRef.instance.title = title;
-            modalComponentRef.instance.submitEvent.subscribe({ next: submit(), });
-            modalComponentRef.instance.closeEvent.subscribe({ next: close(), });
+            modalComponentRef.instance.submitEvent.subscribe({ next: submit, });
+            modalComponentRef.instance.closeEvent.subscribe({ next: close, });
 
-            modalViewContainer.appendChild(componentRef.location.nativeElement);
+            modalViewContainer.appendChild(injectedComponentRef!.location.nativeElement);
       }
 }
