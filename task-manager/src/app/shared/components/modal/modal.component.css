@@ -51,7 +51,3 @@
       padding: 0.5em 1em;
       box-sizing: border-box;
 }
-
-::ng-deep .icon {
-      display: none;
-}

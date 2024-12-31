@@ -4,23 +4,30 @@ import { CommonModule } from '@angular/common';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-import { ModalService, Task } from 'src/app/shared';
-import { NewTaskModalComponent, NewTaskStoreService } from 'src/app/board';
 import { Subscription } from 'rxjs';
+
+import { ButtonComponent, DatabaseService, ModalService, Task, TaskRepository, TaskService } from 'src/app/shared';
+import { NewTaskModalComponent, NewTaskStoreService } from 'src/app/board';
+import { TASK_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
 
 @Component({
       standalone: true,
       selector: 'tm-sidebar-left',
-      imports: [CommonModule, FontAwesomeModule],
       styleUrls: ['./sidebar-left.component.css'],
       templateUrl: './sidebar-left.component.html',
       changeDetection: ChangeDetectionStrategy.OnPush,
+      imports: [CommonModule, FontAwesomeModule, ButtonComponent],
+      providers: [
+            DatabaseService,
+            { provide: TASK_REPOSITORY_TOKEN, useClass: TaskService }
+      ]
 })
 export class SidebarLeftComponent implements OnInit, OnDestroy {
 
       private task?: Partial<Task | null>;
 
       private readonly modalService: ModalService;
+      private readonly taskRepository: TaskRepository;
       private readonly changeDetectorRef: ChangeDetectorRef;
       private readonly newTaskStoreService: NewTaskStoreService;
 
@@ -30,6 +37,7 @@ export class SidebarLeftComponent implements OnInit, OnDestroy {
             this.modalService = inject(ModalService);
             this.changeDetectorRef = inject(ChangeDetectorRef);
             this.newTaskStoreService = inject(NewTaskStoreService);
+            this.taskRepository = inject<TaskRepository>(TASK_REPOSITORY_TOKEN);
       }
 
       public ngOnInit(): void {
@@ -46,7 +54,9 @@ export class SidebarLeftComponent implements OnInit, OnDestroy {
             this.modalService.create({
                   component: NewTaskModalComponent,
                   title: 'New task',
-                  onSubmit: () => { console.log(this.task); },
+                  onSubmit: () => {
+                        console.log(this.task);
+                   },
                   closeDisabled: false,
                   submitDisabled: true,
             });
