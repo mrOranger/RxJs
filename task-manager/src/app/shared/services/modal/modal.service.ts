@@ -26,6 +26,7 @@ export class ModalService {
             const rootComponentViewContainer = rootComponent!.injector.get(ViewContainerRef);
 
             const modalComponentRef = rootComponentViewContainer?.createComponent(ModalComponent);
+
             const modalViewContainer = modalComponentRef?.location.nativeElement.querySelector('.main');
 
             const injectedComponentRef = rootComponentViewContainer?.createComponent(component);

@@ -1,12 +1,10 @@
-<div class="modal-body" [@modalState]>
-      <header class="header">
-            <h1 class="title">{{ title }}</h1>
-      </header>
-      <main class="main">
-            <ng-content></ng-content>
-      </main>
-      <footer class="footer">
-            <button tmButton class="confirm" (click)="onSubmit()" [disabled]="disableSubmit">Confirm</button>
-            <button tmButton class="cancel" (click)="onClose()" [disabled]="disableCancel">Cancel</button>
-      </footer>
-</div>
+<header class="header">
+      <h1 class="title">{{ title }}</h1>
+</header>
+<main class="main">
+      <ng-content></ng-content>
+</main>
+<footer class="footer">
+      <button tmButton class="confirm" (click)="onSubmit()" [disabled]="disableSubmit">Confirm</button>
+      <button tmButton class="cancel" (click)="onClose()" [disabled]="disableCancel">Cancel</button>
+</footer>

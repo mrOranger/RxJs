@@ -1,10 +1,9 @@
 import { ApplicationRef, Component, ElementRef, inject, Input } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 
 import { ButtonComponent } from '../button/button.component';
 import { Subject } from 'rxjs';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { transform } from '@babel/core';
 
 @Component({
       standalone: true,
@@ -12,16 +11,28 @@ import { transform } from '@babel/core';
       styleUrls: ['./modal.component.css'],
       templateUrl: './modal.component.html',
       imports: [CommonModule, ButtonComponent],
+      host: {
+            '[@modalZoomIn]': '',
+      },
       animations: [
-            trigger('modalState', [
-                  state('hidden', style({
-                        transform: 'scale(0.0)',
-                  })),
-                  state('initialized', style({
-                        transform: 'scale(1.0)'
-                  })),
+            trigger('modalZoomIn', [
+                  transition(':enter', [
+                        style({
+                              transform: 'translate(-100vw, -50%)',
+                        }),
+                        animate('200ms', style({
+                              transform: 'translate(-50%, -50%)',
+                        }))
+                  ]),
+                  transition(':leave', [
+                        style({
+                              transform: 'translate(-50%, -50%)',
+                        }),
+                        animate('200ms', style({
+                              transform: 'translate(-50%, 100vw)',
+                        }))
+                  ]),
             ]),
-            transition('hidden <=> initialized', animate(500)),
       ]
 })
 export class ModalComponent {
@@ -34,16 +45,16 @@ export class ModalComponent {
       public closeEvent: Subject<void>;
       public submitEvent: Subject<void>;
 
+      private readonly elementRef?: ElementRef;
       private readonly applicationRef: ApplicationRef;
 
-      public constructor(
-            private readonly elementRef?: ElementRef,
-      ) {
+      public constructor() {
             this.isCancelDisabled = false;
             this.isSubmitDisabled = false;
             this.closeEvent = new Subject<void>();
             this.submitEvent = new Subject<void>();
 
+            this.elementRef = inject(ElementRef);
             this.applicationRef = inject(ApplicationRef);
       }
 
