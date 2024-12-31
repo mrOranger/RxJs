@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ButtonComponent } from '../button/button.component';
 import { Subject } from 'rxjs';
-import { state, style, trigger } from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { transform } from '@babel/core';
 
 @Component({
@@ -21,6 +21,7 @@ import { transform } from '@babel/core';
                         transform: 'scale(1.0)'
                   })),
             ]),
+            transition('hidden <=> initialized', animate(500)),
       ]
 })
 export class ModalComponent {
