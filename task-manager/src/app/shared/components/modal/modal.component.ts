@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { ButtonComponent } from '../button/button.component';
 import { Subject } from 'rxjs';
+import { state, style, trigger } from '@angular/animations';
+import { transform } from '@babel/core';
 
 @Component({
       standalone: true,
@@ -10,6 +12,16 @@ import { Subject } from 'rxjs';
       styleUrls: ['./modal.component.css'],
       templateUrl: './modal.component.html',
       imports: [CommonModule, ButtonComponent],
+      animations: [
+            trigger('modalState', [
+                  state('hidden', style({
+                        transform: 'scale(0.0)',
+                  })),
+                  state('initialized', style({
+                        transform: 'scale(1.0)'
+                  })),
+            ]),
+      ]
 })
 export class ModalComponent {
 
