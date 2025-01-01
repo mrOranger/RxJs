@@ -49,14 +49,13 @@ export class SidebarLeftComponent implements OnInit, OnDestroy {
             });
       }
 
-
       public onNewTask() {
             this.modalService.create({
                   component: NewTaskModalComponent,
                   title: 'New task',
                   width: '60%',
                   height: '50%',
-                  onSubmit: () => {
+                  onOk: () => {
                         console.log(this.task);
                    },
                   closeDisabled: false,

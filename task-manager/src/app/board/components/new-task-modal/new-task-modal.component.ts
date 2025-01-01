@@ -35,7 +35,6 @@ export class NewTaskModalComponent implements OnInit, OnDestroy {
             this.newTaskFormService$ = this.newTaskFormService.form.valueChanges.subscribe({
                   next: (values) => {
                         this.modalService.updateConfig({ okDisabled: !this.newTaskFormService.form.valid, cancelDisabled: false });
-                        this.newTaskStoreService.value = values;
                         this.changeDetectorRef.detectChanges();
                   }
             });

@@ -43,7 +43,7 @@ export class ModalComponent {
       private isSubmitDisabled: boolean;
 
       public closeEvent: Subject<void>;
-      public submitEvent: Subject<void>;
+      public okEvent: Subject<void>;
 
       private readonly elementRef?: ElementRef;
       private readonly applicationRef: ApplicationRef;
@@ -56,7 +56,7 @@ export class ModalComponent {
             this.isCancelDisabled = false;
             this.isSubmitDisabled = false;
             this.closeEvent = new Subject<void>();
-            this.submitEvent = new Subject<void>();
+            this.okEvent = new Subject<void>();
       }
 
       public get title() {
@@ -83,8 +83,8 @@ export class ModalComponent {
             this.isCancelDisabled = disabled;
       }
 
-      public onSubmit(): void {
-            this.submitEvent.next();
+      public onOk(): void {
+            this.okEvent.next();
             this.removeBlur();
             this.elementRef?.nativeElement.remove();
       }

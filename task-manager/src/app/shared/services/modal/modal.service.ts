@@ -11,17 +11,17 @@ export class ModalService {
             this.applicationRef = inject(ApplicationRef);
       }
 
-      public create<T>(params: {
+      public create<T, V>(params: {
             component: Type<T>;
             title: string;
-            width: string;
-            height: string;
-            onSubmit?: () => void;
+            width?: string;
+            height?: string;
+            onOk?: () => V;
             onClose?: () => void;
             submitDisabled?: boolean;
             closeDisabled?: boolean;
       }): void {
-            const { title, width, height, onClose, onSubmit, component, closeDisabled, submitDisabled } = params;
+            const { title, width, height, onClose, onOk, component, closeDisabled, submitDisabled } = params;
 
             const rootComponent = this.applicationRef.components.at(0);
             rootComponent?.location.nativeElement.classList.add('blur');
@@ -34,7 +34,7 @@ export class ModalService {
             const injectedComponentRef = rootComponentViewContainer?.createComponent(component);
 
             modalComponentRef.instance.title = title;
-            modalComponentRef.instance.submitEvent.subscribe({ next: onSubmit });
+            modalComponentRef.instance.okEvent.subscribe({ next: onOk });
             modalComponentRef.instance.closeEvent.subscribe({ next: onClose });
             modalComponentRef.instance.disableCancel = !!closeDisabled;
             modalComponentRef.instance.disableSubmit = !!submitDisabled;
@@ -43,6 +43,14 @@ export class ModalService {
             modalViewContainer.appendChild(injectedComponentRef!.location.nativeElement);
 
             this.modalRef = modalComponentRef;
+      }
+
+      public get onClose() {
+            return this.modalRef?.instance.closeEvent;
+      }
+
+      public get onOk() {
+            return this.modalRef?.instance.okEvent;
       }
 
       public updateConfig(config: { okDisabled: boolean; cancelDisabled: boolean }) {
