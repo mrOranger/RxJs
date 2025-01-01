@@ -1,10 +1,8 @@
-<div class="notification">
-      <fa-icon [icon]="icon" size="2x" class="notification-icon" [ngClass]="{
-                  error: (type) === 'error',
-                  success: (type) === 'success'
-            }"></fa-icon>
-      <div class="notification-message">
-            <span class="notification-message-title">{{ title }}</span>
-            <span class="notification-message-body">{{ message }}</span>
-      </div>
+<fa-icon [icon]="icon" size="2x" class="notification-icon" [ngClass]="{
+      error: (type) === 'error',
+      success: (type) === 'success'
+}"></fa-icon>
+<div class="notification-message">
+      <span class="notification-message-title">{{ title }}</span>
+      <span class="notification-message-body">{{ message }}</span>
 </div>

@@ -1,4 +1,4 @@
-.notification {
+:host {
       min-width: 400px;
       max-width: 20%;
       position: absolute;
@@ -16,6 +16,8 @@
       align-items: center;
       justify-content: center;
       gap: 0.5em;
+
+      z-index: 9999;
 }
 
 .error {
