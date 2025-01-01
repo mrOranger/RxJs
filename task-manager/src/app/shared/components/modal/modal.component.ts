@@ -2,8 +2,9 @@ import { ApplicationRef, Component, ElementRef, inject, Input } from '@angular/c
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 
-import { ButtonComponent } from '../button/button.component';
 import { Subject } from 'rxjs';
+
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
       standalone: true,
@@ -37,8 +38,7 @@ import { Subject } from 'rxjs';
 })
 export class ModalComponent {
 
-      @Input() public title!: string;
-
+      private modalTitle: string;
       private isCancelDisabled: boolean;
       private isSubmitDisabled: boolean;
 
@@ -49,25 +49,22 @@ export class ModalComponent {
       private readonly applicationRef: ApplicationRef;
 
       public constructor() {
+            this.elementRef = inject(ElementRef);
+            this.applicationRef = inject(ApplicationRef);
+
+            this.modalTitle = '';
             this.isCancelDisabled = false;
             this.isSubmitDisabled = false;
             this.closeEvent = new Subject<void>();
             this.submitEvent = new Subject<void>();
-
-            this.elementRef = inject(ElementRef);
-            this.applicationRef = inject(ApplicationRef);
       }
 
-      public onSubmit(): void {
-            this.submitEvent.next();
-            this.removeBlur();
-            this.elementRef?.nativeElement.remove();
+      public get title() {
+            return this.modalTitle;
       }
 
-      public onClose(): void {
-            this.closeEvent.next();
-            this.removeBlur();
-            this.elementRef?.nativeElement.remove();
+      public set title(newTitle: string) {
+            this.modalTitle = newTitle;
       }
 
       public get disableSubmit() {
@@ -84,6 +81,18 @@ export class ModalComponent {
 
       public set disableCancel(disabled: boolean) {
             this.isCancelDisabled = disabled;
+      }
+
+      public onSubmit(): void {
+            this.submitEvent.next();
+            this.removeBlur();
+            this.elementRef?.nativeElement.remove();
+      }
+
+      public onClose(): void {
+            this.closeEvent.next();
+            this.removeBlur();
+            this.elementRef?.nativeElement.remove();
       }
 
       private removeBlur() {
