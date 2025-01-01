@@ -4,6 +4,7 @@ import { ModalComponent } from '../../components';
 
 @Injectable({ providedIn: 'root' })
 export class ModalService {
+
       private modalRef?: ComponentRef<ModalComponent>;
       public readonly applicationRef: ApplicationRef;
 
@@ -11,17 +12,15 @@ export class ModalService {
             this.applicationRef = inject(ApplicationRef);
       }
 
-      public create<T, V>(params: {
+      public create<T>(params: {
             component: Type<T>;
             title: string;
             width?: string;
             height?: string;
-            onOk?: () => V;
-            onClose?: () => void;
             submitDisabled?: boolean;
             closeDisabled?: boolean;
-      }): void {
-            const { title, width, height, onClose, onOk, component, closeDisabled, submitDisabled } = params;
+      }) {
+            const { title, width, height, component, closeDisabled, submitDisabled } = params;
 
             const rootComponent = this.applicationRef.components.at(0);
             rootComponent?.location.nativeElement.classList.add('blur');
@@ -34,8 +33,6 @@ export class ModalService {
             const injectedComponentRef = rootComponentViewContainer?.createComponent(component);
 
             modalComponentRef.instance.title = title;
-            modalComponentRef.instance.okEvent.subscribe({ next: onOk });
-            modalComponentRef.instance.closeEvent.subscribe({ next: onClose });
             modalComponentRef.instance.disableCancel = !!closeDisabled;
             modalComponentRef.instance.disableSubmit = !!submitDisabled;
             modalComponentRef.location.nativeElement.setAttribute('style', `width: ${width}; height: ${height}`);
@@ -45,12 +42,8 @@ export class ModalService {
             this.modalRef = modalComponentRef;
       }
 
-      public get onClose() {
-            return this.modalRef?.instance.closeEvent;
-      }
-
-      public get onOk() {
-            return this.modalRef?.instance.okEvent;
+      public get componentInstance() {
+            return this.modalRef?.instance;
       }
 
       public updateConfig(config: { okDisabled: boolean; cancelDisabled: boolean }) {
