@@ -1,4 +1,4 @@
-import { Entity } from "dexie";
+import { Entity } from "./entity.interface";
 
 export interface TaskUser extends Entity {
       id: string;
