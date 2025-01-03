@@ -42,12 +42,24 @@ export class NewTaskFormService {
       }
 
       public get assignedUserFormControl() {
-            return new FormControl(null, {
+            return new FormControl('', {
                   validators: [Validators.required],
             });
       }
 
       public get form() {
             return this.newTaskForm;
+      }
+
+      public get title() {
+            return this.titleFormControl.value as string;
+      }
+
+      public get description() {
+            return this.descriptionFormControl.value as string;
+      }
+
+      public get assignedUser() {
+            return this.assignedUserFormControl.value as string;
       }
 }

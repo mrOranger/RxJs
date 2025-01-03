@@ -17,3 +17,7 @@
 .action {
       width: 100%;
 }
+
+.action .icon {
+      color: var(--info);
+}

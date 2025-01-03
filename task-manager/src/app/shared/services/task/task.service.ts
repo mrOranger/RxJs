@@ -7,10 +7,10 @@ import { from, Observable, of, switchMap, throwError } from 'rxjs';
 import { Task } from '../../models';
 import { TaskRepository } from './task.repository';
 import { DatabaseService } from '../database.service';
+import { TaskStatus } from '../../enums';
 
 @Injectable()
 export class TaskService implements TaskRepository {
-
       public constructor(private readonly databaseService: DatabaseService) {}
 
       public index(): Observable<Task[]> {
@@ -28,7 +28,13 @@ export class TaskService implements TaskRepository {
             );
       }
       public save(value: Omit<Task, 'id' | 'createdAt' | 'updatedAt'>): Observable<Task> {
-            const newTask = { id: uuidv4(), ...value, createdAt: new Date(), updatedAt: new Date() };
+            const newTask = {
+                  id: uuidv4(),
+                  ...value,
+                  status: TaskStatus.TODO,
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+            };
             return from(this.databaseService.tasks.add(newTask)).pipe(switchMap(() => of(newTask)));
       }
 

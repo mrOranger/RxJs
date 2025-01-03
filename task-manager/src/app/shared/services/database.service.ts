@@ -15,7 +15,7 @@ export class DatabaseService extends Dexie {
 
             this.version(1).stores({
                   users: 'id, firstName, lastName, &email, [email+password], createdAt, updatedAt',
-                  tasks: 'id, title, description, createdAt, updatedAt',
+                  tasks: 'id, title, description, status, createdAt, updatedAt',
                   taskUser: 'id, userId, taskId, createdAt, updatedAt',
             });
 
