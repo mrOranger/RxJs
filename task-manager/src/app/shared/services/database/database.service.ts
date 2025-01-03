@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import Dexie, { EntityTable } from 'dexie';
-
-import { TaskEntity, TaskUserEntity, UserEntity } from '../models';
+import { TaskEntity, TaskUserEntity, UserEntity } from '../../models';
 
 @Injectable()
 export class DatabaseService extends Dexie {
@@ -22,6 +21,5 @@ export class DatabaseService extends Dexie {
             this.users.mapToClass(UserEntity);
             this.tasks.mapToClass(TaskEntity);
             this.taskUser.mapToClass(TaskUserEntity);
-
       }
 }

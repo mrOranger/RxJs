@@ -5,9 +5,9 @@ import { catchError, from, Observable, of, switchMap, throwError } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 
 import { TaskUserRepository } from './task-user.repository';
-import { DatabaseService } from '../database.service';
 
-import { TaskUser } from '../../models';
+import { TaskUser } from '../../../models';
+import { DatabaseService } from '../database.service';
 
 @Injectable()
 export class TaskUserService implements TaskUserRepository {

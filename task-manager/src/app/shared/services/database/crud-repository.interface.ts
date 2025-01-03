@@ -1,6 +1,5 @@
 import { Observable } from 'rxjs';
-
-import { Entity } from '../models';
+import { Entity } from '../../models';
 
 export interface CrudRepository<T extends Entity, K, V extends keyof T> {
       index(): Observable<Array<T>>;

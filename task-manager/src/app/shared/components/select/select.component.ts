@@ -35,13 +35,13 @@ export class SelectComponent<T> implements ControlValueAccessor {
       }
 
       public getItemPlaceholder(item: T) {
-            let placholder = '';
+            let placeholder = '';
             for (const key in (item)) {
                   if (this.displayValues.includes(key)) {
-                        placholder = `${placholder} ${item[key] as string}`;
+                        placeholder = `${placeholder} ${item[key] as string}`;
                   }
             }
-            return placholder.trim();
+            return placeholder.trim();
       }
 
       public writeValue(newValue: T): void {

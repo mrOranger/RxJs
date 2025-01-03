@@ -1,21 +1,21 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { forkJoin, Subscription, switchMap } from 'rxjs';
+import { Subscription, switchMap } from 'rxjs';
 
 import {
-      DatabaseService,
-      InputComponent,
-      ModalService,
-      NotificationService,
-      SelectComponent,
-      TaskRepository,
-      TaskService,
-      TaskUserRepository,
-      TaskUserService,
       User,
-      UserRepository,
+      TaskService,
       UserService,
+      ModalService,
+      InputComponent,
+      TaskRepository,
+      UserRepository,
+      TaskUserService,
+      SelectComponent,
+      DatabaseService,
+      TaskUserRepository,
+      NotificationService,
 } from 'src/app/shared';
 import { TASK_REPOSITORY_TOKEN, TASK_USER_REPOSITORY_TOKEN, USER_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
 import { NewTaskFormService } from '../../services';
@@ -61,7 +61,7 @@ export class NewTaskModalComponent implements OnInit, OnDestroy {
 
       public ngOnInit(): void {
             this.newTaskFormService$ = this.newTaskFormService.form.valueChanges.subscribe({
-                  next: (values) => {
+                  next: () => {
                         this.modalService.updateConfig({
                               okDisabled: !this.newTaskFormService.form.valid,
                               cancelDisabled: false,

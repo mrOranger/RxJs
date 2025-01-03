@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { TaskUser } from "../../models";
+import { TaskUser } from "../../../models";
 
 export interface TaskUserRepository {
       find(userId: string, taskId: string): Observable<TaskUser>;

@@ -1,17 +1,22 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { v4 as uuidv4 } from 'uuid';
 
 import { from, Observable, of, switchMap, throwError } from 'rxjs';
 
-import { Task } from '../../models';
+import { Task } from '../../../models';
 import { TaskRepository } from './task.repository';
+import { TaskStatus } from '../../../enums';
 import { DatabaseService } from '../database.service';
-import { TaskStatus } from '../../enums';
 
 @Injectable()
 export class TaskService implements TaskRepository {
-      public constructor(private readonly databaseService: DatabaseService) {}
+
+      private readonly databaseService: DatabaseService;
+
+      public constructor() {
+            this.databaseService = inject(DatabaseService);
+      }
 
       public index(): Observable<Task[]> {
             return from(this.databaseService.tasks.toArray());

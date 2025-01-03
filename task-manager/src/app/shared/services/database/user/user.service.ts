@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -10,7 +10,12 @@ import { DatabaseService } from '../database.service';
 
 @Injectable()
 export class UserService implements UserRepository {
-      public constructor(private readonly databaseService: DatabaseService) {}
+
+      private readonly databaseService: DatabaseService;
+
+      public constructor() {
+            this.databaseService = inject(DatabaseService);
+      }
 
       public index(): Observable<User[]> {
             return from(this.databaseService.users.toArray());
