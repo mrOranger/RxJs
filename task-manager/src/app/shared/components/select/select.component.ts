@@ -31,7 +31,7 @@ export class SelectComponent<T> implements ControlValueAccessor {
       public constructor() {
             this.isDisabled = false;
             this.selectedValue = null;
-            this.emptySelectionLabel = 'Seleziona un valore';
+            this.emptySelectionLabel = 'Select a value';
       }
 
       public getItemPlaceholder(item: T) {

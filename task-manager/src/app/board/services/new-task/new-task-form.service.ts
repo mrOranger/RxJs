@@ -13,11 +13,20 @@ export class NewTaskFormService {
             this.newTaskForm = this.formBuilder.group({
                   [this.titleFormName]: this.titleFormControl,
                   [this.descriptionFormName]: this.descriptionFormControl,
+                  [this.assignedUserFormName]: this.assignedUserFormControl,
             });
       }
 
       public get titleFormName() {
             return 'title';
+      }
+
+      public get descriptionFormName() {
+            return 'description';
+      }
+
+      public get assignedUserFormName() {
+            return 'assigned_user';
       }
 
       public get titleFormControl() {
@@ -26,13 +35,15 @@ export class NewTaskFormService {
             });
       }
 
-      public get descriptionFormName() {
-            return 'description';
-      }
-
       public get descriptionFormControl() {
             return new FormControl('', {
                   validators: [Validators.required, Validators.minLength(2), Validators.maxLength(255)],
+            });
+      }
+
+      public get assignedUserFormControl() {
+            return new FormControl(null, {
+                  validators: [Validators.required],
             });
       }
 
