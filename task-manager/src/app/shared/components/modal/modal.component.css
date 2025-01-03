@@ -1,5 +1,6 @@
 :host {
-      min-width: 500px;
+      max-width: 500px;
+      max-height: 600px;
 
       position: absolute;
       top: 50%;
@@ -45,11 +46,29 @@
 .footer {
       width: 100%;
       display: inline-flex;
-      flex-direction: row;
+      flex-direction: column;
       justify-content: flex-start;
       align-items: center;
-      gap: 1em;
       border-top: 2px solid var(--accent);
-      padding: 0.5em 1em;
+      padding: 0.5em 0em;
+      gap: 0.5em;
       box-sizing: border-box;
+}
+
+.confirm {
+      background-color: var(--info);
+      color: var(--primary);
+}
+
+.confirm:disabled {
+      background-color: var(--not-allowed);
+      color: var(--text-not-allowed);
+}
+
+.confirm,
+.cancel {
+      width: 100%;
+      display: inline-flex;
+      justify-content: center;
+      align-self: center;
 }
