@@ -1,0 +1,43 @@
+:host {
+      display: inline-flex;
+      flex-direction: row;
+      justify-content: space-between;
+      border: none;
+      align-items: center;
+      gap: 0.25em;
+      cursor: pointer;
+}
+
+.select {
+      cursor: pointer;
+      border: 0.5px solid gray !important;
+      border-radius: var(--default-border-radius);
+      transition: 0.5s ease;
+      padding: 0.5em 1em;
+}
+
+.select:active,
+.select:focus-visible {
+      outline: 0.5px solid gray;
+      transform: scale(1.01);
+}
+
+.select:disabled {
+      cursor: not-allowed;
+      outline: 1px solid gray;
+      background-color: var(--card-background);
+}
+
+.placeholder-value {
+      color: var(--text-not-allowed);
+}
+
+.regular-value {
+      color: var(--text-primary);
+}
+
+.placeholder-value,
+.regular-value {
+      font-size: var(--small-font-size);
+      font-weight: var(--regular-font-weight);
+}

@@ -1,6 +1,6 @@
-import { NgIf } from '@angular/common';
-import { Component, Injector, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, NgControl, ReactiveFormsModule } from '@angular/forms';
+import { Component, Injector, Input, OnInit } from '@angular/core';
+import { NgIf } from '@angular/common';
 
 @Component({
       standalone: true,

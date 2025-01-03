@@ -21,4 +21,7 @@
             <span [hidden]="!formService.descriptionFormControl.hasError('maxlength')" class="error-message">
                   • La descrizione del task deve essere lunga massimo 255 caratteri
             </span></tm-input>
+      <tm-select [values]="users" [displayValues]="['firstName', 'lastName']" [key]="'id'"
+            [emptySelectionLabel]="'Seleziona un utente'">
+      </tm-select>
 </form>
