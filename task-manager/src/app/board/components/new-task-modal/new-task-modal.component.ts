@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { Subscription, switchMap } from 'rxjs';
+import { forkJoin, Subscription, switchMap } from 'rxjs';
 
 import {
       User,
@@ -16,6 +16,7 @@ import {
       DatabaseService,
       TaskUserRepository,
       NotificationService,
+      Task,
 } from 'src/app/shared';
 import { TASK_REPOSITORY_TOKEN, TASK_USER_REPOSITORY_TOKEN, USER_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
 import { NewTaskFormService } from '../../services';
@@ -47,6 +48,9 @@ export class NewTaskModalComponent implements OnInit, OnDestroy {
 
       private newTaskFormService$?: Subscription;
 
+      private taskTitle!: string;
+      private taskDescription!: string;
+      private assignationUserId!: string;
       private availableUsers?: User[];
 
       public constructor() {
@@ -61,7 +65,10 @@ export class NewTaskModalComponent implements OnInit, OnDestroy {
 
       public ngOnInit(): void {
             this.newTaskFormService$ = this.newTaskFormService.form.valueChanges.subscribe({
-                  next: () => {
+                  next: (values) => {
+                        this.taskTitle = values.title;
+                        this.taskDescription = values.description;
+                        this.assignationUserId = values.assigned_user;
                         this.modalService.updateConfig({
                               okDisabled: !this.newTaskFormService.form.valid,
                               cancelDisabled: false,
@@ -75,29 +82,39 @@ export class NewTaskModalComponent implements OnInit, OnDestroy {
                         this.availableUsers = users;
                         this.changeDetectorRef.detectChanges();
                   },
-            })
+            });
 
-            this.modalService.componentInstance?.okEvent
-                  .pipe(
-                        switchMap(() => this.taskRepository.save(this.form.value)),
-                        switchMap((task) => this.taskUserRepository.attach(this.formService.assignedUser, task.id))
-                  )
-                  .subscribe({
-                        next: () => {
-                              this.modalService.componentInstance?.onClose();
-                              this.changeDetectorRef.detectChanges();
-                              this.notificationService.success('New task created successfully!');
-                        },
-                        error: (exception) => {
-                              console.error(exception);
-                              this.modalService.componentInstance?.onClose();
-                              this.notificationService.error('Error in creating the task, please try later!');
-                        },
-                  });
+            this.modalService.componentInstance?.okEvent.subscribe({
+                  next: () =>
+                        this.taskRepository
+                              .save(<Task>{
+                                    title: this.taskTitle,
+                                    description: this.taskDescription,
+                              })
+                              .pipe(
+                                    switchMap((task) =>
+                                          this.taskUserRepository.attach(this.assignationUserId, task.id),
+                                    ),
+                              )
+                              .subscribe({
+                                    next: () => {
+                                          this.modalService.componentInstance?.onClose();
+                                          this.changeDetectorRef.detectChanges();
+                                          this.notificationService.success('New task created successfully!');
+                                    },
+                                    error: (exception) => {
+                                          console.error(exception);
+                                          this.modalService.componentInstance?.onClose();
+                                          this.notificationService.error(
+                                                'Error in creating the task, please try later!',
+                                          );
+                                    },
+                              }),
+            });
       }
 
       public get users() {
-            return this.availableUsers?? [];
+            return this.availableUsers ?? [];
       }
 
       public get form() {

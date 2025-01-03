@@ -1,3 +1,3 @@
-<tm-task-list class="todo-list" title="To Do"></tm-task-list>
-<tm-task-list class="in-progress-list" title="In Progress"></tm-task-list>
-<tm-task-list class="completed-list" title="Completed"></tm-task-list>
+<tm-task-list class="todo-list" title="To Do" [taskStatus]="todoStatus"></tm-task-list>
+<tm-task-list class="in-progress-list" title="In Progress" [taskStatus]="inProgressStatus"></tm-task-list>
+<tm-task-list class="completed-list" title="Completed" [taskStatus]="completedStatus"></tm-task-list>

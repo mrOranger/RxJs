@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { Subscription } from 'rxjs';
-
 import * as moment from 'moment';
 
-import { Task, User, UserRepository, UserService } from 'src/app/shared';
-import { USER_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
+import { DatabaseService, Task, TaskUser, TaskUserRepository, TaskUserService, User, UserRepository, UserService } from 'src/app/shared';
+import { TASK_USER_REPOSITORY_TOKEN, USER_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
+import { forkJoin } from 'rxjs';
 
 @Component({
       standalone: true,
@@ -15,30 +14,49 @@ import { USER_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
       templateUrl: './task-list-item.component.html',
       styleUrls: ['./task-list-item.component.css'],
       changeDetection: ChangeDetectionStrategy.OnPush,
-      providers: [{ provide: USER_REPOSITORY_TOKEN, useClass: UserService }]
+      providers: [
+            DatabaseService,
+            { provide: USER_REPOSITORY_TOKEN, useClass: UserService },
+            { provide: TASK_USER_REPOSITORY_TOKEN, useClass: TaskUserService },
+      ]
 })
-export class TaskListItemComponent implements OnInit, OnDestroy {
+export class TaskListItemComponent implements OnInit {
 
       @Input() public task!: Task;
 
-      private users?: User[];
-      private users$?: Subscription;
-      private changeDetectorRef: ChangeDetectorRef;
+      private users: User[];
+      private assignations: TaskUser[];
+      private readonly userRepository: UserRepository;
+      private readonly changeDetectorRef: ChangeDetectorRef;
+      private readonly taskUserRepository: TaskUserRepository;
 
-      public constructor(
-            @Inject(USER_REPOSITORY_TOKEN) private readonly userRepository: UserRepository,
-      ) {
+      public constructor() {
+            this.users = [];
+            this.assignations = [];
             this.changeDetectorRef = inject(ChangeDetectorRef);
+            this.userRepository = inject<UserRepository>(USER_REPOSITORY_TOKEN);
+            this.taskUserRepository = inject<TaskUserRepository>(TASK_USER_REPOSITORY_TOKEN);
       }
 
       public ngOnInit(): void {
-            this.users$ = this.userRepository.index().subscribe({
-                  next: (users) => {
+            forkJoin([
+                  this.userRepository.index(),
+                  this.taskUserRepository.index(),
+            ]).subscribe({
+                  next: ([users, assignations]) => {
                         this.users = users;
+                        this.assignations = assignations;
                         this.changeDetectorRef.detectChanges();
                   }
-            });
+            })
       }
+
+      public get assignedUsers() {
+            return this.assignations
+                  .filter((anAssignation) => anAssignation.taskId === this.task.id)
+                  .map((anAssignation) => this.users.find((aUser) => aUser.id === anAssignation.userId)) ?? [];
+      }
+
 
       public get createdAt() {
             return moment(this.task.createdAt).format('ddd, DD/MM/YYYY');
@@ -46,13 +64,5 @@ export class TaskListItemComponent implements OnInit, OnDestroy {
 
       public get updatedAt() {
             return moment(this.task.updatedAt).format('ddd, DD/MM/YYYY');
-      }
-
-      public get taskUsers() {
-            return this.users ?? [];
-      }
-
-      public ngOnDestroy(): void {
-            this.users$?.unsubscribe();
       }
 }

@@ -1,6 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { Task, User } from 'src/app/shared';
+
 @Injectable()
 export class NewTaskFormService {
 
@@ -42,13 +44,20 @@ export class NewTaskFormService {
       }
 
       public get assignedUserFormControl() {
-            return new FormControl('', {
+            return new FormControl<User | null>(null, {
                   validators: [Validators.required],
             });
       }
 
       public get form() {
             return this.newTaskForm;
+      }
+
+      public get newTask() {
+            return <Task>{
+                  title: this.title,
+                  description: this.description,
+            };
       }
 
       public get title() {
@@ -59,7 +68,7 @@ export class NewTaskFormService {
             return this.descriptionFormControl.value as string;
       }
 
-      public get assignedUser() {
-            return this.assignedUserFormControl.value as string;
+      public get assignedUserId() {
+            return this.assignedUserFormControl.value?.id ?? '';
       }
 }

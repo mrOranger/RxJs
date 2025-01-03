@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
@@ -29,26 +29,28 @@ import { USER_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
       changeDetection: ChangeDetectionStrategy.OnPush,
       imports: [NgIf, RouterLink, FormsModule, InputComponent, ButtonComponent, FontAwesomeModule, ReactiveFormsModule],
       providers: [
-            { provide: USER_REPOSITORY_TOKEN, useClass: UserService },
             LoaderService,
             DatabaseService,
             SignupFormService,
             StoreSignupService,
             LocalStorageService,
+            { provide: USER_REPOSITORY_TOKEN, useClass: UserService },
       ],
 })
 export class SignupComponent {
 
       private readonly loaderService: LoaderService;
+      private readonly userRepository: UserRepository;
       private readonly signupFormService: SignupFormService;
       private readonly notificationService: NotificationService;
       private readonly localStorageService: LocalStorageService;
 
-      public constructor(@Inject(USER_REPOSITORY_TOKEN) private readonly userRepository: UserRepository) {
+      public constructor() {
             this.loaderService = inject(LoaderService);
             this.signupFormService = inject(SignupFormService);
             this.notificationService = inject(NotificationService);
             this.localStorageService = inject(LocalStorageService);
+            this.userRepository = inject<UserRepository>(USER_REPOSITORY_TOKEN);
       }
 
       public get formService() {

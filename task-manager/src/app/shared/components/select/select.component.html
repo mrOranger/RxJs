@@ -1,5 +1,5 @@
 <select [(ngModel)]="selectedValue" (ngModelChange)="onSelectChange($event)" class="select">
-      <option [value]="''" class="placeholder-value">{{ emptySelectionLabel }}</option>
+      <option [value]="null" class="placeholder-value">{{ emptySelectionLabel }}</option>
       <option *ngFor="let value of values" [value]="value[key]" class="regular-value">
             {{ getItemPlaceholder(value) }}
       </option>

@@ -1,4 +1,4 @@
-import { Inject, inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import { catchError, of, switchMap } from 'rxjs';
@@ -13,14 +13,14 @@ import { USER_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
 @Injectable()
 export class SignupFormService {
       private readonly storeSignupService: StoreSignupService;
+      private readonly userRepository: UserRepository;
       private readonly formBuilder: FormBuilder;
       private readonly signupForm: FormGroup;
 
       public readonly passwordFormGroupName = 'passwords_group';
 
-      public constructor(
-            @Inject(USER_REPOSITORY_TOKEN) private readonly userRepository: UserRepository
-      ) {
+      public constructor() {
+            this.userRepository = inject<UserRepository>(USER_REPOSITORY_TOKEN);
             this.storeSignupService = inject(StoreSignupService);
             this.formBuilder = inject(FormBuilder);
 

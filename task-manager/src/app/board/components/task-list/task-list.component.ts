@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
-import { DatabaseService, Task, TaskRepository, TaskService } from 'src/app/shared';
+
 import { TASK_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
-import { Observable } from 'rxjs';
 import { TaskListItemComponent } from '../task-list-item/task-list-item.component';
+import { DatabaseService, Task, TaskRepository, TaskService, TaskStatus } from 'src/app/shared';
 
 @Component({
       standalone: true,
@@ -12,18 +12,36 @@ import { TaskListItemComponent } from '../task-list-item/task-list-item.componen
       styleUrls: ['./task-list.component.css'],
       imports: [CommonModule, TaskListItemComponent, NgFor],
       changeDetection: ChangeDetectionStrategy.OnPush,
-      providers: [{ provide: TASK_REPOSITORY_TOKEN, useClass: TaskService }, DatabaseService],
+      providers: [
+            DatabaseService,
+            { provide: TASK_REPOSITORY_TOKEN, useClass: TaskService },
+      ],
 })
-export class TaskListComponent {
+export class TaskListComponent implements OnInit {
       @Input() public title!: string;
+      @Input() public taskStatus!: TaskStatus;
 
-      private readonly _tasks: Observable<Task[]>;
+      private currentTasks: Task[];
 
-      public constructor(@Inject(TASK_REPOSITORY_TOKEN) private readonly taskRepository: TaskRepository) {
-            this._tasks = this.taskRepository.index();
+      private readonly taskRepository: TaskRepository;
+      private readonly changeDetectorRef: ChangeDetectorRef;
+
+      public constructor() {
+            this.currentTasks = [];
+            this.changeDetectorRef = inject(ChangeDetectorRef);
+            this.taskRepository = inject<TaskRepository>(TASK_REPOSITORY_TOKEN);
       }
 
-      public get tasks$() {
-            return this._tasks;
+      public ngOnInit(): void {
+            this.taskRepository.index().subscribe({
+                  next: (tasks) => {
+                        this.currentTasks = tasks.filter((task) => task.status === this.taskStatus);
+                        this.changeDetectorRef.detectChanges();
+                  }
+            })
+      }
+
+      public get tasks() {
+            return this.currentTasks;
       }
 }

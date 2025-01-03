@@ -1,4 +1,4 @@
 <h1 class="column-title">{{ title }}</h1>
 <div class="column-body">
-      <tm-task-list-item *ngFor="let task of (tasks$ | async)" [task]="task"></tm-task-list-item>
+      <tm-task-list-item *ngFor="let task of tasks" [task]="task"></tm-task-list-item>
 </div>

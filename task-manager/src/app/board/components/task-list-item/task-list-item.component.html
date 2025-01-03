@@ -5,8 +5,8 @@
       <main class="task-body">
             <h2 class="task-description">{{ task.description }}</h2>
             <ul class="task-assignation">
-                  <li *ngFor="let user of taskUsers">
-                        <p class="task-assignation-user">{{ user.firstName }} {{ user.lastName }}</p>
+                  <li *ngFor="let user of assignedUsers">
+                        <p class="task-assignation-user">{{ user?.firstName }} {{ user?.lastName }}</p>
                   </li>
             </ul>
       </main>

@@ -29,24 +29,26 @@ import { UserType } from '../../enums';
       changeDetection: ChangeDetectionStrategy.OnPush,
       imports: [RouterLink, FormsModule, InputComponent, ButtonComponent, FontAwesomeModule, ReactiveFormsModule],
       providers: [
-            { provide: USER_REPOSITORY_TOKEN, useClass: UserService },
             DatabaseService,
             LoginFormService,
             StoreLoginService,
             LocalStorageService,
+            { provide: USER_REPOSITORY_TOKEN, useClass: UserService },
       ],
 })
 export class LoginComponent {
+      private readonly loaderService: LoaderService;
+      private readonly userRepository: UserRepository;
+      private readonly loginFormService: LoginFormService;
       private readonly notificationService: NotificationService;
       private readonly localStorageService: LocalStorageService;
-      private readonly loginFormService: LoginFormService;
-      private readonly loaderService: LoaderService;
 
-      public constructor(@Inject(USER_REPOSITORY_TOKEN) private readonly userRepository: UserRepository) {
+      public constructor() {
+            this.loaderService = inject(LoaderService);
+            this.loginFormService = inject(LoginFormService);
             this.localStorageService = inject(LocalStorageService);
             this.notificationService = inject(NotificationService);
-            this.loginFormService = inject(LoginFormService);
-            this.loaderService = inject(LoaderService);
+            this.userRepository = inject<UserRepository>(USER_REPOSITORY_TOKEN);
       }
 
       public get formService() {

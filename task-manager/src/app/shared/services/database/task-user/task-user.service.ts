@@ -18,6 +18,10 @@ export class TaskUserService implements TaskUserRepository {
             this.databaseService = inject(DatabaseService);
       }
 
+      public index(): Observable<TaskUser[]> {
+            return from(this.databaseService.taskUser.toArray());
+      }
+
       public find(userId: string, taskId: string): Observable<TaskUser> {
             return from(
                   this.databaseService.taskUser
