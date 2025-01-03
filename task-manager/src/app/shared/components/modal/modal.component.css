@@ -1,7 +1,4 @@
 :host {
-      max-width: 500px;
-      max-height: 600px;
-
       position: absolute;
       top: 50%;
       left: 50%;
@@ -11,6 +8,7 @@
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
+      gap: 2em;
 
       z-index: 1000;
       padding: 1em 2em;

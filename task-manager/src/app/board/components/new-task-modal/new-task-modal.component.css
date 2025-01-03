@@ -11,15 +11,10 @@
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
-      gap: 1em;
       box-sizing: border-box;
-      padding: 2em 0em;
+      gap: 1em;
 }
 
-tm-input[name='title'] {
-      width: 100%;
-}
-
-tm-input[name='description'] {
+.form > * {
       width: 100%;
 }

@@ -26,8 +26,7 @@ export class SidebarLeftComponent {
             this.modalService.create({
                   component: NewTaskModalComponent,
                   title: 'New task',
-                  width: '40%',
-                  height: '60%',
+                  width: '60%',
                   closeDisabled: false,
                   submitDisabled: true,
             });
