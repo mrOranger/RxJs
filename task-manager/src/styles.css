@@ -53,6 +53,7 @@ body {
       opacity: 0.3;
       background-color: blur(5px);
       z-index: 999;
+      pointer-events: none;
 }
 
 .card {

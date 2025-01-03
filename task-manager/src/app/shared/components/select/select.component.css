@@ -41,3 +41,7 @@
       font-size: var(--small-font-size);
       font-weight: var(--regular-font-weight);
 }
+
+select:nth-child(n) {
+      user-select: none;
+}
