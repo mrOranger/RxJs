@@ -26,10 +26,15 @@
 
 .column-body {
       width: 100%;
+      height: 100%;
       align-items: center;
       display: inline-flex;
       flex-direction: column;
       justify-content: flex-start;
       padding: 0.5em 1em;
       gap: 0.5em;
+}
+
+:host.dragover {
+      background-color: var(--accent);
 }

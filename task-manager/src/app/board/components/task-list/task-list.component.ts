@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule, NgFor } from '@angular/common';
+import { CommonModule, NgClass, NgFor } from '@angular/common';
 
 import { TASK_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
 import { TaskListItemComponent } from '../task-list-item/task-list-item.component';
@@ -19,13 +19,13 @@ import { Subscription } from 'rxjs';
       selector: 'tm-task-list',
       templateUrl: './task-list.component.html',
       styleUrls: ['./task-list.component.css'],
-      imports: [CommonModule, TaskListItemComponent, NgFor],
       changeDetection: ChangeDetectionStrategy.OnPush,
+      imports: [CommonModule, TaskListItemComponent, NgFor, NgClass],
       host: {
-            '(drop)': 'onDrop($event)',
+            '[class.dragover]': 'isDraggingOver',
+            '(drop)': 'onDrop()',
             '(dragover)': 'onDragOver($event)',
-            '(dragenter)': 'onDragEnter($event)',
-            '(dragleave)': 'onDragLeave($event)',
+            '(dragenter)': 'onDragEnter()',
       },
       providers: [DatabaseService, { provide: TASK_REPOSITORY_TOKEN, useClass: TaskService }],
 })
@@ -63,7 +63,11 @@ export class TaskListComponent implements OnInit, OnDestroy {
             return this.currentTasks;
       }
 
-      public onDragEnter(event: DragEvent): void {
+      public get isDraggingOver() {
+            return this.storeDragTaskService.value?.status === this.taskStatus;
+      }
+
+      public onDragEnter(): void {
             if (this.storeDragTaskService.value) {
                   const draggedTask = this.storeDragTaskService.value;
                   draggedTask.status = this.taskStatus;
@@ -77,9 +81,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
             }
       }
 
-      public onDragLeave(event: DragEvent): void {}
-
-      public onDrop(event: DragEvent): void {
+      public onDrop(): void {
             if (this.storeDragTaskService.value) {
                   const draggedTask = this.storeDragTaskService.value;
                   this.taskRepository.update(draggedTask.id, draggedTask);
