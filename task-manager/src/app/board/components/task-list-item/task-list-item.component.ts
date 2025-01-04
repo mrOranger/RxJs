@@ -1,29 +1,21 @@
-import {
-      ChangeDetectionStrategy,
-      ChangeDetectorRef,
-      Component,
-      ElementRef,
-      inject,
-      Input,
-      OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import * as moment from 'moment';
 
 import {
       DatabaseService,
+      StoreDragTaskService,
       StoreTaskService,
+      StoreTaskUserService,
+      StoreUserService,
       Task,
       TaskUser,
-      TaskUserRepository,
       TaskUserService,
       User,
-      UserRepository,
       UserService,
 } from 'src/app/shared';
 import { TASK_USER_REPOSITORY_TOKEN, USER_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
-import { forkJoin } from 'rxjs';
 
 @Component({
       standalone: true,
@@ -47,32 +39,25 @@ import { forkJoin } from 'rxjs';
 export class TaskListItemComponent implements OnInit {
       @Input() public task!: Task;
 
-      private users: User[];
+      private users!: User[];
       private isHidden: boolean;
-      private assignations: TaskUser[];
+      private assignations!: TaskUser[];
       private readonly elementRef: ElementRef;
-      private readonly userRepository: UserRepository;
-      private readonly changeDetectorRef: ChangeDetectorRef;
-      private readonly taskUserRepository: TaskUserRepository;
+      private readonly storeUserService: StoreUserService;
+      private readonly storeDragTaskService: StoreDragTaskService;
+      private readonly storeTaskUserService: StoreTaskUserService;
 
       public constructor() {
-            this.users = [];
             this.isHidden = false;
-            this.assignations = [];
             this.elementRef = inject(ElementRef);
-            this.changeDetectorRef = inject(ChangeDetectorRef);
-            this.userRepository = inject<UserRepository>(USER_REPOSITORY_TOKEN);
-            this.taskUserRepository = inject<TaskUserRepository>(TASK_USER_REPOSITORY_TOKEN);
+            this.storeUserService = inject(StoreUserService);
+            this.storeDragTaskService = inject(StoreDragTaskService);
+            this.storeTaskUserService = inject(StoreTaskUserService);
       }
 
       public ngOnInit(): void {
-            forkJoin([this.userRepository.index(), this.taskUserRepository.index()]).subscribe({
-                  next: ([users, assignations]) => {
-                        this.users = users;
-                        this.assignations = assignations;
-                        this.changeDetectorRef.detectChanges();
-                  },
-            });
+            this.users = this.storeUserService.value;
+            this.assignations = this.storeTaskUserService.value;
       }
 
       public get assignedUsers() {
@@ -96,10 +81,16 @@ export class TaskListItemComponent implements OnInit {
       }
 
       public onDragStart(event: DragEvent) {
-            console.log(this.task.id, 'dragstart', this.elementRef);
+            if (!this.storeDragTaskService.value) {
+                  this.storeDragTaskService.value = this.task;
+                  console.log(this.task.id, 'dragstart');
+            }
       }
 
       public onDragEnd(event: DragEvent) {
-            console.log(this.task.id, 'dragend', this.elementRef);
+            if (this.storeDragTaskService.value) {
+                  this.storeDragTaskService.value = null;
+                  console.log(this.task.id, 'dragend');
+            }
       }
 }

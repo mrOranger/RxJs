@@ -1,7 +1,6 @@
 import { StoreService } from './store.service';
 
 export abstract class StoreCollectionService<T> extends StoreService<T[]> {
-
       public constructor() {
             super([]);
       }

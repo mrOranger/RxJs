@@ -3,7 +3,15 @@ import { CommonModule, NgFor } from '@angular/common';
 
 import { TASK_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
 import { TaskListItemComponent } from '../task-list-item/task-list-item.component';
-import { DatabaseService, StoreTaskService, Task, TaskRepository, TaskService, TaskStatus } from 'src/app/shared';
+import {
+      DatabaseService,
+      StoreDragTaskService,
+      StoreTaskService,
+      Task,
+      TaskRepository,
+      TaskService,
+      TaskStatus,
+} from 'src/app/shared';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -30,13 +38,15 @@ export class TaskListComponent implements OnInit, OnDestroy {
       private readonly taskRepository: TaskRepository;
       private readonly storeTaskService: StoreTaskService;
       private readonly changeDetectorRef: ChangeDetectorRef;
+      private readonly storeDragTaskService: StoreDragTaskService;
 
       private storeTaskService$!: Subscription;
 
       public constructor() {
             this.currentTasks = [];
-            this.changeDetectorRef = inject(ChangeDetectorRef);
             this.storeTaskService = inject(StoreTaskService);
+            this.changeDetectorRef = inject(ChangeDetectorRef);
+            this.storeDragTaskService = inject(StoreDragTaskService);
             this.taskRepository = inject<TaskRepository>(TASK_REPOSITORY_TOKEN);
       }
 
@@ -54,20 +64,27 @@ export class TaskListComponent implements OnInit, OnDestroy {
       }
 
       public onDragEnter(event: DragEvent): void {
-            console.log(this.taskStatus, 'onDragEnter', event);
+            if (this.storeDragTaskService.value) {
+                  const draggedTask = this.storeDragTaskService.value;
+                  draggedTask.status = this.taskStatus;
+                  this.storeTaskService.update(draggedTask, 'id');
+            }
       }
 
       public onDragOver(event: DragEvent): void {
-            event.preventDefault();
-            console.log(this.taskStatus, 'onDragOver', event);
+            if (this.storeDragTaskService.value) {
+                  event.preventDefault();
+            }
       }
 
-      public onDragLeave(event: DragEvent): void {
-            console.log(this.taskStatus, 'onDragLeave', event);
-      }
+      public onDragLeave(event: DragEvent): void {}
 
       public onDrop(event: DragEvent): void {
-            console.log(this.taskStatus, 'onDrop', event);
+            if (this.storeDragTaskService.value) {
+                  const draggedTask = this.storeDragTaskService.value;
+                  this.taskRepository.update(draggedTask.id, draggedTask);
+                  this.storeDragTaskService.value = null;
+            }
       }
 
       public ngOnDestroy(): void {
