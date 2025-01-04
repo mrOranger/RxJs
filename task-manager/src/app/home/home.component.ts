@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { Subscription } from 'rxjs';
 
-import { DatabaseService, StoreTaskListService, TaskRepository, TaskService, TaskStatus } from '../shared';
+import { DatabaseService, StoreTaskService, TaskRepository, TaskService, TaskStatus } from '../shared';
 import { TASK_REPOSITORY_TOKEN } from '../injection-tokens';
 import { TaskListComponent } from '../board';
 
@@ -19,19 +19,19 @@ import { TaskListComponent } from '../board';
 export class HomeComponent implements OnInit, OnDestroy {
       private taskRepository$!: Subscription;
       private readonly taskRepository: TaskRepository;
+      private readonly storeTaskService: StoreTaskService;
       private readonly changeDetectorRef: ChangeDetectorRef;
-      private readonly storeTaskListService: StoreTaskListService;
 
       public constructor() {
+            this.storeTaskService = inject(StoreTaskService);
             this.changeDetectorRef = inject(ChangeDetectorRef);
-            this.storeTaskListService = inject(StoreTaskListService);
             this.taskRepository = inject<TaskRepository>(TASK_REPOSITORY_TOKEN);
       }
 
       public ngOnInit(): void {
             this.taskRepository$ = this.taskRepository.index().subscribe({
                   next: (tasks) => {
-                        this.storeTaskListService.value = tasks;
+                        this.storeTaskService.value = tasks;
                         this.changeDetectorRef.detectChanges();
                   },
             });

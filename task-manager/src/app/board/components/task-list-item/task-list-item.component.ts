@@ -1,10 +1,19 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit } from '@angular/core';
+import {
+      ChangeDetectionStrategy,
+      ChangeDetectorRef,
+      Component,
+      ElementRef,
+      inject,
+      Input,
+      OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import * as moment from 'moment';
 
 import {
       DatabaseService,
+      StoreTaskService,
       Task,
       TaskUser,
       TaskUserRepository,
@@ -30,6 +39,7 @@ import { forkJoin } from 'rxjs';
       },
       providers: [
             DatabaseService,
+            StoreTaskService,
             { provide: USER_REPOSITORY_TOKEN, useClass: UserService },
             { provide: TASK_USER_REPOSITORY_TOKEN, useClass: TaskUserService },
       ],
@@ -38,14 +48,18 @@ export class TaskListItemComponent implements OnInit {
       @Input() public task!: Task;
 
       private users: User[];
+      private isHidden: boolean;
       private assignations: TaskUser[];
+      private readonly elementRef: ElementRef;
       private readonly userRepository: UserRepository;
       private readonly changeDetectorRef: ChangeDetectorRef;
       private readonly taskUserRepository: TaskUserRepository;
 
       public constructor() {
             this.users = [];
+            this.isHidden = false;
             this.assignations = [];
+            this.elementRef = inject(ElementRef);
             this.changeDetectorRef = inject(ChangeDetectorRef);
             this.userRepository = inject<UserRepository>(USER_REPOSITORY_TOKEN);
             this.taskUserRepository = inject<TaskUserRepository>(TASK_USER_REPOSITORY_TOKEN);
@@ -77,11 +91,15 @@ export class TaskListItemComponent implements OnInit {
             return moment(this.task.updatedAt).format('ddd, DD/MM/YYYY');
       }
 
+      public get hidden() {
+            return this.isHidden;
+      }
+
       public onDragStart(event: DragEvent) {
-            console.log(this.task.id, 'dragstart', event);
+            console.log(this.task.id, 'dragstart', this.elementRef);
       }
 
       public onDragEnd(event: DragEvent) {
-            console.log(this.task.id, 'dragstop', event);
+            console.log(this.task.id, 'dragend', this.elementRef);
       }
 }
