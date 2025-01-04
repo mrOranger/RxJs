@@ -1,26 +1,35 @@
-import { Component, ViewChild } from '@angular/core';
+import { Router, RouterLink, RouterModule } from '@angular/router';
+import { Component, inject, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faChartBar, faDoorOpen, faHome, faList } from '@fortawesome/free-solid-svg-icons';
-import { RouterLink } from '@angular/router';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+import { LoaderService, LocalStorageService } from '../shared';
 
 @Component({
       standalone: true,
       selector: 'tm-header',
       templateUrl: './header.component.html',
       styleUrls: ['./header.component.css'],
-      imports: [CommonModule, FontAwesomeModule, RouterLink],
+      imports: [CommonModule, FontAwesomeModule, RouterLink, RouterModule],
+      providers: [LocalStorageService, LoaderService],
 })
 export class HeaderComponent {
 
       private activeElement: boolean;
+      private readonly router: Router;
+      private readonly loaderService: LoaderService;
+      private readonly localStorageService: LocalStorageService;
 
       @ViewChild('hamburger')
       public readonly hamburgerMenu!: HTMLUListElement;
 
       public constructor() {
             this.activeElement = false;
+            this.router = inject(Router);
+            this.loaderService = inject(LoaderService);
+            this.localStorageService = inject(LocalStorageService);
       }
 
       public get active() {
@@ -49,6 +58,13 @@ export class HeaderComponent {
 
       public onToggleHamburgerMenu() {
             this.activeElement = !this.activeElement;
+      }
+
+      public onLogout() {
+            this.loaderService.startAndStop(() => {
+                  this.localStorageService.removeAuthKey();
+                  this.router.navigate(['authentication/login']);
+            });
       }
 
 }

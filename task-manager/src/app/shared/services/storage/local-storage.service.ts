@@ -12,4 +12,8 @@ export class LocalStorageService {
       public set authKey(key: string) {
             localStorage.setItem(this.AUTH_KEY, key);
       }
+
+      public removeAuthKey() {
+            localStorage.removeItem(this.AUTH_KEY);
+      }
 }
