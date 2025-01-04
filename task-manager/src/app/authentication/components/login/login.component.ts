@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 
 import { faSignInAlt, faTasks } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -27,7 +27,15 @@ import { UserType } from '../../enums';
       templateUrl: './login.component.html',
       styleUrls: ['./login.component.css'],
       changeDetection: ChangeDetectionStrategy.OnPush,
-      imports: [RouterLink, FormsModule, InputComponent, ButtonComponent, FontAwesomeModule, ReactiveFormsModule],
+      imports: [
+            RouterLink,
+            FormsModule,
+            InputComponent,
+            ButtonComponent,
+            FontAwesomeModule,
+            ReactiveFormsModule,
+            RouterModule,
+      ],
       providers: [
             DatabaseService,
             LoginFormService,
@@ -37,6 +45,7 @@ import { UserType } from '../../enums';
       ],
 })
 export class LoginComponent {
+      private readonly router: Router;
       private readonly loaderService: LoaderService;
       private readonly userRepository: UserRepository;
       private readonly loginFormService: LoginFormService;
@@ -44,6 +53,7 @@ export class LoginComponent {
       private readonly localStorageService: LocalStorageService;
 
       public constructor() {
+            this.router = inject(Router);
             this.loaderService = inject(LoaderService);
             this.loginFormService = inject(LoginFormService);
             this.localStorageService = inject(LocalStorageService);
@@ -77,14 +87,15 @@ export class LoginComponent {
             const password = this.loginFormService.passwordControl?.value;
             this.userRepository.findByEmailAndPassword(email, password).subscribe({
                   next: () => {
-                        this.loaderService.stop();
                         this.localStorageService.authKey = uuid4();
                         this.notificationService.success('Login successful', 50000);
+                        this.router.navigate(['/home']);
+                        this.loaderService.stop();
                   },
                   error: (error) => {
                         console.error(error);
-                        this.loaderService.stop();
                         this.notificationService.error('Username or password incorrect', 50000);
+                        this.loaderService.stop();
                   },
             });
       }

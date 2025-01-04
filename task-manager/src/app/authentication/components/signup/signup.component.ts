@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
 
 import { v4 as uuid4 } from 'uuid';
@@ -27,7 +27,16 @@ import { USER_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
       templateUrl: './signup.component.html',
       styleUrls: ['./signup.component.css'],
       changeDetection: ChangeDetectionStrategy.OnPush,
-      imports: [NgIf, RouterLink, FormsModule, InputComponent, ButtonComponent, FontAwesomeModule, ReactiveFormsModule],
+      imports: [
+            NgIf,
+            RouterLink,
+            FormsModule,
+            InputComponent,
+            ButtonComponent,
+            FontAwesomeModule,
+            ReactiveFormsModule,
+            Router,
+      ],
       providers: [
             LoaderService,
             DatabaseService,
@@ -38,7 +47,7 @@ import { USER_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
       ],
 })
 export class SignupComponent {
-
+      private readonly router: Router;
       private readonly loaderService: LoaderService;
       private readonly userRepository: UserRepository;
       private readonly signupFormService: SignupFormService;
@@ -46,6 +55,7 @@ export class SignupComponent {
       private readonly localStorageService: LocalStorageService;
 
       public constructor() {
+            this.router = inject(Router);
             this.loaderService = inject(LoaderService);
             this.signupFormService = inject(SignupFormService);
             this.notificationService = inject(NotificationService);
@@ -76,9 +86,10 @@ export class SignupComponent {
                   })
                   .subscribe({
                         next: () => {
-                              this.loaderService.stop();
                               this.localStorageService.authKey = uuid4();
-                              this.notificationService.success('You have been successfully signed in.', 5000)
+                              this.notificationService.success('You have been successfully signed in.', 5000);
+                              this.router.navigate(['/home']);
+                              this.loaderService.stop();
                         },
                         error: (error) => {
                               console.error(error);
