@@ -1,8 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { Subscription } from 'rxjs';
+
+import { DatabaseService, StoreTaskListService, TaskRepository, TaskService, TaskStatus } from '../shared';
+import { TASK_REPOSITORY_TOKEN } from '../injection-tokens';
 import { TaskListComponent } from '../board';
-import { TaskStatus } from '../shared';
 
 @Component({
       standalone: true,
@@ -11,8 +14,28 @@ import { TaskStatus } from '../shared';
       styleUrls: ['./home.component.css'],
       imports: [CommonModule, TaskListComponent],
       changeDetection: ChangeDetectionStrategy.OnPush,
+      providers: [DatabaseService, { provide: TASK_REPOSITORY_TOKEN, useClass: TaskService }],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, OnDestroy {
+      private taskRepository$!: Subscription;
+      private readonly taskRepository: TaskRepository;
+      private readonly changeDetectorRef: ChangeDetectorRef;
+      private readonly storeTaskListService: StoreTaskListService;
+
+      public constructor() {
+            this.changeDetectorRef = inject(ChangeDetectorRef);
+            this.storeTaskListService = inject(StoreTaskListService);
+            this.taskRepository = inject<TaskRepository>(TASK_REPOSITORY_TOKEN);
+      }
+
+      public ngOnInit(): void {
+            this.taskRepository$ = this.taskRepository.index().subscribe({
+                  next: (tasks) => {
+                        this.storeTaskListService.value = tasks;
+                        this.changeDetectorRef.detectChanges();
+                  },
+            });
+      }
 
       public get todoStatus() {
             return TaskStatus.TODO;
@@ -26,4 +49,7 @@ export class HomeComponent {
             return TaskStatus.COMPLETED;
       }
 
+      public ngOnDestroy(): void {
+            this.taskRepository$.unsubscribe();
+      }
 }

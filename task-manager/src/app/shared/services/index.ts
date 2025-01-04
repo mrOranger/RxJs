@@ -1,3 +1,4 @@
+export * from './store';
 export * from './modal';
 export * from './loader';
 export * from './storage';
