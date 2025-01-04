@@ -1,9 +1,18 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import * as moment from 'moment';
 
-import { DatabaseService, Task, TaskUser, TaskUserRepository, TaskUserService, User, UserRepository, UserService } from 'src/app/shared';
+import {
+      DatabaseService,
+      Task,
+      TaskUser,
+      TaskUserRepository,
+      TaskUserService,
+      User,
+      UserRepository,
+      UserService,
+} from 'src/app/shared';
 import { TASK_USER_REPOSITORY_TOKEN, USER_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
 import { forkJoin } from 'rxjs';
 
@@ -14,14 +23,18 @@ import { forkJoin } from 'rxjs';
       templateUrl: './task-list-item.component.html',
       styleUrls: ['./task-list-item.component.css'],
       changeDetection: ChangeDetectionStrategy.OnPush,
+      host: {
+            draggable: 'true',
+            '(dragstart)': 'onDragStart($event)',
+            '(dragend)': 'onDragEnd($event)',
+      },
       providers: [
             DatabaseService,
             { provide: USER_REPOSITORY_TOKEN, useClass: UserService },
             { provide: TASK_USER_REPOSITORY_TOKEN, useClass: TaskUserService },
-      ]
+      ],
 })
 export class TaskListItemComponent implements OnInit {
-
       @Input() public task!: Task;
 
       private users: User[];
@@ -39,24 +52,22 @@ export class TaskListItemComponent implements OnInit {
       }
 
       public ngOnInit(): void {
-            forkJoin([
-                  this.userRepository.index(),
-                  this.taskUserRepository.index(),
-            ]).subscribe({
+            forkJoin([this.userRepository.index(), this.taskUserRepository.index()]).subscribe({
                   next: ([users, assignations]) => {
                         this.users = users;
                         this.assignations = assignations;
                         this.changeDetectorRef.detectChanges();
-                  }
-            })
+                  },
+            });
       }
 
       public get assignedUsers() {
-            return this.assignations
-                  .filter((anAssignation) => anAssignation.taskId === this.task.id)
-                  .map((anAssignation) => this.users.find((aUser) => aUser.id === anAssignation.userId)) ?? [];
+            return (
+                  this.assignations
+                        .filter((anAssignation) => anAssignation.taskId === this.task.id)
+                        .map((anAssignation) => this.users.find((aUser) => aUser.id === anAssignation.userId)) ?? []
+            );
       }
-
 
       public get createdAt() {
             return moment(this.task.createdAt).format('ddd, DD/MM/YYYY');
@@ -64,5 +75,13 @@ export class TaskListItemComponent implements OnInit {
 
       public get updatedAt() {
             return moment(this.task.updatedAt).format('ddd, DD/MM/YYYY');
+      }
+
+      public onDragStart(event: DragEvent) {
+            console.log(this.task.id, 'dragstart', event);
+      }
+
+      public onDragEnd(event: DragEvent) {
+            console.log(this.task.id, 'dragstop', event);
       }
 }

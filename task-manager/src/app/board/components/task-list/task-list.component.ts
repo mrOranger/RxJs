@@ -12,10 +12,13 @@ import { DatabaseService, Task, TaskRepository, TaskService, TaskStatus } from '
       styleUrls: ['./task-list.component.css'],
       imports: [CommonModule, TaskListItemComponent, NgFor],
       changeDetection: ChangeDetectionStrategy.OnPush,
-      providers: [
-            DatabaseService,
-            { provide: TASK_REPOSITORY_TOKEN, useClass: TaskService },
-      ],
+      host: {
+            '(dragenter)': 'onDragEnter($event)',
+            '(dragleave)': 'onDragLeave($event)',
+            '(dragover)': 'onDragOver($event)',
+            '(drop)': 'onDrop($event)',
+      },
+      providers: [DatabaseService, { provide: TASK_REPOSITORY_TOKEN, useClass: TaskService }],
 })
 export class TaskListComponent implements OnInit {
       @Input() public title!: string;
@@ -37,11 +40,28 @@ export class TaskListComponent implements OnInit {
                   next: (tasks) => {
                         this.currentTasks = tasks.filter((task) => task.status === this.taskStatus);
                         this.changeDetectorRef.detectChanges();
-                  }
-            })
+                  },
+            });
       }
 
       public get tasks() {
             return this.currentTasks;
+      }
+
+      public onDragEnter(event: DragEvent): void {
+            console.log(this.taskStatus, 'onDragEnter', event);
+      }
+
+      public onDragOver(event: DragEvent): void {
+            event.preventDefault();
+            console.log(this.taskStatus, 'onDragOver', event);
+      }
+
+      public onDragLeave(event: DragEvent): void {
+            console.log(this.taskStatus, 'onDragLeave', event);
+      }
+
+      public onDrop(event: DragEvent): void {
+            console.log(this.taskStatus, 'onDrop', event);
       }
 }

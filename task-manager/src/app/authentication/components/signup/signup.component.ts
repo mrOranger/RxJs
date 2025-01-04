@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { NgIf } from '@angular/common';
 
 import { v4 as uuid4 } from 'uuid';
@@ -31,11 +31,11 @@ import { USER_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
             NgIf,
             RouterLink,
             FormsModule,
+            RouterModule,
             InputComponent,
             ButtonComponent,
             FontAwesomeModule,
             ReactiveFormsModule,
-            Router,
       ],
       providers: [
             LoaderService,

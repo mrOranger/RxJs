@@ -30,11 +30,11 @@ import { UserType } from '../../enums';
       imports: [
             RouterLink,
             FormsModule,
+            RouterModule,
             InputComponent,
             ButtonComponent,
             FontAwesomeModule,
             ReactiveFormsModule,
-            RouterModule,
       ],
       providers: [
             DatabaseService,
