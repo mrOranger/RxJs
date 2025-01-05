@@ -1,0 +1,7 @@
+<div class="input-container">
+      <label>{{ label }}</label>
+      <textarea [(ngModel)]="value" [placeholder]="placeholder" [disabled]="disabled"></textarea>
+      <ng-content
+            *ngIf="formControl?.invalid && (formControl?.touched || formControl?.dirty)"
+            selector=".error-messages"></ng-content>
+</div>

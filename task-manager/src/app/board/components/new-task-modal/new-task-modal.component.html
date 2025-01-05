@@ -1,5 +1,9 @@
 <form class="form" [formGroup]="form">
-      <tm-input label="Title" type="text" name="title" placeholder="Task title here ..."
+      <tm-input
+            label="Title"
+            type="text"
+            name="title"
+            placeholder="Task title here ..."
             [formControlName]="formService.titleFormName">
             <span [hidden]="!formService.titleFormControl.hasError('required')" class="error-message">
                   • Il titolo del task è obbligatorio
@@ -9,8 +13,13 @@
             </span>
             <span [hidden]="!formService.titleFormControl.hasError('maxlength')" class="error-message">
                   • Il titolo del task deve essere lungo massimo 255 caratteri
-            </span></tm-input>
-      <tm-input label="Description" type="text" name="description" placeholder="Task's description here ..."
+            </span></tm-input
+      >
+      <tm-textarea
+            label="Description"
+            type="text"
+            name="description"
+            placeholder="Task's description here ..."
             [formControlName]="formService.descriptionFormName">
             <span [hidden]="!formService.descriptionFormControl.hasError('required')" class="error-message">
                   • La descrizione del task è obbligatoria
@@ -20,8 +29,13 @@
             </span>
             <span [hidden]="!formService.descriptionFormControl.hasError('maxlength')" class="error-message">
                   • La descrizione del task deve essere lunga massimo 255 caratteri
-            </span></tm-input>
-      <tm-select [values]="users" [displayValues]="['firstName', 'lastName']" [key]="'id'"
-            [emptySelectionLabel]="'Assign to someone ...'" [formControlName]="formService.assignedUserFormName">
+            </span></tm-textarea
+      >
+      <tm-select
+            [values]="users"
+            [displayValues]="['firstName', 'lastName']"
+            [key]="'id'"
+            [emptySelectionLabel]="'Assign to someone ...'"
+            [formControlName]="formService.assignedUserFormName">
       </tm-select>
 </form>

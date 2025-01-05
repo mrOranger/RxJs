@@ -17,6 +17,7 @@ import {
       TaskUserRepository,
       NotificationService,
       Task,
+      TextareaComponent,
 } from 'src/app/shared';
 import { TASK_REPOSITORY_TOKEN, TASK_USER_REPOSITORY_TOKEN, USER_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
 import { NewTaskFormService } from '../../services';
@@ -35,7 +36,7 @@ import { NewTaskFormService } from '../../services';
             { provide: USER_REPOSITORY_TOKEN, useClass: UserService },
             { provide: TASK_USER_REPOSITORY_TOKEN, useClass: TaskUserService },
       ],
-      imports: [FormsModule, ReactiveFormsModule, InputComponent, SelectComponent],
+      imports: [FormsModule, ReactiveFormsModule, InputComponent, SelectComponent, TextareaComponent],
 })
 export class NewTaskModalComponent implements OnInit, OnDestroy {
       private readonly modalService: ModalService;
