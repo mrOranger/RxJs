@@ -1,8 +1,8 @@
-:host.ng-invalid.ng-touched.ng-dirty .input-container input {
+:host.ng-invalid.ng-touched.ng-dirty .input-container textarea {
       border: 1px solid var(--error);
 }
 
-:host.ng-valid.ng-touched.ng-dirty .input-container input {
+:host.ng-valid.ng-touched.ng-dirty .input-container textarea {
       border: 1px solid var(--success);
 }
 
@@ -21,25 +21,27 @@
       margin: 0.25rem 0.5rem;
 }
 
-.input-container input {
+.input-container textarea {
       width: 100%;
       box-sizing: border-box;
       padding: 1em 2em;
       border-radius: var(--default-border-radius);
       border: 0.5px solid gray;
       transition: 0.2s ease;
+      resize: none;
+      font-family: var(--system-font-family);
 }
 
-.input-container input:active {
+.input-container textarea:active {
       outline: 1px solid gray;
 }
 
-.input-container input:focus-visible {
+.input-container textarea:focus-visible {
       outline: 0.5px solid gray;
       transform: scale(1.01);
 }
 
-.input-container input:disabled {
+.input-container textarea:disabled {
       cursor: not-allowed;
       outline: 1px solid gray;
       background-color: var(--card-background);
