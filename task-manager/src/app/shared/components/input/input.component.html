@@ -1,5 +1,10 @@
 <div class="input-container">
       <label>{{ label }}</label>
       <input [(ngModel)]="value" [type]="type" [name]="name" [placeholder]="placeholder" [disabled]="disabled" />
-      <ng-content *ngIf="control?.invalid && (control?.touched || control?.dirty)" selector=".error-messages"></ng-content>
+      <fa-icon
+            class="eye-icon"
+            [icon]="eyeIcon"
+            [hidden]="initialType !== 'password'"
+            (click)="onShowPassword()"></fa-icon>
 </div>
+<ng-content *ngIf="control?.invalid && (control?.touched || control?.dirty)" selector=".error-messages"></ng-content>

@@ -33,6 +33,10 @@ tm-input[type='email'] {
 
 button[type='button'] {
       width: 100%;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5e;
 }
 
 .user-type {
