@@ -4,7 +4,6 @@ import { ModalComponent } from '../../components';
 
 @Injectable({ providedIn: 'root' })
 export class ModalService {
-
       private modalRef?: ComponentRef<ModalComponent>;
       public readonly applicationRef: ApplicationRef;
 
