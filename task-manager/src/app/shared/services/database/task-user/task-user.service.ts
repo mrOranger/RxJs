@@ -11,7 +11,6 @@ import { DatabaseService } from '../database.service';
 
 @Injectable()
 export class TaskUserService implements TaskUserRepository {
-
       private readonly databaseService: DatabaseService;
 
       public constructor() {
@@ -31,6 +30,17 @@ export class TaskUserService implements TaskUserRepository {
                         })
                         .first(),
             ).pipe(
+                  switchMap((result) => {
+                        if (result) {
+                              return of(result);
+                        }
+                        return throwError(() => 'Relationship not found');
+                  }),
+            );
+      }
+
+      public findByTaskId(taskId: string): Observable<TaskUser[]> {
+            return from(this.databaseService.taskUser.where({ taskId }).toArray()).pipe(
                   switchMap((result) => {
                         if (result) {
                               return of(result);
