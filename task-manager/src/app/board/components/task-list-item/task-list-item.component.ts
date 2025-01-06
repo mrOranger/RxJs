@@ -5,6 +5,7 @@ import * as moment from 'moment';
 
 import {
       DatabaseService,
+      ModalService,
       StoreDragTaskService,
       StoreTaskService,
       StoreTaskUserService,
@@ -16,6 +17,7 @@ import {
       UserService,
 } from 'src/app/shared';
 import { TASK_USER_REPOSITORY_TOKEN, USER_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
+import { UpdateTaskModalComponent } from '../update-task-modal/update-task-modal.component';
 
 @Component({
       standalone: true,
@@ -28,6 +30,7 @@ import { TASK_USER_REPOSITORY_TOKEN, USER_REPOSITORY_TOKEN } from 'src/app/injec
             draggable: 'true',
             '(dragstart)': 'onDragStart($event)',
             '(dragend)': 'onDragEnd($event)',
+            '(click)': 'onUpdateTask()',
       },
       providers: [
             DatabaseService,
@@ -42,14 +45,14 @@ export class TaskListItemComponent implements OnInit {
       private users!: User[];
       private isHidden: boolean;
       private assignations!: TaskUser[];
-      private readonly elementRef: ElementRef;
+      private readonly modalService: ModalService;
       private readonly storeUserService: StoreUserService;
       private readonly storeDragTaskService: StoreDragTaskService;
       private readonly storeTaskUserService: StoreTaskUserService;
 
       public constructor() {
             this.isHidden = false;
-            this.elementRef = inject(ElementRef);
+            this.modalService = inject(ModalService);
             this.storeUserService = inject(StoreUserService);
             this.storeDragTaskService = inject(StoreDragTaskService);
             this.storeTaskUserService = inject(StoreTaskUserService);
@@ -92,5 +95,15 @@ export class TaskListItemComponent implements OnInit {
                   this.storeDragTaskService.value = null;
                   console.log(this.task.id, 'dragend');
             }
+      }
+
+      public onUpdateTask() {
+            this.modalService.create({
+                  component: UpdateTaskModalComponent,
+                  title: 'Update task',
+                  width: '60%',
+                  closeDisabled: false,
+                  submitDisabled: true,
+            });
       }
 }
