@@ -8,6 +8,7 @@ import {
       ModalService,
       StoreDragTaskService,
       StoreTaskService,
+      StoreTaskUpdateService,
       StoreTaskUserService,
       StoreUserService,
       Task,
@@ -49,6 +50,7 @@ export class TaskListItemComponent implements OnInit {
       private readonly storeUserService: StoreUserService;
       private readonly storeDragTaskService: StoreDragTaskService;
       private readonly storeTaskUserService: StoreTaskUserService;
+      private readonly storeTaskUpdateService: StoreTaskUpdateService;
 
       public constructor() {
             this.isHidden = false;
@@ -56,6 +58,7 @@ export class TaskListItemComponent implements OnInit {
             this.storeUserService = inject(StoreUserService);
             this.storeDragTaskService = inject(StoreDragTaskService);
             this.storeTaskUserService = inject(StoreTaskUserService);
+            this.storeTaskUpdateService = inject(StoreTaskUpdateService);
       }
 
       public ngOnInit(): void {
@@ -98,8 +101,12 @@ export class TaskListItemComponent implements OnInit {
       }
 
       public onUpdateTask() {
+            this.storeTaskUpdateService.value = this.task;
             this.modalService.create({
                   component: UpdateTaskModalComponent,
+                  params: {
+                        task: this.task,
+                  },
                   title: 'Update task',
                   width: '60%',
                   closeDisabled: false,

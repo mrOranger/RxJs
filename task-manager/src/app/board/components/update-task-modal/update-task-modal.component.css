@@ -1,0 +1,20 @@
+:host {
+      display: inline-flex;
+      width: 100%;
+      height: 100%;
+}
+
+.form {
+      width: 100%;
+      height: 100%;
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      box-sizing: border-box;
+      gap: 1em;
+}
+
+.form > * {
+      width: 100%;
+}

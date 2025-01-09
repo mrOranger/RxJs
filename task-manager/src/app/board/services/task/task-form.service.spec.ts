@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { NewTaskFormService } from './new-task-form.service';
+import { TaskFormService } from './task-form.service';
 
 describe('NewTaskFormService', () => {
-      let service: NewTaskFormService;
+      let service: TaskFormService;
 
       beforeEach(() => {
             TestBed.configureTestingModule({});
-            service = TestBed.inject(NewTaskFormService);
+            service = TestBed.inject(TaskFormService);
       });
 
       it('should be created', () => {

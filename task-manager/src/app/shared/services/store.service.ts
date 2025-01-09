@@ -1,7 +1,7 @@
 import { BehaviorSubject, PartialObserver, Subscription } from 'rxjs';
 
 export abstract class StoreService<T> {
-      private readonly behaviorSubject: BehaviorSubject<T>;
+      protected readonly behaviorSubject: BehaviorSubject<T>;
 
       public constructor(initialValue: T) {
             this.behaviorSubject = new BehaviorSubject<T>(initialValue);

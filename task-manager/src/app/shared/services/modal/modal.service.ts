@@ -1,18 +1,26 @@
-import { ApplicationRef, ComponentRef, inject, Injectable, Type, ViewContainerRef } from '@angular/core';
+import {
+      ApplicationRef,
+      ComponentRef,
+      inject,
+      Injectable,
+      reflectComponentType,
+      Type,
+      ViewContainerRef,
+} from '@angular/core';
 
 import { ModalComponent } from '../../components';
 
 @Injectable({ providedIn: 'root' })
 export class ModalService {
-      private modalRef?: ComponentRef<ModalComponent>;
       public readonly applicationRef: ApplicationRef;
 
       public constructor() {
             this.applicationRef = inject(ApplicationRef);
       }
 
-      public create<T>(params: {
+      public create<T, K>(params: {
             component: Type<T>;
+            params?: Record<string, K>;
             title: string;
             width?: string;
             height?: string;
@@ -23,6 +31,7 @@ export class ModalService {
 
             const rootComponent = this.applicationRef.components.at(0);
             rootComponent?.location.nativeElement.classList.add('blur');
+
             const rootComponentViewContainer = rootComponent!.injector.get(ViewContainerRef);
 
             const modalComponentRef = rootComponentViewContainer?.createComponent(ModalComponent);
@@ -31,24 +40,35 @@ export class ModalService {
 
             const injectedComponentRef = rootComponentViewContainer?.createComponent(component);
 
-            modalComponentRef.instance.title = title;
-            modalComponentRef.instance.disableCancel = !!closeDisabled;
-            modalComponentRef.instance.disableSubmit = !!submitDisabled;
+            const modalComponentMetadata = reflectComponentType(ModalComponent);
+            const injectedComponentRefMetadata = reflectComponentType(component);
+
+            for (const input of modalComponentMetadata!.inputs) {
+                  if (input.propName === 'title') {
+                        modalComponentRef.instance.title = title;
+                  }
+
+                  if (input.propName === 'disableCancel') {
+                        modalComponentRef.instance.disableCancel = !!closeDisabled;
+                  }
+
+                  if (input.propName === 'disableSubmit') {
+                        modalComponentRef.instance.disableSubmit = !!submitDisabled;
+                  }
+            }
+
+            for (const input of injectedComponentRefMetadata!.inputs) {
+                  if (input.propName === 'modalInstance') {
+                        injectedComponentRef.setInput('modalInstance', modalComponentRef.instance);
+                  }
+
+                  if (params.params && params.params[input.propName]) {
+                        injectedComponentRef.setInput(input.propName, params.params[input.propName]);
+                  }
+            }
+
             modalComponentRef.location.nativeElement.setAttribute('style', `width: ${width}; height: ${height}`);
 
             modalViewContainer.appendChild(injectedComponentRef!.location.nativeElement);
-
-            this.modalRef = modalComponentRef;
-      }
-
-      public get componentInstance() {
-            return this.modalRef?.instance;
-      }
-
-      public updateConfig(config: { okDisabled: boolean; cancelDisabled: boolean }) {
-            if (this.modalRef) {
-                  this.modalRef.instance.disableSubmit = config.okDisabled;
-                  this.modalRef.instance.disableCancel = config.cancelDisabled;
-            }
       }
 }

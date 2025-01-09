@@ -1,5 +1,5 @@
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, NgControl, ReactiveFormsModule } from '@angular/forms';
-import { ChangeDetectionStrategy, Component, inject, Injector, Input, OnInit } from '@angular/core';
+import { Component, inject, Injector, Input, OnInit } from '@angular/core';
 import { NgIf } from '@angular/common';
 
 @Component({
@@ -7,7 +7,6 @@ import { NgIf } from '@angular/common';
       selector: 'tm-textarea',
       templateUrl: './textarea.component.html',
       styleUrls: ['./textarea.component.css'],
-      changeDetection: ChangeDetectionStrategy.OnPush,
       imports: [FormsModule, ReactiveFormsModule, NgIf],
       providers: [
             {

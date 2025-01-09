@@ -1,5 +1,5 @@
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgFor } from '@angular/common';
 
 @Component({
@@ -7,7 +7,6 @@ import { NgFor } from '@angular/common';
       selector: 'tm-select',
       templateUrl: './select.component.html',
       styleUrls: ['./select.component.css'],
-      changeDetection: ChangeDetectionStrategy.OnPush,
       imports: [FormsModule, ReactiveFormsModule, NgFor],
       providers: [
             {
@@ -36,7 +35,7 @@ export class SelectComponent<T> implements ControlValueAccessor {
 
       public getItemPlaceholder(item: T) {
             let placeholder = '';
-            for (const key in (item)) {
+            for (const key in item) {
                   if (this.displayValues.includes(key)) {
                         placeholder = `${placeholder} ${item[key] as string}`;
                   }
