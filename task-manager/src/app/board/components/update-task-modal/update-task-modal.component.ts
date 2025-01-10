@@ -54,7 +54,8 @@ export class UpdateTaskModalComponent {
       private users?: User[];
       private assignedUser?: User;
 
-      private close$?: Subscription;
+      private ok$?: Subscription;
+      private cancel$?: Subscription;
       private database$?: Subscription;
       private taskFormService$?: Subscription;
 
@@ -110,7 +111,7 @@ export class UpdateTaskModalComponent {
                   },
             });
 
-            this.close$ = this.modalInstance.okEvent
+            this.ok$ = this.modalInstance.okEvent
                   .pipe(
                         concatMap(() =>
                               this.taskRepository.update(this.task.id, {
@@ -130,6 +131,10 @@ export class UpdateTaskModalComponent {
                               this.modalInstance.closeEvent.next();
                         },
                   });
+
+            this.cancel$ = this.modalInstance.closeEvent.subscribe({
+                  next: () => this.ngOnDestroy(),
+            });
       }
 
       public get databaseUsers() {
@@ -145,7 +150,8 @@ export class UpdateTaskModalComponent {
       }
 
       public ngOnDestroy(): void {
-            this.close$?.unsubscribe();
+            this.ok$?.unsubscribe();
+            this.cancel$?.unsubscribe();
             this.database$?.unsubscribe();
             this.taskFormService$?.unsubscribe();
       }
