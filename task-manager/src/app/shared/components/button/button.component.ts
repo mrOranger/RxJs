@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
 
 @Component({
       standalone: true,
@@ -6,4 +6,15 @@ import { Component } from '@angular/core';
       templateUrl: './button.component.html',
       styleUrls: ['./button.component.css'],
 })
-export class ButtonComponent {}
+export class ButtonComponent {
+      @Input() public hidden: boolean;
+
+      public constructor() {
+            this.hidden = false;
+      }
+
+      @HostBinding('attr.hidden')
+      public get isVisible() {
+            return this.hidden;
+      }
+}

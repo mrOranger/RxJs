@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { ButtonComponent, ModalService } from 'src/app/shared';
+import { Router, RouterModule } from '@angular/router';
 import { NewTaskModalComponent } from 'src/app/board';
 
 @Component({
@@ -12,13 +13,14 @@ import { NewTaskModalComponent } from 'src/app/board';
       selector: 'tm-sidebar-left',
       styleUrls: ['./sidebar-left.component.css'],
       templateUrl: './sidebar-left.component.html',
-      imports: [CommonModule, FontAwesomeModule, ButtonComponent],
+      imports: [CommonModule, FontAwesomeModule, ButtonComponent, RouterModule],
 })
 export class SidebarLeftComponent {
-
+      private readonly router: Router;
       private readonly modalService: ModalService;
 
       public constructor() {
+            this.router = inject(Router);
             this.modalService = inject(ModalService);
       }
 
@@ -32,8 +34,28 @@ export class SidebarLeftComponent {
             });
       }
 
-      public get newTaskIcon() {
-            return faPlusCircle;
+      public get icons() {
+            return {
+                  newTask: faPlus,
+                  newProject: faPlus,
+            };
       }
 
+      public get labels() {
+            return {
+                  newTask: 'New Task',
+                  newProject: 'New Project',
+            };
+      }
+
+      public get visibilities() {
+            return {
+                  newTask: this.router.url === '/home',
+                  newProject: this.router.url === '/projects',
+            };
+      }
+
+      public onNewProject() {
+            console.log('Modal for new project');
+      }
 }

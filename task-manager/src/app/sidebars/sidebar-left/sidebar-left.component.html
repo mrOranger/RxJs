@@ -1,6 +1,8 @@
-<div class="actions-list">
-      <button tmButton (click)="onNewTask()" class="action">
-            New Task
-            <fa-icon [icon]="newTaskIcon" size="lg" class="icon"></fa-icon>
-      </button>
-</div>
+<button tmButton (click)="onNewTask()" class="action" *ngIf="visibilities.newTask">
+      {{ labels.newTask }}
+      <fa-icon [icon]="icons.newTask" size="lg" class="icon"></fa-icon>
+</button>
+<button tmButton (click)="onNewProject()" class="action" *ngIf="visibilities.newProject">
+      {{ labels.newProject }}
+      <fa-icon [icon]="icons.newProject" size="lg" class="icon"></fa-icon>
+</button>
