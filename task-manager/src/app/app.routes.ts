@@ -10,7 +10,7 @@ export const routes: Routes = [
       {
             path: 'authentication',
             loadChildren: () => import('./authentication/authentication.routes').then((m) => m.routes),
-            canActivateChild: [ authGuard(false) ],
+            canActivateChild: [authGuard(false)],
       },
       {
             path: '',
@@ -19,12 +19,20 @@ export const routes: Routes = [
                   {
                         path: 'home',
                         loadComponent: () => import('./home/home.component').then((m) => m.HomeComponent),
-                        canActivate: [ authGuard(true) ]
-                  }
+                        canActivate: [authGuard(true)],
+                  },
+                  {
+                        path: 'projects',
+                        loadComponent: () =>
+                              import('./projects/components/project-list/project-list.component').then(
+                                    (m) => m.ProjectListComponent,
+                              ),
+                        canActivate: [authGuard(true)],
+                  },
             ],
       },
       {
             path: '**',
             component: NotFoundComponent,
-      }
+      },
 ];
