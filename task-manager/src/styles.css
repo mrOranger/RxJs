@@ -27,6 +27,8 @@
 
       --default-border-radius: 0.25rem;
 
+      --default-shadow: 0em 0.5em 0.5em lightgray;
+
       --system-font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
             'Open Sans', 'Helvetica Neue', sans-serif, 'Helvetica Neue', sans-serif;
 }
@@ -70,7 +72,7 @@ body {
       border-radius: var(--default-border-radius);
       background-color: var(--card-background);
       gap: 2em;
-      box-shadow: 0em 0.5em 0.5em lightgray;
+      box-shadow: var(--default-shadow);
 }
 
 .card .header {
