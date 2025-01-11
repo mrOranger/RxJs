@@ -1,7 +1,8 @@
-import { Entity } from "dexie";
-import { DatabaseService } from "../../services";
+import { Entity } from 'dexie';
 
-export class TaskUserEntity extends Entity<DatabaseService>{
+import { DatabaseService } from '../../services';
+
+export class TaskUserEntity extends Entity<DatabaseService> {
       public id!: string;
       public userId!: string;
       public taskId!: string;
