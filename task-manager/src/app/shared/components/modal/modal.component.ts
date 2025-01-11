@@ -21,24 +21,29 @@ import { ButtonComponent } from '../button/button.component';
                         style({
                               transform: 'translate(-100vw, -50%)',
                         }),
-                        animate('200ms', style({
-                              transform: 'translate(-50%, -50%)',
-                        }))
+                        animate(
+                              '200ms',
+                              style({
+                                    transform: 'translate(-50%, -50%)',
+                              }),
+                        ),
                   ]),
                   transition(':leave', [
                         style({
                               transform: 'translate(-50%, -50%)',
                         }),
-                        animate('200ms', style({
-                              transform: 'translate(-50%, 100vw)',
-                        }))
+                        animate(
+                              '200ms',
+                              style({
+                                    transform: 'translate(-50%, 100vw)',
+                              }),
+                        ),
                   ]),
             ]),
-      ]
+      ],
 })
 export class ModalComponent {
-
-      private modalTitle: string;
+      private modalTitle!: string;
       private isCancelDisabled: boolean;
       private isSubmitDisabled: boolean;
 
@@ -52,7 +57,7 @@ export class ModalComponent {
             this.elementRef = inject(ElementRef);
             this.applicationRef = inject(ApplicationRef);
 
-            this.modalTitle = '';
+            this.modalTitle = 'Modal';
             this.isCancelDisabled = false;
             this.isSubmitDisabled = false;
             this.closeEvent = new Subject<void>();
@@ -99,5 +104,4 @@ export class ModalComponent {
             const rootComponent = this.applicationRef.components.at(0);
             rootComponent?.location.nativeElement.classList.remove('blur');
       }
-
 }
