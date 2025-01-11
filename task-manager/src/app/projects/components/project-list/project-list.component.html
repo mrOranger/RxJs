@@ -1,1 +1,6 @@
-<p>project-list works!</p>
+<div class="projects-list" *ngIf="projects.length > 0; else noProjects">
+      <span>It works!</span>
+</div>
+<ng-template #noProjects>
+      <tm-empty-project-list></tm-empty-project-list>
+</ng-template>

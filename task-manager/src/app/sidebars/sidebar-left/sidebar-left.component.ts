@@ -7,6 +7,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ButtonComponent, ModalService } from 'src/app/shared';
 import { Router, RouterModule } from '@angular/router';
 import { NewTaskModalComponent } from 'src/app/board';
+import { NewProjectModalComponent } from 'src/app/projects';
 
 @Component({
       standalone: true,
@@ -56,6 +57,12 @@ export class SidebarLeftComponent {
       }
 
       public onNewProject() {
-            console.log('Modal for new project');
+            this.modalService.create({
+                  component: NewProjectModalComponent,
+                  title: 'New Project',
+                  width: '60%',
+                  closeDisabled: false,
+                  submitDisabled: true,
+            });
       }
 }
