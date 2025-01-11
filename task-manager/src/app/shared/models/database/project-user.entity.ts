@@ -6,4 +6,6 @@ export class ProjectUserEntity extends Entity<DatabaseService> {
       public id!: string;
       public userId!: string;
       public projectId!: string;
+      public createdAt!: Date;
+      public updatedAt!: Date;
 }
