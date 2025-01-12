@@ -21,6 +21,10 @@ export class ProjectFormService {
             });
       }
 
+      public get form() {
+            return this.projectForm;
+      }
+
       public get titleFormName() {
             return 'title';
       }
@@ -35,6 +39,22 @@ export class ProjectFormService {
 
       public get endingDateFormName() {
             return 'ending_date';
+      }
+
+      public get titleFormControl() {
+            return this.form.controls[this.titleFormName];
+      }
+
+      public get descriptionFormControl() {
+            return this.form.controls[this.descriptionFormName];
+      }
+
+      public get startingDateFormControl() {
+            return this.form.controls[this.startingDateFormName];
+      }
+
+      public get endingDateFormControl() {
+            return this.form.controls[this.endingDateFormName];
       }
 
       public subscribeOnValueChanges(
