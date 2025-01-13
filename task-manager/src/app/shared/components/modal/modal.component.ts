@@ -1,4 +1,12 @@
-import { ApplicationRef, Component, ElementRef, inject, Input } from '@angular/core';
+import {
+      ApplicationRef,
+      ChangeDetectionStrategy,
+      ChangeDetectorRef,
+      Component,
+      ElementRef,
+      inject,
+      Input,
+} from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 
@@ -41,6 +49,7 @@ import { ButtonComponent } from '../button/button.component';
                   ]),
             ]),
       ],
+      changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalComponent {
       private modalTitle!: string;
@@ -52,10 +61,12 @@ export class ModalComponent {
 
       private readonly elementRef?: ElementRef;
       private readonly applicationRef: ApplicationRef;
+      private readonly changeDetectorRef: ChangeDetectorRef;
 
       public constructor() {
             this.elementRef = inject(ElementRef);
             this.applicationRef = inject(ApplicationRef);
+            this.changeDetectorRef = inject(ChangeDetectorRef);
 
             this.modalTitle = 'Modal';
             this.isCancelDisabled = false;
@@ -70,6 +81,7 @@ export class ModalComponent {
 
       public set title(newTitle: string) {
             this.modalTitle = newTitle;
+            this.changeDetectorRef.detectChanges();
       }
 
       public get disableSubmit() {
@@ -78,6 +90,7 @@ export class ModalComponent {
 
       public set disableSubmit(disabled: boolean) {
             this.isSubmitDisabled = disabled;
+            this.changeDetectorRef.detectChanges();
       }
 
       public get disableCancel() {
@@ -86,6 +99,7 @@ export class ModalComponent {
 
       public set disableCancel(disabled: boolean) {
             this.isCancelDisabled = disabled;
+            this.changeDetectorRef.detectChanges();
       }
 
       public onOk(): void {
