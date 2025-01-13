@@ -1,5 +1,5 @@
-import { inject, Injectable } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Injectable } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { PartialObserver } from 'rxjs';
 
@@ -8,17 +8,25 @@ import { ProjectFormValidators } from '../validators';
 @Injectable()
 export class ProjectFormService {
       private readonly projectForm: FormGroup;
-      private readonly formBuilder: FormBuilder;
 
       public constructor() {
-            this.formBuilder = inject(FormBuilder);
-
-            this.projectForm = this.formBuilder.group({
-                  [this.titleFormName]: ['', [Validators.required, Validators.maxLength(255)]],
-                  [this.descriptionFormName]: ['', [Validators.required, Validators.maxLength(255)]],
-                  [this.startingDateFormName]: [null, [Validators.required, ProjectFormValidators.notBeforeToday]],
-                  [this.endingDateFormName]: [null, [Validators.required]],
-            });
+            this.projectForm = new FormGroup(
+                  {
+                        [this.titleFormName]: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+                        [this.descriptionFormName]: new FormControl('', [
+                              Validators.required,
+                              Validators.maxLength(255),
+                        ]),
+                        [this.startingDateFormName]: new FormControl(null, [
+                              Validators.required,
+                              ProjectFormValidators.notBeforeToday,
+                        ]),
+                        [this.endingDateFormName]: new FormControl(null, [Validators.required]),
+                  },
+                  {
+                        validators: [ProjectFormValidators.notBeforeStartingDate],
+                  },
+            );
       }
 
       public get form() {
