@@ -86,8 +86,9 @@ export class LoginComponent {
             const email = this.loginFormService.emailControl?.value;
             const password = this.loginFormService.passwordControl?.value;
             this.userRepository.findByEmailAndPassword(email, password).subscribe({
-                  next: () => {
+                  next: (user) => {
                         this.localStorageService.authKey = uuid4();
+                        this.localStorageService.userId = user.id;
                         this.notificationService.success('Login successful', 50000);
                         this.router.navigate(['/home']);
                         this.loaderService.stop();

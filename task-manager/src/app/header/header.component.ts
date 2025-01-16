@@ -16,7 +16,6 @@ import { LoaderService, LocalStorageService } from '../shared';
       providers: [LocalStorageService, LoaderService],
 })
 export class HeaderComponent {
-
       private activeElement: boolean;
       private readonly router: Router;
       private readonly loaderService: LoaderService;
@@ -62,9 +61,9 @@ export class HeaderComponent {
 
       public onLogout() {
             this.loaderService.startAndStop(() => {
+                  this.localStorageService.removeUserId();
                   this.localStorageService.removeAuthKey();
                   this.router.navigate(['authentication/login']);
             });
       }
-
 }

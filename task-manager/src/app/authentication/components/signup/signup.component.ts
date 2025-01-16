@@ -85,8 +85,9 @@ export class SignupComponent {
                         password: this.signupFormService.passwordControl?.value,
                   })
                   .subscribe({
-                        next: () => {
+                        next: (user) => {
                               this.localStorageService.authKey = uuid4();
+                              this.localStorageService.userId = user.id;
                               this.notificationService.success('You have been successfully signed in.', 5000);
                               this.router.navigate(['/home']);
                               this.loaderService.stop();

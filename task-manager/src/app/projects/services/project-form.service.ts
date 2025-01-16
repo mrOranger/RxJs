@@ -10,23 +10,25 @@ export class ProjectFormService {
       private readonly projectForm: FormGroup;
 
       public constructor() {
-            this.projectForm = new FormGroup(
-                  {
-                        [this.titleFormName]: new FormControl('', [Validators.required, Validators.maxLength(255)]),
-                        [this.descriptionFormName]: new FormControl('', [
-                              Validators.required,
-                              Validators.maxLength(255),
-                        ]),
-                        [this.startingDateFormName]: new FormControl(null, [
-                              Validators.required,
-                              ProjectFormValidators.notBeforeToday,
-                        ]),
-                        [this.endingDateFormName]: new FormControl(null, [Validators.required]),
-                  },
-                  {
-                        validators: [ProjectFormValidators.notBeforeStartingDate],
-                  },
-            );
+            this.projectForm = new FormGroup({
+                  [this.titleFormName]: new FormControl('', {
+                        validators: [Validators.required, Validators.maxLength(255)],
+                  }),
+                  [this.descriptionFormName]: new FormControl('', {
+                        validators: [Validators.required, Validators.maxLength(255)],
+                  }),
+                  [this.dateFormName]: new FormGroup(
+                        {
+                              [this.startingDateFormName]: new FormControl(null, {
+                                    validators: [Validators.required, ProjectFormValidators.notBeforeToday],
+                              }),
+                              [this.endingDateFormName]: new FormControl(null, { validators: [Validators.required] }),
+                        },
+                        {
+                              validators: [ProjectFormValidators.notBeforeStartingDate],
+                        },
+                  ),
+            });
       }
 
       public get form() {
@@ -39,6 +41,10 @@ export class ProjectFormService {
 
       public get descriptionFormName() {
             return 'description';
+      }
+
+      public get dateFormName() {
+            return 'date';
       }
 
       public get startingDateFormName() {
@@ -57,12 +63,16 @@ export class ProjectFormService {
             return this.form.controls[this.descriptionFormName];
       }
 
+      public get dateFormControl() {
+            return this.form.controls[this.dateFormName];
+      }
+
       public get startingDateFormControl() {
-            return this.form.controls[this.startingDateFormName];
+            return this.form.get(this.dateFormName)?.get(this.startingDateFormName);
       }
 
       public get endingDateFormControl() {
-            return this.form.controls[this.endingDateFormName];
+            return this.form.get(this.dateFormName)?.get(this.endingDateFormName);
       }
 
       public subscribeOnValueChanges(

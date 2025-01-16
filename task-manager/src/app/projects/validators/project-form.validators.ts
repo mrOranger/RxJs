@@ -1,18 +1,16 @@
-import { AbstractControl, Validators } from '@angular/forms';
+import { AbstractControl, ValidatorFn, Validators } from '@angular/forms';
 
 export class ProjectFormValidators extends Validators {
-      public static get notBeforeToday() {
+      public static get notBeforeToday(): ValidatorFn {
             return (control: AbstractControl) => {
-                  const value = new Date(control.value);
-                  return value?.getTime() > Date.now() ? null : { notBeforeToday: true };
+                  return Date.parse(control.value) < Date.now() ? { notBeforeToday: true } : null;
             };
       }
 
-      public static get notBeforeStartingDate() {
+      public static get notBeforeStartingDate(): ValidatorFn {
             return (control: AbstractControl) => {
-                  const startingDate = new Date(control.get('starting_date')?.value);
-                  const endingDate = new Date(control.get('ending_date')?.value);
-                  return startingDate?.getTime() <= endingDate?.getTime() ? null : { notBeforeStartingDate: true };
+                  const { starting_date, ending_date } = control?.value;
+                  return Date.parse(starting_date) > Date.parse(ending_date) ? { notBeforeStartingDate: true } : null;
             };
       }
 }
