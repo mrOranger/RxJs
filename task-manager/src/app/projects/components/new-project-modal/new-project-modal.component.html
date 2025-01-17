@@ -33,7 +33,7 @@
                   • La descrizione del progetto deve essere lunga massimo 255 caratteri
             </span>
       </tm-textarea>
-      <div class="date-section" [formGroupName]="formService.dateFormName">
+      <div class="date-section">
             <tm-input
                   label="Starting Date"
                   type="date"
@@ -59,9 +59,6 @@
                   [formControlName]="formService.endingDateFormName">
                   <span [hidden]="!formService.endingDateFormControl?.hasError('required')" class="error-message">
                         • La data di fine è obbligatoria
-                  </span>
-                  <span [hidden]="!formService.dateFormControl.hasError('notBeforeStartingDate')" class="error-message">
-                        • La data di fine non può precedere quella di inizio
                   </span>
             </tm-input>
       </div>

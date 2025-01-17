@@ -1,1 +1,6 @@
-<p>project-list-item works!</p>
+<h2 class="project-title">{{ title }}</h2>
+<p class="project-description">{{ description }}</p>
+<div class="project-dates">
+      <tm-tag [label]="startingAt" type="info" [icon]="clock"></tm-tag>
+      <tm-tag [label]="endingAt" type="info" [icon]="clock"></tm-tag>
+</div>

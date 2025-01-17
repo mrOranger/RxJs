@@ -11,6 +11,10 @@ export abstract class StoreService<T> {
             return this.behaviorSubject.subscribe(observer);
       }
 
+      public get subject$() {
+            return this.behaviorSubject.asObservable();
+      }
+
       public get value() {
             return this.behaviorSubject.value;
       }

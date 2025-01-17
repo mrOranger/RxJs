@@ -1,3 +1,4 @@
+export { TagComponent } from './tag/tag.component';
 export { ModalComponent } from './modal/modal.component';
 export { InputComponent } from './input/input.component';
 export { ButtonComponent } from './button/button.component';

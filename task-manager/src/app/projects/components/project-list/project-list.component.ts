@@ -7,6 +7,7 @@ import {
       DatabaseService,
       LoaderService,
       NotificationService,
+      Project,
       ProjectRepository,
       ProjectService,
       StoreProjectService,
@@ -15,6 +16,7 @@ import {
 import { PROJECT_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
 
 import { EmptyProjectListComponent } from '../empty-project-list/empty-project-list.component';
+import { ProjectListItemComponent } from '../project-list-item/project-list-item.component';
 
 @Component({
       standalone: true,
@@ -22,7 +24,7 @@ import { EmptyProjectListComponent } from '../empty-project-list/empty-project-l
       templateUrl: './project-list.component.html',
       styleUrls: ['./project-list.component.css'],
       changeDetection: ChangeDetectionStrategy.OnPush,
-      imports: [CommonModule, EmptyProjectListComponent],
+      imports: [CommonModule, EmptyProjectListComponent, ProjectListItemComponent],
       providers: [
             LoaderService,
             DatabaseService,
@@ -37,7 +39,10 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       private readonly storeProjectService: StoreProjectService;
       private readonly notificationService!: NotificationService;
 
+      private projects!: Project[];
+
       private projectRepository$!: Subscription;
+      private storeProjectsService$!: Subscription;
 
       public constructor() {
             this.loaderService = inject(LoaderService);
@@ -48,6 +53,14 @@ export class ProjectListComponent implements OnInit, OnDestroy {
 
       public ngOnInit(): void {
             this.loaderService.start('Loading Projects ...');
+
+            this.storeProjectsService$ = this.storeProjectService.subscribe({
+                  next: (projects) => {
+                        this.projects = projects;
+                        this.changeDetectorRef.detectChanges();
+                  },
+            });
+
             this.projectRepository$ = this.projectRepository.index().subscribe({
                   next: (projects) => {
                         this.loaderService.stop();
@@ -62,11 +75,12 @@ export class ProjectListComponent implements OnInit, OnDestroy {
             });
       }
 
-      public get projects() {
-            return this.storeProjectService.value;
+      public get databaseProjects() {
+            return this.projects ?? [];
       }
 
       public ngOnDestroy(): void {
             this.projectRepository$.unsubscribe();
+            this.storeProjectsService$.unsubscribe();
       }
 }

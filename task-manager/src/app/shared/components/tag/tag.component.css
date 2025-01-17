@@ -1,0 +1,59 @@
+:host {
+      width: 100%;
+      display: inline-flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+
+      border: 1px solid var(--secondary);
+      border-radius: 0.5rem;
+      background-color: var(--card-background);
+      box-sizing: border-box;
+
+      padding: 0.25em 0.5em;
+      gap: 0.5em;
+
+      &.success {
+            background-color: var(--success);
+      }
+
+      &.error {
+            background-color: var(--error);
+      }
+
+      &.warning {
+            background-color: var(--warning);
+      }
+
+      &.info {
+            border: 1px solid var(--info);
+            background-color: rgb(from var(--info) r g b / 0.2);
+      }
+}
+
+fa-icon {
+      &.success {
+            color: var(--success);
+      }
+
+      &.error {
+            color: var(--error);
+      }
+
+      &.warning {
+            color: var(--warning);
+      }
+
+      &.info {
+            color: var(--info);
+      }
+}
+
+.label {
+      font-size: 0.8rem;
+      font-weight: 300;
+      text-wrap: pretty;
+      margin: 0em;
+      padding: 0em;
+      text-align: left;
+}

@@ -7,8 +7,4 @@ export class StoreTaskUpdateService extends StoreService<Task | null> {
       public constructor() {
             super(null);
       }
-
-      public get subject$() {
-            return this.behaviorSubject;
-      }
 }

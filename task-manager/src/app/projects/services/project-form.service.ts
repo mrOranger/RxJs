@@ -17,17 +17,10 @@ export class ProjectFormService {
                   [this.descriptionFormName]: new FormControl('', {
                         validators: [Validators.required, Validators.maxLength(255)],
                   }),
-                  [this.dateFormName]: new FormGroup(
-                        {
-                              [this.startingDateFormName]: new FormControl(null, {
-                                    validators: [Validators.required, ProjectFormValidators.notBeforeToday],
-                              }),
-                              [this.endingDateFormName]: new FormControl(null, { validators: [Validators.required] }),
-                        },
-                        {
-                              validators: [ProjectFormValidators.notBeforeStartingDate],
-                        },
-                  ),
+                  [this.startingDateFormName]: new FormControl(null, {
+                        validators: [Validators.required, ProjectFormValidators.notBeforeToday],
+                  }),
+                  [this.endingDateFormName]: new FormControl(null, { validators: [Validators.required] }),
             });
       }
 

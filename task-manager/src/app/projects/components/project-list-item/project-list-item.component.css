@@ -1,0 +1,77 @@
+:host {
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1em;
+      padding: 1em 2em;
+
+      border: 1px solid var(--secondary);
+      border-radius: var(--default-border-radius);
+      background-color: var(--card-background);
+      box-shadow: var(--default-shadow);
+
+      cursor: pointer;
+      transition: 0.4s ease-in-out;
+}
+
+.project-title,
+.project-description,
+.project-dates {
+      margin: 0em;
+      padding: 0em;
+      width: 100%;
+      height: 100%;
+}
+
+.project-title {
+      font-size: 1.5rem;
+}
+
+.project-description,
+.project-starting-date,
+.project-ending-date {
+      font-size: 1rem;
+}
+
+.project-title {
+      font-weight: 400;
+}
+
+.project-description,
+.project-starting-date,
+.project-ending-date {
+      font-weight: 300;
+}
+
+.project-title,
+.project-description,
+.project-starting-date,
+.project-ending-date {
+      text-wrap: pretty;
+      user-select: none;
+}
+
+.project-dates {
+      width: 100%;
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 1em;
+}
+
+:host:hover {
+      transform: scale(1.02);
+      background-color: var(--accent);
+}
+
+:host:active {
+      transform: scale(0.98);
+      background-color: var(--accent);
+}
+
+:host:focus-visible {
+      transform: scale(0.98);
+      background-color: var(--accent);
+}

@@ -5,6 +5,10 @@ export abstract class StoreCollectionService<T> extends StoreService<T[]> {
             super([]);
       }
 
+      public override get subject$() {
+            return super.subject$;
+      }
+
       public add(item: T): void {
             this.value = [...this.value, item];
       }

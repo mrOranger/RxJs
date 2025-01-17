@@ -1,5 +1,5 @@
-<div class="projects-list" *ngIf="projects.length > 0; else noProjects">
-      <span>It works!</span>
+<div class="projects-list" *ngIf="databaseProjects.length > 0; else noProjects">
+      <tm-project-list-item *ngFor="let project of databaseProjects" [project]="project"></tm-project-list-item>
 </div>
 <ng-template #noProjects>
       <tm-empty-project-list></tm-empty-project-list>

@@ -8,6 +8,7 @@ import {
       NotificationService,
       ProjectRepository,
       ProjectService,
+      StoreProjectService,
       TextareaComponent,
 } from 'src/app/shared';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -45,6 +46,7 @@ export class NewProjectModalComponent implements OnInit, OnDestroy {
       private readonly changeDetectorRef: ChangeDetectorRef;
       private readonly projectRepository: ProjectRepository;
       private readonly projectFormService: ProjectFormService;
+      private readonly storeProjectService: StoreProjectService;
       private readonly notificationService: NotificationService;
       private readonly localStorageService: LocalStorageService;
 
@@ -53,6 +55,7 @@ export class NewProjectModalComponent implements OnInit, OnDestroy {
             this.projectFormService = inject(ProjectFormService);
             this.localStorageService = inject(LocalStorageService);
             this.notificationService = inject(NotificationService);
+            this.storeProjectService = inject(StoreProjectService);
             this.projectRepository = inject<ProjectRepository>(PROJECT_REPOSITORY_TOKEN);
       }
 
@@ -84,7 +87,8 @@ export class NewProjectModalComponent implements OnInit, OnDestroy {
                         ),
                   )
                   .subscribe({
-                        next: () => {
+                        next: (newProject) => {
+                              this.storeProjectService.add(newProject);
                               this.notificationService.success('Project created successfully');
                               this.changeDetectorRef.detectChanges();
                               this.ngOnDestroy();
