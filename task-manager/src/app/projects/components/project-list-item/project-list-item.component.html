@@ -4,3 +4,11 @@
       <tm-tag [label]="startingAt" type="info" [icon]="clock"></tm-tag>
       <tm-tag [label]="endingAt" type="info" [icon]="clock"></tm-tag>
 </div>
+<div class="project-actions">
+      <button tmButton class="button update-button" (click)="onUpdate($event)">
+            Update <fa-icon class="icon" [icon]="pencil"></fa-icon>
+      </button>
+      <button tmButton class="button delete-button" (click)="onDelete($event)">
+            Delete <fa-icon class="icon" [icon]="trash"></fa-icon>
+      </button>
+</div>

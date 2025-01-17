@@ -23,6 +23,6 @@ export abstract class StoreCollectionService<T> extends StoreService<T[]> {
       }
 
       public delete(item: T, keyName: keyof T): void {
-            this.value = this.value.filter((anItem) => anItem[keyName] === item[keyName]);
+            this.value = this.value.filter((anItem) => anItem[keyName] !== item[keyName]);
       }
 }
