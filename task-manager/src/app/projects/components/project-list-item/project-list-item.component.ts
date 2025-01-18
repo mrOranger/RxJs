@@ -1,22 +1,66 @@
-import { Component, HostBinding, inject, Input } from '@angular/core';
+import {
+      ChangeDetectionStrategy,
+      ChangeDetectorRef,
+      Component,
+      HostBinding,
+      inject,
+      Input,
+      OnDestroy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonComponent, Project, StoreProjectService, TagComponent } from 'src/app/shared';
-import * as moment from 'moment';
+
 import { faClock, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+import * as moment from 'moment';
+
+import { of, Subscription, switchMap } from 'rxjs';
+
+import {
+      ButtonComponent,
+      DatabaseService,
+      ModalService,
+      NotificationService,
+      Project,
+      ProjectRepository,
+      ProjectService,
+      StoreProjectService,
+      TagComponent,
+} from 'src/app/shared';
+
+import { PROJECT_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
+import { UpdateProjectModalComponent } from '../update-project-modal/update-project-modal.component';
 
 @Component({
       standalone: true,
       selector: 'tm-project-list-item',
       templateUrl: './project-list-item.component.html',
       styleUrls: ['./project-list-item.component.css'],
+      changeDetection: ChangeDetectionStrategy.OnPush,
       imports: [CommonModule, TagComponent, ButtonComponent, FontAwesomeModule],
+      providers: [
+            ModalService,
+            DatabaseService,
+            NotificationService,
+            NotificationService,
+            { provide: PROJECT_REPOSITORY_TOKEN, useClass: ProjectService },
+      ],
 })
-export class ProjectListItemComponent {
+export class ProjectListItemComponent implements OnDestroy {
+      private readonly modalService: ModalService;
+      private readonly changeDetectorRef: ChangeDetectorRef;
+      private readonly projectRepository: ProjectRepository;
       private readonly storeProjectService: StoreProjectService;
+      private readonly notificationService: NotificationService;
+
+      private projectRepositoryDelete$!: Subscription;
 
       public constructor() {
+            this.modalService = inject(ModalService);
+            this.changeDetectorRef = inject(ChangeDetectorRef);
             this.storeProjectService = inject(StoreProjectService);
+            this.notificationService = inject(NotificationService);
+            this.projectRepository = inject<ProjectRepository>(PROJECT_REPOSITORY_TOKEN);
       }
 
       @Input() public project!: Project;
@@ -56,10 +100,29 @@ export class ProjectListItemComponent {
 
       public onUpdate(event: MouseEvent) {
             event.stopImmediatePropagation();
+            this.modalService.create({
+                  title: 'Update Project',
+                  closeDisabled: true,
+                  submitDisabled: true,
+                  component: UpdateProjectModalComponent,
+                  params: {
+                        project: this.project,
+                  },
+            });
       }
 
       public onDelete(event: MouseEvent) {
+            this.projectRepositoryDelete$ = this.projectRepository.delete(this.project.id).subscribe({
+                  next: () => {
+                        this.storeProjectService.delete(this.project, 'id');
+                        this.notificationService.success('Project deleted successfully.');
+                        this.changeDetectorRef.detectChanges();
+                  },
+            });
             event.stopImmediatePropagation();
-            this.storeProjectService.delete(this.project, 'id');
+      }
+
+      public ngOnDestroy(): void {
+            this.projectRepositoryDelete$?.unsubscribe();
       }
 }

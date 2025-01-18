@@ -1,1 +1,65 @@
-<p>update-project-model works!</p>
+<form class="form" [formGroup]="formService.form">
+      <tm-input
+            label="Title"
+            type="text"
+            name="title"
+            class="form-item"
+            placeholder="Project's title here ..."
+            [formControlName]="formService.titleFormName">
+            <span [hidden]="!formService.titleFormControl.hasError('required')" class="error-message">
+                  • Il titolo del progetto è obbligatorio
+            </span>
+            <span [hidden]="!formService.titleFormControl.hasError('minlength')" class="error-message">
+                  • Il titolo del progetto deve essere lungo minimo 2 caratteri
+            </span>
+            <span [hidden]="!formService.titleFormControl.hasError('maxlength')" class="error-message">
+                  • Il titolo del progetto deve essere lungo massimo 255 caratteri
+            </span>
+      </tm-input>
+      <tm-textarea
+            label="Description"
+            type="text"
+            name="description"
+            class="form-item"
+            placeholder="Project's description here ..."
+            [formControlName]="formService.descriptionFormName">
+            <span [hidden]="!formService.descriptionFormControl.hasError('required')" class="error-message">
+                  • La descrizione del progetto è obbligatoria
+            </span>
+            <span [hidden]="!formService.descriptionFormControl.hasError('minlength')" class="error-message">
+                  • La descrizione del progetto deve essere lunga minimo 2 caratteri
+            </span>
+            <span [hidden]="!formService.descriptionFormControl.hasError('maxlength')" class="error-message">
+                  • La descrizione del progetto deve essere lunga massimo 255 caratteri
+            </span>
+      </tm-textarea>
+      <div class="date-section">
+            <tm-input
+                  label="Starting Date"
+                  type="date"
+                  name="starting-date"
+                  class="form-item"
+                  placeholder="Project's starting date ..."
+                  [formControlName]="formService.startingDateFormName">
+                  <span [hidden]="!formService.startingDateFormControl?.hasError('required')" class="error-message">
+                        • La data di inizio è obbligatoria
+                  </span>
+                  <span
+                        [hidden]="!formService.startingDateFormControl?.hasError('notBeforeToday')"
+                        class="error-message">
+                        • La data di inizio non può precedere oggi
+                  </span>
+            </tm-input>
+            <tm-input
+                  label="Ending Date"
+                  type="date"
+                  name="ending-date"
+                  class="form-item"
+                  placeholder="Project's ending date ..."
+                  [formControlName]="formService.endingDateFormName">
+                  <span [hidden]="!formService.endingDateFormControl?.hasError('required')" class="error-message">
+                        • La data di fine è obbligatoria
+                  </span>
+            </tm-input>
+      </div>
+</form>
