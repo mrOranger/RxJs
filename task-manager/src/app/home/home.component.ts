@@ -1,13 +1,19 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 
 import { forkJoin, Subscription } from 'rxjs';
 
 import {
       DatabaseService,
+      Project,
+      ProjectRepository,
+      ProjectService,
+      StoreSelectedProjectService,
       StoreTaskService,
       StoreTaskUserService,
       StoreUserService,
+      TabComponent,
+      TabListComponent,
       TaskRepository,
       TaskService,
       TaskStatus,
@@ -16,7 +22,12 @@ import {
       UserRepository,
       UserService,
 } from '../shared';
-import { TASK_REPOSITORY_TOKEN, TASK_USER_REPOSITORY_TOKEN, USER_REPOSITORY_TOKEN } from '../injection-tokens';
+import {
+      PROJECT_REPOSITORY_TOKEN,
+      TASK_REPOSITORY_TOKEN,
+      TASK_USER_REPOSITORY_TOKEN,
+      USER_REPOSITORY_TOKEN,
+} from '../injection-tokens';
 import { TaskListComponent } from '../board';
 
 @Component({
@@ -24,24 +35,31 @@ import { TaskListComponent } from '../board';
       selector: 'tm-home',
       templateUrl: './home.component.html',
       styleUrls: ['./home.component.css'],
-      imports: [CommonModule, TaskListComponent],
       changeDetection: ChangeDetectionStrategy.OnPush,
+      imports: [CommonModule, TaskListComponent, TabComponent, TabListComponent, NgFor],
       providers: [
             DatabaseService,
             { provide: TASK_REPOSITORY_TOKEN, useClass: TaskService },
             { provide: USER_REPOSITORY_TOKEN, useClass: UserService },
+            { provide: PROJECT_REPOSITORY_TOKEN, useClass: ProjectService },
             { provide: TASK_USER_REPOSITORY_TOKEN, useClass: TaskUserService },
       ],
 })
 export class HomeComponent implements OnInit, OnDestroy {
+      private projects!: Project[];
+
       private data$!: Subscription;
+      private projects$!: Subscription;
+
       private readonly taskRepository: TaskRepository;
       private readonly userRepository: UserRepository;
       private readonly storeTaskService: StoreTaskService;
       private readonly storeUserService: StoreUserService;
       private readonly changeDetectorRef: ChangeDetectorRef;
+      private readonly projectRepository: ProjectRepository;
       private readonly taskUserRepository: TaskUserRepository;
       private readonly storeTaskUserService: StoreTaskUserService;
+      private readonly storeSelectedProjectService: StoreSelectedProjectService;
 
       public constructor() {
             this.storeUserService = inject(StoreUserService);
@@ -50,6 +68,8 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.storeTaskUserService = inject(StoreTaskUserService);
             this.userRepository = inject<UserRepository>(USER_REPOSITORY_TOKEN);
             this.taskRepository = inject<TaskRepository>(TASK_REPOSITORY_TOKEN);
+            this.storeSelectedProjectService = inject(StoreSelectedProjectService);
+            this.projectRepository = inject<ProjectRepository>(PROJECT_REPOSITORY_TOKEN);
             this.taskUserRepository = inject<TaskUserRepository>(TASK_USER_REPOSITORY_TOKEN);
       }
 
@@ -66,6 +86,17 @@ export class HomeComponent implements OnInit, OnDestroy {
                         this.changeDetectorRef.detectChanges();
                   },
             });
+
+            this.projects$ = this.projectRepository.index().subscribe({
+                  next: (projects) => {
+                        this.projects = projects;
+                        this.changeDetectorRef.detectChanges();
+                  },
+            });
+      }
+
+      public get databaseProjects() {
+            return this.projects ?? [];
       }
 
       public get todoStatus() {
@@ -80,7 +111,16 @@ export class HomeComponent implements OnInit, OnDestroy {
             return TaskStatus.COMPLETED;
       }
 
+      public get selectedProject() {
+            return this.storeSelectedProjectService.value;
+      }
+
+      public onSelectProject(project: Project) {
+            this.storeSelectedProjectService.value = project;
+      }
+
       public ngOnDestroy(): void {
             this.data$.unsubscribe();
+            this.projects$.unsubscribe();
       }
 }

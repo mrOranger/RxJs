@@ -1,9 +1,11 @@
+export { TabComponent } from './tab/tab.component';
 export { TagComponent } from './tag/tag.component';
 export { ModalComponent } from './modal/modal.component';
 export { InputComponent } from './input/input.component';
 export { ButtonComponent } from './button/button.component';
 export { LoaderComponent } from './loader/loader.component';
 export { SelectComponent } from './select/select.component';
+export { TabListComponent } from './tab-list/tab-list.component';
 export { TextareaComponent } from './textarea/textarea.component';
 export { NotFoundComponent } from './not-found/not-found.component';
 export { RadioGroupComponent } from './radio-group/radio-group.component';

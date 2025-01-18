@@ -1,0 +1,45 @@
+:host {
+      display: inline-flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+      padding: 0.5em 1em;
+      cursor: pointer;
+      transition: 0.2s ease;
+      color: var(--text-not-allowed);
+      border-bottom: 1px solid var(--text-not-allowed);
+}
+
+:host.selected:not(:host[disabled]) {
+      color: var(--info);
+      border-bottom: 2px solid var(--info);
+}
+
+:host[disabled] {
+      cursor: not-allowed;
+      color: var(--not-allowed);
+      border-bottom: 2px solid var(--not-allowed);
+      pointer-events: none;
+}
+
+.tab-label,
+.tab-icon {
+      margin: 0em;
+      padding: 0em;
+}
+
+:host:hover {
+      color: rgba(from var(--info) r g b / 0.7);
+      border-bottom: 2px solid rgba(from var(--info) r g b / 0.7);
+}
+
+:host:active,
+:host:focus-visible {
+      color: var(--info);
+      border-bottom: 2px solid var(--info);
+}
+
+.tab-label {
+      font-size: 1.5rem;
+}

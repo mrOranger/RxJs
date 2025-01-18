@@ -1,9 +1,28 @@
 :host {
+      width: 100%;
+      height: 100%;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 1em;
+      padding: 1em 2em;
+      box-sizing: border-box;
+}
+
+.task-list {
       height: 100%;
       width: 100%;
       display: inline-grid;
       box-sizing: border-box;
       grid-template-columns: repeat(3, 1fr);
-      padding: 1em 2em;
       gap: 1em;
+}
+
+.project-tab {
+      width: 100%;
+      display: inline-flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: flex-start;
 }

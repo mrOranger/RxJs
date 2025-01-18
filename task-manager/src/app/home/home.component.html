@@ -1,3 +1,12 @@
-<tm-task-list class="todo-list" title="To Do" [taskStatus]="todoStatus"></tm-task-list>
-<tm-task-list class="in-progress-list" title="In Progress" [taskStatus]="inProgressStatus"></tm-task-list>
-<tm-task-list class="completed-list" title="Completed" [taskStatus]="completedStatus"></tm-task-list>
+<tm-tab-list>
+      <tm-tab
+            *ngFor="let project of databaseProjects"
+            [label]="project.title"
+            [selected]="selectedProject?.id === project.id"
+            (clicked)="onSelectProject(project)"></tm-tab>
+</tm-tab-list>
+<div class="task-list">
+      <tm-task-list class="todo-list" title="To Do" [taskStatus]="todoStatus"></tm-task-list>
+      <tm-task-list class="in-progress-list" title="In Progress" [taskStatus]="inProgressStatus"></tm-task-list>
+      <tm-task-list class="completed-list" title="Completed" [taskStatus]="completedStatus"></tm-task-list>
+</div>
