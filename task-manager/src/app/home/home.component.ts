@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
+import {
+      ChangeDetectionStrategy,
+      ChangeDetectorRef,
+      Component,
+      HostBinding,
+      inject,
+      OnDestroy,
+      OnInit,
+} from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
 
 import { forkJoin, Subscription } from 'rxjs';
@@ -28,7 +36,7 @@ import {
       TASK_USER_REPOSITORY_TOKEN,
       USER_REPOSITORY_TOKEN,
 } from '../injection-tokens';
-import { TaskListComponent } from '../board';
+import { NoProjectSelectedComponent, TaskListComponent } from '../board';
 
 @Component({
       standalone: true,
@@ -36,7 +44,7 @@ import { TaskListComponent } from '../board';
       templateUrl: './home.component.html',
       styleUrls: ['./home.component.css'],
       changeDetection: ChangeDetectionStrategy.OnPush,
-      imports: [CommonModule, TaskListComponent, TabComponent, TabListComponent, NgFor],
+      imports: [CommonModule, TaskListComponent, TabComponent, TabListComponent, NgFor, NoProjectSelectedComponent],
       providers: [
             DatabaseService,
             { provide: TASK_REPOSITORY_TOKEN, useClass: TaskService },

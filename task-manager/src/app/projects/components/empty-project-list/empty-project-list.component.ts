@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalService } from 'src/app/shared';
 import { NewProjectModalComponent } from '../new-project-modal/new-project-modal.component';
@@ -11,9 +11,12 @@ import { NewProjectModalComponent } from '../new-project-modal/new-project-modal
       styleUrls: ['./empty-project-list.component.css'],
 })
 export class EmptyProjectListComponent {
+      @Input() public label?: string;
+
       private readonly modalService: ModalService;
 
       public constructor() {
+            this.label = 'Start creating a';
             this.modalService = inject(ModalService);
       }
 

@@ -11,7 +11,6 @@ import { DatabaseService } from '../database.service';
 
 @Injectable()
 export class TaskService implements TaskRepository {
-
       private readonly databaseService: DatabaseService;
 
       public constructor() {
@@ -32,6 +31,11 @@ export class TaskService implements TaskRepository {
                   }),
             );
       }
+
+      public findByProjectId(projectId: string): Observable<Task[]> {
+            return from(this.databaseService.tasks.where('projectId').equalsIgnoreCase(projectId).toArray());
+      }
+
       public save(value: Omit<Task, 'id' | 'createdAt' | 'updatedAt'>): Observable<Task> {
             const newTask = {
                   id: uuidv4(),

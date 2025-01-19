@@ -17,6 +17,7 @@ import {
       TaskStatus,
       TaskUserRepository,
       StoreTaskService,
+      StoreSelectedProjectService,
 } from 'src/app/shared';
 import { TASK_REPOSITORY_TOKEN, TASK_USER_REPOSITORY_TOKEN, USER_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
 import { TaskFormService } from '../../services';
@@ -53,6 +54,7 @@ export class NewTaskModalComponent implements OnInit, OnDestroy {
       private readonly changeDetectorRef: ChangeDetectorRef;
       private readonly taskUserRepository: TaskUserRepository;
       private readonly notificationService: NotificationService;
+      private readonly storeSelectedProjectService: StoreSelectedProjectService;
 
       private ok$!: Subscription;
       private cancel$!: Subscription;
@@ -66,6 +68,7 @@ export class NewTaskModalComponent implements OnInit, OnDestroy {
             this.notificationService = inject(NotificationService);
             this.taskRepository = inject<TaskRepository>(TASK_REPOSITORY_TOKEN);
             this.userRepository = inject<UserRepository>(USER_REPOSITORY_TOKEN);
+            this.storeSelectedProjectService = inject(StoreSelectedProjectService);
             this.taskUserRepository = inject<TaskUserRepository>(TASK_USER_REPOSITORY_TOKEN);
       }
 
@@ -95,6 +98,7 @@ export class NewTaskModalComponent implements OnInit, OnDestroy {
                                     title: this.title,
                                     description: this.description,
                                     status: TaskStatus.TODO,
+                                    projectId: this.storeSelectedProjectService.value?.id ?? '',
                               }),
                         ),
                         tap((task) => this.storeTaskService.add(task)),

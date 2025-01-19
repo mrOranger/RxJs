@@ -9,8 +9,8 @@ import {
       ModalComponent,
       NotificationService,
       SelectComponent,
+      StoreSelectedProjectService,
       StoreTaskService,
-      StoreTaskUserService,
       Task,
       TaskRepository,
       TaskService,
@@ -66,16 +66,16 @@ export class UpdateTaskModalComponent {
       private readonly changeDetectorRef: ChangeDetectorRef;
       private readonly tasksUserRepository: TaskUserRepository;
       private readonly notificationService: NotificationService;
-      private readonly storeTaskUserService: StoreTaskUserService;
+      private readonly storeSelectedProjectService: StoreSelectedProjectService;
 
       public constructor() {
             this.taskFormService = inject(TaskFormService);
             this.storeTaskService = inject(StoreTaskService);
             this.changeDetectorRef = inject(ChangeDetectorRef);
             this.notificationService = inject(NotificationService);
-            this.storeTaskUserService = inject(StoreTaskUserService);
             this.taskRepository = inject<TaskRepository>(TASK_REPOSITORY_TOKEN);
             this.userRepository = inject<UserRepository>(USER_REPOSITORY_TOKEN);
+            this.storeSelectedProjectService = inject(StoreSelectedProjectService);
             this.tasksUserRepository = inject<TaskUserRepository>(TASK_USER_REPOSITORY_TOKEN);
       }
 
@@ -118,6 +118,7 @@ export class UpdateTaskModalComponent {
                                     title: this.title,
                                     description: this.description,
                                     status: this.task.status,
+                                    projectId: this.storeSelectedProjectService.select?.id ?? '',
                               }),
                         ),
                         switchMap(() => this.tasksUserRepository.detach(this.oldAssignedUserId, this.task.id)),

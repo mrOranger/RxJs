@@ -7,6 +7,7 @@ export class TaskEntity extends Entity<DatabaseService> {
       public title!: string;
       public description!: string;
       public status!: TaskStatus;
+      public projectId!: string;
       public createdAt!: Date;
       public updatedAt!: Date;
 }

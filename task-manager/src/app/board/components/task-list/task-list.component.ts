@@ -1,18 +1,19 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule, NgClass, NgFor } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 
 import { TASK_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
 import { TaskListItemComponent } from '../task-list-item/task-list-item.component';
 import {
       DatabaseService,
       StoreDragTaskService,
+      StoreSelectedProjectService,
       StoreTaskService,
       Task,
       TaskRepository,
       TaskService,
       TaskStatus,
 } from 'src/app/shared';
-import { Subscription } from 'rxjs';
+import { combineLatest, Subscription } from 'rxjs';
 
 @Component({
       standalone: true,
@@ -20,7 +21,7 @@ import { Subscription } from 'rxjs';
       templateUrl: './task-list.component.html',
       styleUrls: ['./task-list.component.css'],
       changeDetection: ChangeDetectionStrategy.OnPush,
-      imports: [CommonModule, TaskListItemComponent, NgFor, NgClass],
+      imports: [CommonModule, TaskListItemComponent, NgFor],
       host: {
             '[class.dragover]': 'isDraggingOver',
             '(drop)': 'onDrop()',
@@ -33,34 +34,40 @@ export class TaskListComponent implements OnInit, OnDestroy {
       @Input() public title!: string;
       @Input() public taskStatus!: TaskStatus;
 
-      private currentTasks: Task[];
+      private currentTasks!: Task[];
 
       private readonly taskRepository: TaskRepository;
       private readonly storeTaskService: StoreTaskService;
       private readonly changeDetectorRef: ChangeDetectorRef;
       private readonly storeDragTaskService: StoreDragTaskService;
+      private readonly selectedProjectService: StoreSelectedProjectService;
 
-      private storeTaskService$!: Subscription;
+      private data$!: Subscription;
 
       public constructor() {
-            this.currentTasks = [];
             this.storeTaskService = inject(StoreTaskService);
             this.changeDetectorRef = inject(ChangeDetectorRef);
             this.storeDragTaskService = inject(StoreDragTaskService);
+            this.selectedProjectService = inject(StoreSelectedProjectService);
             this.taskRepository = inject<TaskRepository>(TASK_REPOSITORY_TOKEN);
       }
 
       public ngOnInit(): void {
-            this.storeTaskService$ = this.storeTaskService.subscribe({
-                  next: (tasks) => {
-                        this.currentTasks = tasks.filter((aTask) => aTask.status === this.taskStatus);
-                        this.changeDetectorRef.detectChanges();
+            this.data$ = combineLatest([
+                  this.storeTaskService.subject$,
+                  this.selectedProjectService.subject$,
+            ]).subscribe({
+                  next: ([tasks, selectedProject]) => {
+                        if (selectedProject?.id) {
+                              this.currentTasks = tasks.filter((aTask) => aTask.status === this.taskStatus);
+                              this.changeDetectorRef.detectChanges();
+                        }
                   },
             });
       }
 
       public get tasks() {
-            return this.currentTasks;
+            return this.currentTasks ?? [];
       }
 
       public get isDraggingOver() {
@@ -90,6 +97,6 @@ export class TaskListComponent implements OnInit, OnDestroy {
       }
 
       public ngOnDestroy(): void {
-            this.storeTaskService$.unsubscribe();
+            this.data$.unsubscribe();
       }
 }

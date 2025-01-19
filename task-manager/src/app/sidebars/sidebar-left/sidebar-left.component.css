@@ -5,6 +5,11 @@
       border-right: 2px solid var(--accent);
       box-sizing: border-box;
       padding: 0.5em 1em;
+      gap: 1em;
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
 }
 
 .action {
@@ -13,4 +18,8 @@
 
 .action .icon {
       color: var(--info);
+}
+
+:host[hidden='true'] {
+      display: none;
 }

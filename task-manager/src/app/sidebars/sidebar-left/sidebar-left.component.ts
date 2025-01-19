@@ -1,11 +1,12 @@
-import { Component, inject } from '@angular/core';
+import { Component, HostBinding, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { Router, RouterModule } from '@angular/router';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
-import { ButtonComponent, ModalService } from 'src/app/shared';
-import { Router, RouterModule } from '@angular/router';
+import { ButtonComponent, ModalService, StoreSelectedProjectService } from 'src/app/shared';
 import { NewTaskModalComponent } from 'src/app/board';
 import { NewProjectModalComponent } from 'src/app/projects';
 
@@ -19,10 +20,12 @@ import { NewProjectModalComponent } from 'src/app/projects';
 export class SidebarLeftComponent {
       private readonly router: Router;
       private readonly modalService: ModalService;
+      private readonly storeSelectedProject: StoreSelectedProjectService;
 
       public constructor() {
             this.router = inject(Router);
             this.modalService = inject(ModalService);
+            this.storeSelectedProject = inject(StoreSelectedProjectService);
       }
 
       public onNewTask() {
@@ -51,9 +54,15 @@ export class SidebarLeftComponent {
 
       public get visibilities() {
             return {
-                  newTask: this.router.url === '/home',
+                  newTask: this.router.url === '/home' && !!this.storeSelectedProject.value,
                   newProject: this.router.url === '/projects',
             };
+      }
+
+      @HostBinding('attr.hidden')
+      public get isVisible() {
+            console.log(Object.values(this.visibilities));
+            return !Object.values(this.visibilities).reduce((acc, visible) => visible || acc, false);
       }
 
       public onNewProject() {
