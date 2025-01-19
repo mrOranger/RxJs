@@ -59,7 +59,9 @@ export class TaskListComponent implements OnInit, OnDestroy {
             ]).subscribe({
                   next: ([tasks, selectedProject]) => {
                         if (selectedProject?.id) {
-                              this.currentTasks = tasks.filter((aTask) => aTask.status === this.taskStatus);
+                              this.currentTasks = tasks
+                                    .filter((aTask) => aTask.status === this.taskStatus)
+                                    .filter((aTask) => aTask.projectId === selectedProject.id);
                               this.changeDetectorRef.detectChanges();
                         }
                   },
