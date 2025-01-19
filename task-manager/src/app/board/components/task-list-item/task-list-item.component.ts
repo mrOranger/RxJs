@@ -89,14 +89,12 @@ export class TaskListItemComponent implements OnInit {
       public onDragStart(event: DragEvent) {
             if (!this.storeDragTaskService.value) {
                   this.storeDragTaskService.value = this.task;
-                  console.log(this.task.id, 'dragstart');
             }
       }
 
       public onDragEnd(event: DragEvent) {
             if (this.storeDragTaskService.value) {
                   this.storeDragTaskService.value = null;
-                  console.log(this.task.id, 'dragend');
             }
       }
 

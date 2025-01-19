@@ -1,0 +1,42 @@
+:host {
+      width: 100%;
+      height: fit-content;
+
+      display: inline-flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+
+      gap: 1em;
+      padding: 1em 2em;
+      box-sizing: border-box;
+
+      border: 1px solid var(--secondary);
+      border-radius: var(--large-border-radius);
+      background-color: var(--card-background);
+      box-shadow: var(--default-shadow);
+}
+
+.label {
+      font-size: 1rem;
+      letter-spacing: 0em;
+      font-weight: 300;
+      text-wrap: pretty;
+      margin: 0.5em 0em;
+      color: var(--not-allowed);
+}
+
+.value {
+      font-size: 1.75rem;
+      font-weight: 300;
+      text-wrap: pretty;
+      margin: 0em 1em;
+}
+
+.statistics {
+      width: 100%;
+      border: 1px solid var(--not-allowed);
+      border-radius: var(--large-border-radius);
+      background-color: var(--primary);
+      padding: 1em 2em;
+}

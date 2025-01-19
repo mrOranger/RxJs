@@ -29,6 +29,12 @@ export const routes: Routes = [
                               ),
                         canActivate: [authGuard(true)],
                   },
+                  {
+                        path: 'statistics',
+                        loadComponent: () =>
+                              import('./statistics/components/main/main.component').then((m) => m.MainComponent),
+                        canActivate: [authGuard(true)],
+                  },
             ],
       },
       {

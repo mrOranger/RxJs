@@ -61,7 +61,6 @@ export class SidebarLeftComponent {
 
       @HostBinding('attr.hidden')
       public get isVisible() {
-            console.log(Object.values(this.visibilities));
             return !Object.values(this.visibilities).reduce((acc, visible) => visible || acc, false);
       }
 
