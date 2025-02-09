@@ -2,20 +2,37 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ButtonComponent } from './button.component';
 
-describe('ButtonComponent', () => {
-  let component: ButtonComponent;
-  let fixture: ComponentFixture<ButtonComponent>;
+describe('button.component', () => {
+      beforeEach(() => {
+            TestBed.configureTestingModule({
+                  declarations: [ButtonComponent],
+            });
+      });
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [ButtonComponent]
-    });
-    fixture = TestBed.createComponent(ButtonComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+      it('should create the button', () => {
+            const fixture = TestBed.createComponent(ButtonComponent);
+            const button = fixture.debugElement.componentInstance;
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+            expect(button).toBeTruthy();
+      });
+
+      it('should create the button with hidden attribute', () => {
+            const fixture = TestBed.createComponent(ButtonComponent);
+            const button = fixture.debugElement.componentInstance;
+
+            fixture.componentInstance.hidden = true;
+
+            expect(button).toBeTruthy();
+            expect(fixture.debugElement.attributes['hidden']).toBeTruthy();
+      });
+
+      it('should create the button without hidden attribute', () => {
+            const fixture = TestBed.createComponent(ButtonComponent);
+            const button = fixture.debugElement.componentInstance;
+
+            fixture.componentInstance.hidden = true;
+
+            expect(button).toBeTruthy();
+            expect(fixture.debugElement.attributes['hidden']).toBeFalsy();
+      });
 });
