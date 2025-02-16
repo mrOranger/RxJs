@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { Chart, Colors } from 'chart.js';
@@ -18,7 +18,7 @@ import { baseColors } from 'ng2-charts';
       changeDetection: ChangeDetectionStrategy.OnPush,
       providers: [DatabaseService, { provide: TASK_REPOSITORY_TOKEN, useClass: TaskService }],
 })
-export class TaskStatusComponent {
+export class TaskStatusComponent implements OnInit, OnDestroy {
       public chart!: Chart;
 
       private readonly taskRepository: TaskRepository;

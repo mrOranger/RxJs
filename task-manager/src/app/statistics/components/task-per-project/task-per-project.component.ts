@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { NgChartsModule } from 'ng2-charts';
@@ -30,7 +30,7 @@ import { PROJECT_REPOSITORY_TOKEN, TASK_REPOSITORY_TOKEN } from 'src/app/injecti
             { provide: PROJECT_REPOSITORY_TOKEN, useClass: ProjectService },
       ],
 })
-export class TaskPerProjectComponent implements OnInit {
+export class TaskPerProjectComponent implements OnInit, OnDestroy {
       public chart!: Chart;
 
       private readonly taskRepository: TaskRepository;

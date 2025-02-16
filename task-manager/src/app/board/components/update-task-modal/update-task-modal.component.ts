@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit, OnDestroy } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { concatMap, forkJoin, Subscription, switchMap, tap } from 'rxjs';
@@ -42,7 +42,7 @@ import { TASK_REPOSITORY_TOKEN, TASK_USER_REPOSITORY_TOKEN, USER_REPOSITORY_TOKE
       ],
       imports: [FormsModule, ReactiveFormsModule, InputComponent, SelectComponent, TextareaComponent],
 })
-export class UpdateTaskModalComponent {
+export class UpdateTaskModalComponent implements OnInit, OnDestroy {
       @Input() public task!: Task;
       @Input() public modalInstance!: ModalComponent;
 

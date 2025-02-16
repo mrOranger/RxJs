@@ -33,8 +33,8 @@ import { PROJECT_REPOSITORY_TOKEN } from 'src/app/injection-tokens';
       imports: [CommonModule, InputComponent, TextareaComponent, ReactiveFormsModule],
 })
 export class UpdateProjectModalComponent implements OnInit, OnDestroy {
-      @Input('project') public project!: Project;
-      @Input('modalInstance') public modalInstance!: ModalComponent;
+      @Input() public project!: Project;
+      @Input() public modalInstance!: ModalComponent;
 
       private title!: string;
       private description!: string;

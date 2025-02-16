@@ -29,15 +29,15 @@ export class TaskFormService {
       }
 
       public get titleFormControl() {
-            return <FormControl>this.newTaskForm.controls[this.titleFormName];
+            return this.newTaskForm.controls[this.titleFormName] as FormControl;
       }
 
       public get descriptionFormControl() {
-            return <FormControl>this.newTaskForm.controls[this.descriptionFormName];
+            return this.newTaskForm.controls[this.descriptionFormName] as FormControl;
       }
 
       public get assignedUserFormControl() {
-            return <FormControl>this.newTaskForm.controls[this.assignedUserFormName];
+            return this.newTaskForm.controls[this.assignedUserFormName] as FormControl;
       }
 
       public get titleFormName() {

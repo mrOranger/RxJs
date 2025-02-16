@@ -19,13 +19,13 @@ export class NotificationService {
             this.applicationRef = inject(ApplicationRef);
       }
 
-      public success(message: string, delay: number = 3000) {
+      public success(message: string, delay = 3000) {
             this.clear();
             const componentRef = this.create(faCheckCircle, 'success', 'Success', message);
             this.hide(componentRef, delay);
       }
 
-      public error(message: string, delay: number = 3000) {
+      public error(message: string, delay = 3000) {
             this.clear();
             const componentRef = this.create(faExclamationCircle, 'error', 'Error', message);
             this.hide(componentRef, delay);
